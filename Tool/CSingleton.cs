@@ -1,33 +1,35 @@
-
-//
-public class CSingleton<T> where T : new()
+namespace MyFrameworkPure
 {
-    private static readonly object lockHelper = new object();
-	private static T m_sInstance;
+    public class CSingleton<T> where T : new()
+    {
+        private static readonly object lockHelper = new object();
+        private static T m_sInstance;
 
-	public static T sInstance
-	{
-
-        get
+        public static T sInstance
         {
-            if(m_sInstance == null)
+
+            get
             {
-                lock(lockHelper)
+                if (m_sInstance == null)
                 {
-                    if (m_sInstance == null)
+                    lock (lockHelper)
                     {
-                        m_sInstance = new T();
+                        if (m_sInstance == null)
+                        {
+                            m_sInstance = new T();
+                        }
                     }
                 }
+                return m_sInstance;
             }
-            return m_sInstance;
-        }
-		
-	}
 
-	//destroy instance
-	public void Destroy()
-	{
-		m_sInstance = default(T);
-	}
+        }
+
+        //destroy instance
+        public void Destroy()
+        {
+            m_sInstance = default(T);
+        }
+    }
+
 }

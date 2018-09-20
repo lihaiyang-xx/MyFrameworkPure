@@ -9,78 +9,82 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 
-public class FontTool
+namespace MyFrameworkPure
 {
-    private static string[] fontName_ch;
-
-    private static string[] fontName_en;
-
-    public static int GetIndexByFontName_en(string name)
+    public static class FontTool
     {
-        for(int i = 0; i < FontName_EN.Length; i++)
+        private static string[] fontName_ch;
+
+        private static string[] fontName_en;
+
+        public static int GetIndexByFontName_en(string name)
         {
-            if(FontName_EN[i] == name)
+            for (int i = 0; i < FontName_EN.Length; i++)
             {
-                return i;
+                if (FontName_EN[i] == name)
+                {
+                    return i;
+                }
             }
+            return -1;
         }
-        return -1;
-    }
 
-    public static string[] FontName_CH
-    {
-        get
+        public static string[] FontName_CH
         {
-            GetSystemFont();
-            return fontName_ch;
-        }
-    }
-
-    public static string[] FontName_EN
-    {
-        get
-        {
-            GetSystemFont();
-            return fontName_en;
-        }
-    }
-
-    public static UnityEngine.Font GetFontByName_ch(string name)
-    {
-        for(int i = 0;i < fontName_ch.Length; i++)
-        {
-            if (fontName_ch[i] == name)
+            get
             {
-                return UnityEngine.Font.CreateDynamicFontFromOSFont(FontName_EN[i], 20);
+                GetSystemFont();
+                return fontName_ch;
             }
         }
 
-        return null;
-    }
-
-    private static void GetSystemFont()
-    {
-        if (fontName_ch != null) return;
-        List<string> list = new List<string>();
-        fontName_en = UnityEngine.Font.GetOSInstalledFontNames();
-
-        List<string> fne = new List<string>(fontName_en);
-
-        for(int i = 0; i < fne.Count; i++)
+        public static string[] FontName_EN
         {
-            try
+            get
             {
-                FontFamily ff = new FontFamily(Path.GetFileNameWithoutExtension(fne[i]));
-                list.Add(ff.Name);
-            }
-            catch
-            {
-                fne.RemoveAt(i);
-                i--;
+                GetSystemFont();
+                return fontName_en;
             }
         }
-        fontName_en = fne.ToArray();
-        fontName_ch = list.ToArray();
+
+        public static UnityEngine.Font GetFontByName_ch(string name)
+        {
+            for (int i = 0; i < fontName_ch.Length; i++)
+            {
+                if (fontName_ch[i] == name)
+                {
+                    return UnityEngine.Font.CreateDynamicFontFromOSFont(FontName_EN[i], 20);
+                }
+            }
+
+            return null;
+        }
+
+        private static void GetSystemFont()
+        {
+            if (fontName_ch != null) return;
+            List<string> list = new List<string>();
+            fontName_en = UnityEngine.Font.GetOSInstalledFontNames();
+
+            List<string> fne = new List<string>(fontName_en);
+
+            for (int i = 0; i < fne.Count; i++)
+            {
+                try
+                {
+                    FontFamily ff = new FontFamily(Path.GetFileNameWithoutExtension(fne[i]));
+                    list.Add(ff.Name);
+                }
+                catch
+                {
+                    fne.RemoveAt(i);
+                    i--;
+                }
+            }
+            fontName_en = fne.ToArray();
+            fontName_ch = list.ToArray();
+        }
+
     }
 
 }

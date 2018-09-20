@@ -4,7 +4,6 @@ using UnityEngine;
 
 public static class GameObjectExtension
 {
-
     public static void AddCollider<T>(this GameObject go) where T:Collider
     {
         MeshFilter filter = go.GetComponent<MeshFilter>();
