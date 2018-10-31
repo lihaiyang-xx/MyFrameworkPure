@@ -25,16 +25,19 @@ public static class GameObjectExtension
     /// </summary>
     public static T Add<T>(this GameObject go) where T : Component
     {
-        if (go != null)
+        T[] ts = go.GetComponents<T>();
+        foreach (var t in ts)
         {
-            T[] ts = go.GetComponents<T>();
-            foreach (var t in ts)
+            if (t != null)
             {
-                if (t != null) Object.Destroy(t);
+#if UNITY_EDITOR
+                Object.DestroyImmediate(t);
+#else
+                Object.Destroy(t);
+#endif
             }
-            return go.AddComponent<T>();
         }
-        return null;
+        return go.AddComponent<T>();
     }
 
     /// <summary>

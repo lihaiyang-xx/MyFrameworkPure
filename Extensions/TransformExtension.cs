@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class TransformExtension
@@ -146,5 +147,60 @@ public static class TransformExtension
                 UnityEngine.Object.Destroy(t.GetChild(i).gameObject);
             }
         }
+    }
+
+    /// <summary>
+    /// 复制填充Transform参数
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="copy"></param>
+    /// <param name="isLocal"></param>
+    public static void CopyTransform(this Transform t, Transform copy)
+    {
+        t.transform.localPosition = copy.transform.localPosition;
+        t.transform.localRotation = copy.transform.localRotation;
+        t.transform.localScale = copy.transform.localScale;
+    }
+
+    /// <summary>
+    /// 重置变换
+    /// </summary>
+    /// <param name="t"></param>
+    public static void Reset(this Transform t)
+    {
+        t.localPosition = Vector3.zero;
+        t.localRotation = Quaternion.identity;
+        t.localScale = Vector3.one;
+    }
+
+    /// <summary>
+    /// 获取子变换,如果超出边界则返回空
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public static Transform GetChildOrDefault(this Transform t, int index)
+    {
+        if (t.childCount <= index)
+            return null;
+        return t.GetChild(index);
+    }
+
+    /// <summary>
+    /// 递归查找子物体名称包含match的所有子物体
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="match"></param>
+    /// <returns></returns>
+    public static Transform[] FindByMatch(this Transform t, string match)
+    {
+        Transform[] childTransforms = t.GetComponentsInChildren<Transform>();
+        //foreach (var child in childtransforms)
+        //{
+        //    debug.log(child.name + "," + match.tolower() + ":" + child.name.tolower().contains(match.tolower()));
+        //}
+        IEnumerable<Transform> children = childTransforms.Where((x) => x.name.ToLower().Contains(match.ToLower()));
+
+        return children as Transform[] ?? children.ToArray();
     }
 }
