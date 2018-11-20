@@ -8,7 +8,7 @@ namespace MyFrameworkPure
     {
         private static T m_sInstance;
 
-        private static readonly object lockHelper = new object();
+        private static readonly object LockHelper = new object();
 
         public static T Instance
         {
@@ -17,7 +17,7 @@ namespace MyFrameworkPure
                 if (m_sInstance == null)
                 {
                     m_sInstance = (T)FindObjectOfType(typeof(T));
-                    lock (lockHelper)
+                    lock (LockHelper)
                     {
                         if (m_sInstance == null)
                         {
