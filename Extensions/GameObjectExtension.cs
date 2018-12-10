@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 游戏对象扩展类
+/// </summary>
 public static class GameObjectExtension
 {
-    public static void AddCollider<T>(this GameObject go) where T:Collider
+    public static void AddCollider<T>(this GameObject go) where T : Collider
     {
         MeshFilter filter = go.GetComponent<MeshFilter>();
-        if (filter&& filter.mesh && !go.GetComponent<Collider>())
+        if (filter && filter.mesh && !go.GetComponent<Collider>())
         {
-            
+
             go.AddComponent<T>();
         }
         if (go.transform.childCount > 0)
@@ -31,7 +34,7 @@ public static class GameObjectExtension
             if (t != null)
             {
 #if UNITY_EDITOR
-                Object.DestroyImmediate(t);
+                Object.DestroyImmediate(t);//立即销毁这个组件 t;
 #else
                 Object.Destroy(t);
 #endif
@@ -43,8 +46,8 @@ public static class GameObjectExtension
     /// <summary>
     /// 获取父物体组件
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="go"></param>
+    /// <typeparam equimpentName="T">什么组件</typeparam>
+    /// <param equimpentName="go">需要获取父物体组件的对象</param>
     /// <returns></returns>
     public static T GetComponentFromParent<T>(this GameObject go) where T : Component
     {
@@ -59,10 +62,10 @@ public static class GameObjectExtension
     /// <summary>
     /// 判断游戏物体是否在鼠标下
     /// </summary>
-    /// <param name="go"></param>
-    /// <param name="camera"></param>
+    /// <param equimpentName="go">游戏对象</param>
+    /// <param equimpentName="camera"></param>
     /// <returns></returns>
-    public static bool IsOnMouse(this GameObject go,Camera camera)
+    public static bool IsOnMouse(this GameObject go, Camera camera)
     {
         if (!camera)
         {

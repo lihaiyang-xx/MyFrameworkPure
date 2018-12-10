@@ -3,6 +3,10 @@ using System.Collections;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 单例
+    /// </summary>
+    /// <typeparam equimpentName="T"></typeparam>
     public class CSingletonMono<T> : MonoBehaviour
         where T : MonoBehaviour
     {
@@ -39,7 +43,10 @@ namespace MyFrameworkPure
                 m_sInstance = default(T);
             }
         }
-
+        /// <summary>
+        /// 单例是否有效
+        /// </summary>
+        /// <returns></returns>
         public static bool IsValid()
         {
             return (Instance != null);

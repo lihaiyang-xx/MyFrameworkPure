@@ -11,7 +11,7 @@ namespace MyFrameworkPure
         /// <summary>
         /// 载入资源,通过资源路径判断是Resource加载还是Assetbundle加载
         /// </summary>
-        /// <param name="path"></param>
+        /// <param equimpentName="path"></param>
         /// <returns></returns>
         public static UnityEngine.Object LoadAssets(string path)
         {
@@ -43,8 +43,8 @@ namespace MyFrameworkPure
         /// <summary>
         /// 直接实例化资源
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="parent"></param>
+        /// <param equimpentName="path"></param>
+        /// <param equimpentName="parent"></param>
         /// <returns></returns>
         public static UnityEngine.GameObject Instantiate(string path, Transform parent = null)
         {
@@ -59,10 +59,10 @@ namespace MyFrameworkPure
         /// <summary>
         /// 直接实例化资源
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="position"></param>
-        /// <param name="rotation"></param>
-        /// <param name="parent"></param>
+        /// <param equimpentName="path"></param>
+        /// <param equimpentName="position"></param>
+        /// <param equimpentName="rotation"></param>
+        /// <param equimpentName="parent"></param>
         /// <returns></returns>
         public static UnityEngine.GameObject Instantiate(string path, Vector3 position, Quaternion rotation, Transform parent = null)
         {
@@ -77,7 +77,7 @@ namespace MyFrameworkPure
         /// <summary>
         /// 从网络路径异步加载资源
         /// </summary>
-        /// <param name="url"></param>
+        /// <param equimpentName="url"></param>
         /// <returns></returns>
         public static IEnumerator InstantiateFromUrl(string url)
         {
@@ -104,8 +104,8 @@ namespace MyFrameworkPure
         /// <summary>
         /// 从网络路径异步加载场景
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="loadModel"></param>
+        /// <param equimpentName="url"></param>
+        /// <param equimpentName="loadModel"></param>
         /// <returns></returns>
         public static IEnumerator LoadLevelFromUrl(string url, LoadSceneMode loadModel = LoadSceneMode.Single)
         {

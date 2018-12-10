@@ -19,7 +19,7 @@ namespace MyFrameworkPure
         /// <summary>
         /// 以UTF8编码读取文件内容
         /// </summary>
-        /// <param name="path"></param>
+        /// <param equimpentName="path"></param>
         /// <returns></returns>
         public static string ReadAllText(string path)
         {
@@ -64,8 +64,8 @@ namespace MyFrameworkPure
         /// <summary>
         /// 写入文件,如果文件存在则覆盖,不存在则创建
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="contents"></param>
+        /// <param equimpentName="path"></param>
+        /// <param equimpentName="contents"></param>
         public static void WriteAllText(string path, string contents)
         {
             try
@@ -81,7 +81,7 @@ namespace MyFrameworkPure
         /// <summary>
         /// 读取贴图文件
         /// </summary>
-        /// <param name="path"></param>
+        /// <param equimpentName="path"></param>
         /// <returns></returns>
         public static Texture2D ReadTextureFromFile(string path)
         {
@@ -99,7 +99,7 @@ namespace MyFrameworkPure
         /// <summary>
         /// 获取文件编码
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param equimpentName="filename"></param>
         /// <returns></returns>
         public static Encoding GetEncoding(string filename)
         {

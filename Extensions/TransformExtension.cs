@@ -9,9 +9,9 @@ public static class TransformExtension
     /// <summary>
     /// 设置位置坐标分量
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="pivot">分量字符,x,y,z</param>
-    /// <param name="v">分量值</param>
+    /// <param equimpentName="t"></param>
+    /// <param equimpentName="pivot">分量字符,x,y,z</param>
+    /// <param equimpentName="v">分量值</param>
     public static void SetPos(this Transform t,char pivot, float v)
     {
         Vector3 pos = t.position;
@@ -36,8 +36,8 @@ public static class TransformExtension
     /// <summary>
     /// 设置X坐标位置
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="x"></param>
+    /// <param equimpentName="t"></param>
+    /// <param equimpentName="x"></param>
     public static void SetPosX(this Transform t, float x)
     {
         Vector3 v = t.position;
@@ -47,8 +47,8 @@ public static class TransformExtension
     /// <summary>
     /// 设置Y坐标位置
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="y"></param>
+    /// <param equimpentName="t"></param>
+    /// <param equimpentName="y"></param>
     public static void SetPosY(this Transform t, float y)
     {
         Vector3 v = t.position;
@@ -58,7 +58,7 @@ public static class TransformExtension
     /// <summary>
     /// 设置Z坐标位置
     /// </summary>
-    /// <param name="t"></param>
+    /// <param equimpentName="t"></param>
     /// <param name="z"></param>
     public static void SetPosZ(this Transform t, float z)
     {
@@ -70,8 +70,8 @@ public static class TransformExtension
     /// <summary>
     /// 获取第level级父物体
     /// </summary>
-    /// <param name="self"></param>
-    /// <param name="level"></param>
+    /// <param equimpentName="self"></param>
+    /// <param equimpentName="level"></param>
     /// <returns></returns>
     public static Transform GetParentByLevel(this Transform self, int level)
     {
@@ -106,9 +106,9 @@ public static class TransformExtension
     /// 若找到，返回相隔层数（临近子物体于其父物体相隔1层）
     /// outNearChild表示找到的父物体的与其相隔1层的子物体
     /// </summary>
-    /// <param name="self"></param>
-    /// <param name="parentName"></param>
-    /// <param name="NearChild"></param>
+    /// <param equimpentName="self"></param>
+    /// <param equimpentName="parentName"></param>
+    /// <param equimpentName="NearChild"></param>
     /// <returns></returns>
     public static int FindParents(this Transform self, string parentName, out Transform NearChild)
     {
@@ -131,8 +131,8 @@ public static class TransformExtension
     /// <summary>
     /// 清除所有子物体
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="immediate">是否立刻销毁</param>
+    /// <param equimpentName="t"></param>
+    /// <param equimpentName="immediate">是否立刻销毁</param>
     public static void ClearChild(this Transform t, bool immediate = false)
     {
         if (!t) return;
@@ -152,9 +152,9 @@ public static class TransformExtension
     /// <summary>
     /// 复制填充Transform参数
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="copy"></param>
-    /// <param name="isLocal"></param>
+    /// <param equimpentName="t"></param>
+    /// <param equimpentName="copy"></param>
+    /// <param equimpentName="isLocal"></param>
     public static void CopyTransform(this Transform t, Transform copy)
     {
         t.transform.localPosition = copy.transform.localPosition;
@@ -165,7 +165,7 @@ public static class TransformExtension
     /// <summary>
     /// 重置变换
     /// </summary>
-    /// <param name="t"></param>
+    /// <param equimpentName="t"></param>
     public static void Reset(this Transform t)
     {
         t.localPosition = Vector3.zero;
@@ -176,8 +176,8 @@ public static class TransformExtension
     /// <summary>
     /// 获取子变换,如果超出边界则返回空
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="index"></param>
+    /// <param equimpentName="t"></param>
+    /// <param equimpentName="index"></param>
     /// <returns></returns>
     public static Transform GetChildOrDefault(this Transform t, int index)
     {
@@ -189,15 +189,15 @@ public static class TransformExtension
     /// <summary>
     /// 递归查找子物体名称包含match的所有子物体
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="match"></param>
+    /// <param equimpentName="t"></param>
+    /// <param equimpentName="match"></param>
     /// <returns></returns>
     public static Transform[] FindByMatch(this Transform t, string match)
     {
         Transform[] childTransforms = t.GetComponentsInChildren<Transform>();
         //foreach (var child in childtransforms)
         //{
-        //    debug.log(child.name + "," + match.tolower() + ":" + child.name.tolower().contains(match.tolower()));
+        //    debug.log(child.equimpentName + "," + match.tolower() + ":" + child.equimpentName.tolower().contains(match.tolower()));
         //}
         IEnumerable<Transform> children = childTransforms.Where((x) => x.name.ToLower().Contains(match.ToLower()));
 

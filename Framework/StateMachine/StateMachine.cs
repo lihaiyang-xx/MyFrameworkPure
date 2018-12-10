@@ -53,7 +53,7 @@ public class StateMachine<T> where T : class
     /// <summary>
     /// 改变状态
     /// </summary>
-    /// <param name="newState">新状态</param>
+    /// <param equimpentName="newState">新状态</param>
     public void ChangeState(State<T> newState)
     {
         Debug.Assert(newState != null, "the new state to chanaged is null *** " + newState);

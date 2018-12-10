@@ -57,8 +57,8 @@ namespace MyFrameworkPure
         /// <summary>
         /// 对称加密与解密
         /// </summary>
-        /// <param name="encryptStr"></param>
-        /// <param name="key"></param>
+        /// <param equimpentName="encryptStr"></param>
+        /// <param equimpentName="key"></param>
         /// <returns></returns>
         public static string Encrypt(string encryptStr, string key = "aescodtuy@#p^sfd")
         {
