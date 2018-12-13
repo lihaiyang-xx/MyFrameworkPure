@@ -9,10 +9,10 @@ namespace MyFrameworkPure
         /// <summary>
         /// 三点贝塞尔曲线
         /// </summary>
-        /// <param name="p0"></param>
-        /// <param name="p1"></param>
-        /// <param name="p2"></param>
-        /// <param name="t"></param>
+        /// <param equimpentName="p0"></param>
+        /// <param equimpentName="p1"></param>
+        /// <param equimpentName="p2"></param>
+        /// <param equimpentName="t"></param>
         /// <returns></returns>
         public static Vector3 BezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, float t)
         {

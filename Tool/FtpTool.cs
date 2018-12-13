@@ -17,10 +17,10 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 连接FTP  
         /// </summary>  
-        /// <param name="FtpServerIP">FTP连接地址</param>  
-        /// <param name="FtpRemotePath">指定FTP连接成功后的当前目录, 如果不指定即默认为根目录</param>  
-        /// <param name="FtpUserID">用户名</param>  
-        /// <param name="FtpPassword">密码</param>  
+        /// <param equimpentName="FtpServerIP">FTP连接地址</param>  
+        /// <param equimpentName="FtpRemotePath">指定FTP连接成功后的当前目录, 如果不指定即默认为根目录</param>  
+        /// <param equimpentName="FtpUserID">用户名</param>  
+        /// <param equimpentName="FtpPassword">密码</param>  
         public FtpTool(string FtpServerIP, string FtpUserID, string FtpPassword)
         {
             ftpServerIP = FtpServerIP;
@@ -32,7 +32,7 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 上传  
         /// </summary>  
-        /// <param name="filename"></param>  
+        /// <param equimpentName="filename"></param>  
         public void Upload(string filename)
         {
             FileInfo fileInf = new FileInfo(filename);
@@ -69,7 +69,7 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 上传  
         /// </summary>  
-        /// <param name="filename"></param>  
+        /// <param equimpentName="filename"></param>  
         public void Upload2(string ftpuri, string filename)
         {
             FileInfo fileInf = new FileInfo(filename);
@@ -106,8 +106,8 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 下载  
         /// </summary>  
-        /// <param name="filePath"></param>  
-        /// <param name="fileName"></param>  
+        /// <param equimpentName="filePath"></param>  
+        /// <param equimpentName="fileName"></param>  
         public void Download(string filePath, string ftpUri, string fileName)
         {
             FtpWebRequest reqFTP;
@@ -147,7 +147,7 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 删除文件  
         /// </summary>  
-        /// <param name="fileName"></param>  
+        /// <param equimpentName="fileName"></param>  
         public void Delete(string fileName)
         {
             try
@@ -180,7 +180,7 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 删除文件夹  
         /// </summary>  
-        /// <param name="folderName"></param>  
+        /// <param equimpentName="folderName"></param>  
         public void RemoveDirectory(string folderName)
         {
             try
@@ -326,7 +326,7 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 判断当前目录下指定的子目录是否存在  
         /// </summary>  
-        /// <param name="RemoteDirectoryName">指定的目录名</param>  
+        /// <param equimpentName="RemoteDirectoryName">指定的目录名</param>  
         public bool DirectoryExist(string RemoteDirectoryName)
         {
             try
@@ -352,7 +352,7 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 判断当前目录下指定的文件是否存在  
         /// </summary>  
-        /// <param name="RemoteFileName">远程文件名</param>  
+        /// <param equimpentName="RemoteFileName">远程文件名</param>  
         public bool FileExist(string RemoteFileName)
         {
             string[] fileList = GetFileList("*.*");
@@ -369,13 +369,13 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 创建文件夹  
         /// </summary>  
-        /// <param name="dirName"></param>  
+        /// <param equimpentName="dirName"></param>  
         public void MakeDir(string dirName)
         {
             FtpWebRequest reqFTP;
             try
             {
-                // dirName = name of the directory to create.  
+                // dirName = equimpentName of the directory to create.  
                 reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI + dirName));
                 reqFTP.Method = WebRequestMethods.Ftp.MakeDirectory;
                 reqFTP.UseBinary = true;
@@ -395,7 +395,7 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 获取指定文件大小  
         /// </summary>  
-        /// <param name="filename"></param>  
+        /// <param equimpentName="filename"></param>  
         /// <returns></returns>  
         public long GetFileSize(string filename)
         {
@@ -424,8 +424,8 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 改名  
         /// </summary>  
-        /// <param name="currentFilename"></param>  
-        /// <param name="newFilename"></param>  
+        /// <param equimpentName="currentFilename"></param>  
+        /// <param equimpentName="newFilename"></param>  
         public void ReName(string currentFilename, string newFilename)
         {
             FtpWebRequest reqFTP;
@@ -451,8 +451,8 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 移动文件  
         /// </summary>  
-        /// <param name="currentFilename"></param>  
-        /// <param name="newFilename"></param>  
+        /// <param equimpentName="currentFilename"></param>  
+        /// <param equimpentName="newFilename"></param>  
         public void MovieFile(string currentFilename, string newDirectory)
         {
             ReName(currentFilename, newDirectory);
@@ -461,7 +461,7 @@ namespace MyFrameworkPure
         /// <summary>  
         /// 切换当前目录  
         /// </summary>  
-        /// <param name="DirectoryName"></param>  
+        /// <param equimpentName="DirectoryName"></param>  
         /// <param name="IsRoot">true 绝对路径   false 相对路径</param>  
         public void GotoDirectory(string DirectoryName, bool IsRoot)
         {

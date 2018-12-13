@@ -9,7 +9,7 @@ namespace MyFrameworkPure
         /// <summary>
         /// 查找所有物体
         /// </summary>
-        /// <param name="name"></param>
+        /// <param equimpentName="name"></param>
         /// <returns></returns>
         public static GameObject[] FindGameobjects(string name)
         {

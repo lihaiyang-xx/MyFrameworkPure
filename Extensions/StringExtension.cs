@@ -10,8 +10,8 @@ public static class StringExtension
     /// <summary>
     /// 获取字符串前缀
     /// </summary>
-    /// <param name="source">原字符串</param>
-    /// <param name="flag">前缀标识符</param>
+    /// <param equimpentName="source">原字符串</param>
+    /// <param equimpentName="flag">前缀标识符</param>
     /// <returns>前缀字符串</returns>
     public static string GetPostfix(this string source, char flag)
     {
@@ -22,9 +22,9 @@ public static class StringExtension
     /// <summary>
     /// 字符串编码转换
     /// </summary>
-    /// <param name="source">字符串</param>
-    /// <param name="srcEncoding">原始编码</param>
-    /// <param name="dstEncoding">目标编码</param>
+    /// <param equimpentName="source">字符串</param>
+    /// <param equimpentName="srcEncoding">原始编码</param>
+    /// <param equimpentName="dstEncoding">目标编码</param>
     /// <returns></returns>
     public static string EncodeConvert(this string source, Encoding srcEncoding,Encoding dstEncoding)
     {
