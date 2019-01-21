@@ -1,4 +1,7 @@
-﻿using System;
+﻿#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -177,3 +180,4 @@ public class XFTTSTool
         public int DATA_Size;
     }
 }
+#endif

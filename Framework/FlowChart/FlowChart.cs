@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 /// <summary>
 /// 流程图
 /// </summary>
@@ -8,14 +10,23 @@ public class FlowChart : IMonoUpdate
 {
 
     private readonly List<FlowNode> nodeList;//节点列表
+    [HideInInspector]
+    public int curIndex;
 
-    private int curIndex;
+    public event UnityAction<int> OnStepChanged;
+    public event UnityAction OnChartComplete;
+
 
     public FlowChart()
     {
         nodeList = new List<FlowNode>();
         curIndex = 0;
-        MonoBehaviorTool.RegisterUpdate(this);
+        MonoBehaviorTool.Instance.RegisterUpdate(this);
+    }
+
+    public int Count
+    {
+        get { return nodeList.Count; }
     }
 
     /// <summary>
@@ -24,12 +35,7 @@ public class FlowChart : IMonoUpdate
     public void Start()
     {
         curIndex = 0;
-        if (curIndex < nodeList.Count)
-            nodeList[curIndex].Enter();
-        else
-        {
-            Debug.Log("图中没有任何节点");
-        }
+        ExecuteStep(curIndex);
     }
 
     /// <summary>
@@ -37,29 +43,51 @@ public class FlowChart : IMonoUpdate
     /// </summary>
     public void ExecuteNext()
     {
-        curIndex++;
-        if (curIndex < nodeList.Count)
-            nodeList[curIndex].Enter();
-        else
-        {
-            Debug.Log("图中没有后续节点");
-        }
+        ExecuteStep(curIndex+1);
+    }
+
+    public void ExecutePrevious()
+    {
+        ExecuteStep(curIndex-1);
     }
 
     public void ExecuteStep(int step)
     {
-        curIndex = step;
-        if (curIndex < nodeList.Count)
+        if (step < 0 || step > nodeList.Count)
         {
-            nodeList[curIndex].Enter();
-            curIndex = 0;
+            return;
         }
-
+        else if(step == nodeList.Count)
+        {
+            Debug.Log("流程结束!");
+            if (OnChartComplete != null) OnChartComplete();
+        }
         else
         {
-            Debug.Log("结点不存在：" + step);
+            int i = curIndex;
+            int j = curIndex;
+            while (i >= step)//往前跳步
+            {
+                nodeList[i].Reset();
+                i--;
+            }
+            while (j < step)//往后跳步
+            {
+                nodeList[j].Complete();
+                j++;
+            }
+            curIndex = step;
+            //nodeList[curIndex].Reset();
+            nodeList[curIndex].Enter();
+            if (OnStepChanged != null) OnStepChanged(curIndex);
         }
     }
+
+    //public void ExecuteStep(float process)
+    //{
+    //    int step = (int)(process * nodeList.Count);
+    //    ExecuteStep(step);
+    //}
 
     /// <summary>
     /// 将节点添加到节点列表中
@@ -75,7 +103,7 @@ public class FlowChart : IMonoUpdate
     public void Clear()
     {
         nodeList.Clear();
-        MonoBehaviorTool.UnRegisterUpdate(this);
+        MonoBehaviorTool.Instance.UnRegisterUpdate(this);
     }
 
     /// <summary>

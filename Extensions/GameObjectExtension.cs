@@ -81,4 +81,27 @@ public static class GameObjectExtension
         }
         return false;
     }
+
+    public static Bounds GetBounds(this GameObject go)
+    {
+        Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
+        MeshRenderer[] renderers = go.GetComponentsInChildren<MeshRenderer>();
+        renderers.ForEach((x) =>
+        {
+            if (bounds.size == Vector3.zero)
+            {
+                bounds = x.bounds;
+            }
+            bounds.Encapsulate(x.bounds);
+        });
+        return bounds;
+    }
+
+    public static T GetOrAddCompoent<T>(this GameObject go) where T : Component
+    {
+        T t = go.GetComponent<T>();
+        if (!t)
+            t = go.AddComponent<T>();
+        return t;
+    }
 }

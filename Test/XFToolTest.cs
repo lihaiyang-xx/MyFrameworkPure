@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class XFToolTest : MonoBehaviour {
-
-	// Use this for initialization
-	void Start ()
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+    // Use this for initialization
+    void Start ()
 	{
 	    XFTTSTool.Login();
 	    XFTTSTool.TextToSpeech("您好", Application.dataPath + "/test.wav");
@@ -16,4 +16,5 @@ public class XFToolTest : MonoBehaviour {
 	void Update () {
 		
 	}
+#endif
 }

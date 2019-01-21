@@ -1,14 +1,17 @@
-﻿using System;
+﻿#if UNITY_EDITOR ||  UNITY_STANDALONE
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Text;
 using ExcelDataReader;
+using MyFrameworkPure;
 using UnityEngine;
 
 public class ExcelTool
 {
-    public static string[,] GetExcelData(string path,string sheetName = "sheet1")
+    public static string[,] GetExcelData(string path, string sheetName = "sheet1")
     {
         using (var stream = File.Open(path, FileMode.Open, FileAccess.Read))
         {
@@ -18,7 +21,7 @@ public class ExcelTool
                 DataTable table = result.Tables[sheetName];
                 int row = table.Rows.Count;
                 int colmon = table.Columns.Count;
-                string[,] data = new string[row,colmon];
+                string[,] data = new string[row, colmon];
                 for (int i = 0; i < row; i++)
                 {
                     for (int j = 0; j < colmon; j++)
@@ -33,4 +36,6 @@ public class ExcelTool
         }
     }
 }
+#endif
+
 

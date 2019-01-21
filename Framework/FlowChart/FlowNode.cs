@@ -29,6 +29,16 @@ public abstract class FlowNode
         Chart.ExecuteNext();//流程图调用下一步
     }
 
+    public virtual void Reset()
+    {
+
+    }
+
+    public virtual void Complete()
+    {
+
+    }
+
     public virtual string GetTip()
     {
         return "";

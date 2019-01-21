@@ -44,6 +44,11 @@ namespace MyFrameworkPure
             return text;
         }
 
+        public static void ReadTextFromUrl(string url, Encoding encoding,Action<string> action)
+        {
+            CoroutineTool.DoCoroutine(AsyncReadAllText(url, encoding, action));
+        }
+
         public static IEnumerator AsyncReadAllText(string path, Encoding encoding, Action<string> action)
         {
             using (WWW www = new WWW(path))
@@ -52,7 +57,7 @@ namespace MyFrameworkPure
                 if (string.IsNullOrEmpty(www.error))
                 {
                     string text = encoding.GetString(www.bytes);
-                    action(text);
+                    if (action != null) action(text);
                 }
                 else
                 {
@@ -78,6 +83,30 @@ namespace MyFrameworkPure
             }
         }
 
+        public static void ReadTextureFromUrl(string url, Action<Texture2D> action)
+        {
+            CoroutineTool.DoCoroutine(AsyncReadTextureFromUrl(url, action));
+        }
+
+        public static IEnumerator AsyncReadTextureFromUrl(string url, Action<Texture2D> action)
+        {
+            Debug.Log(url);
+            using (WWW www = new WWW(url))
+            {
+                yield return www;
+                if (string.IsNullOrEmpty(www.error))
+                {
+                    Texture2D texture = new Texture2D(0, 0);
+                    texture.LoadImage(www.bytes);
+                    if (action != null) action(texture);
+                }
+                else
+                {
+                    Debug.LogError(www.error);
+                }
+            }
+        }
+
         /// <summary>
         /// 读取贴图文件
         /// </summary>
@@ -94,6 +123,27 @@ namespace MyFrameworkPure
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
             return texture;
+        }
+
+        public static void ReadAudioFromUrl(string url, Action<AudioClip> action)
+        {
+            CoroutineTool.DoCoroutine(AsyncReadAudioFromUrl(url, action));
+        }
+
+        public static IEnumerator AsyncReadAudioFromUrl(string url,Action<AudioClip> action)
+        {
+            using (WWW www = new WWW(url))
+            {
+                yield return www;
+                if (string.IsNullOrEmpty(www.error))
+                {
+                    if (action != null) action(www.GetAudioClip(false));
+                }
+                else
+                {
+                    Debug.LogError(www.error);
+                }
+            }
         }
 
         /// <summary>

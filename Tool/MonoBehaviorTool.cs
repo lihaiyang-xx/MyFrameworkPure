@@ -1,47 +1,51 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MyFrameworkPure;
 using UnityEngine;
+using UnityEngine.Events;
 
 public interface IMonoUpdate
 {
     void MonoUpdate();
 }
 
-public class MonoBehaviorTool : MonoBehaviour
+public class MonoBehaviorTool : CSingletonMono<MonoBehaviorTool>
 {
-    private static MonoBehaviorTool monoBehaviorTool;
+    private  List<IMonoUpdate> monoUpdateList;
 
-    private static List<IMonoUpdate> monoUpdateList;
+    private  event UnityAction UpdateCall;
 
-    /// <summary>
-    /// 静态构造函数
-    /// </summary>
-    static MonoBehaviorTool()
+    void Awake()
     {
-        if (!monoBehaviorTool)
-        {
-            GameObject go = new GameObject("MonoBehaviorTool");
-            monoBehaviorTool = go.AddComponent<MonoBehaviorTool>();
-
-            monoUpdateList = new List<IMonoUpdate>();
-        }
+        monoUpdateList = new List<IMonoUpdate>();
     }
 
     /// <summary>
     /// 注册更新
     /// </summary>
     /// <param equimpentName="monoUpdate"></param>
-    public static void RegisterUpdate(IMonoUpdate monoUpdate)
+    public void RegisterUpdate(IMonoUpdate monoUpdate)
     {
         monoUpdateList.Add(monoUpdate);
     }
+
+    public void RegisterUpdate(UnityAction callback)
+    {
+        UpdateCall += callback;
+    }
+    
     /// <summary>
     /// 取消注册更新
     /// </summary>
     /// <param equimpentName="monoUpdate"></param>
-    public static void UnRegisterUpdate(IMonoUpdate monoUpdate)
+    public void UnRegisterUpdate(IMonoUpdate monoUpdate)
     {
         monoUpdateList.Remove(monoUpdate);
+    }
+
+    public void UnRegisterUpdate(UnityAction callback)
+    {
+        UpdateCall -= callback;
     }
 
 
@@ -51,12 +55,15 @@ public class MonoBehaviorTool : MonoBehaviour
         {
             monoUpdate.MonoUpdate();
         }
+
+        if (UpdateCall != null)
+            UpdateCall();
     }
 
     void OnDestroy()
     {
         monoUpdateList.Clear();
         monoUpdateList = null;
-        monoBehaviorTool = null;
+        UpdateCall = null;
     }
 }

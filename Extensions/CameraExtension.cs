@@ -12,5 +12,7 @@ public static class CameraExtension
         var hFov = Mathf.Rad2Deg * radHfov;
         return (float)hFov;
     }
+
+   
 }
 

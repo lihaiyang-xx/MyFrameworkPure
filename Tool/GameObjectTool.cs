@@ -24,6 +24,15 @@ namespace MyFrameworkPure
             }
             return goList.ToArray();
         }
+
+        //public static GameObject FindPath(string path)
+        //{
+        //    GameObject.Find()
+        //    int index = path.IndexOf('/');
+        //    string root = 
+        //    string[] splits = path.Split('/');
+
+        //}
     }
 }
 

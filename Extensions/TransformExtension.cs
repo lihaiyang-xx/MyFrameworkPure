@@ -44,6 +44,13 @@ public static class TransformExtension
         v.x = x;
         t.position = v;
     }
+
+    public static void SetLocalPosX(this Transform t, float x)
+    {
+        Vector3 v = t.localPosition;
+        v.x = x;
+        t.localPosition = v;
+    }
     /// <summary>
     /// 设置Y坐标位置
     /// </summary>
@@ -54,6 +61,12 @@ public static class TransformExtension
         Vector3 v = t.position;
         v.y = y;
         t.position = v;
+    }
+    public static void SetLocalPosY(this Transform t, float y)
+    {
+        Vector3 v = t.localPosition;
+        v.y = y;
+        t.localPosition = v;
     }
     /// <summary>
     /// 设置Z坐标位置
@@ -66,6 +79,36 @@ public static class TransformExtension
         v.z = z;
         t.position = v;
     }
+
+    public static void SetLocalPosZ(this Transform t, float z)
+    {
+        Vector3 v = t.localPosition;
+        v.z = z;
+        t.localPosition = v;
+    }
+
+    public static void SetLocalScaleX(this Transform t, float x)
+    {
+        Vector3 v = t.localScale;
+        v.x = x;
+        t.localScale = v;
+    }
+
+    public static void SetLocalScaleY(this Transform t, float y)
+    {
+        Vector3 v = t.localScale;
+        v.y = y;
+        t.localScale = v;
+    }
+
+    public static void SetLocalScaleZ(this Transform t, float z)
+    {
+        Vector3 v = t.localScale;
+        v.z = z;
+        t.localScale = v;
+    }
+
+
 
     /// <summary>
     /// 获取第level级父物体
@@ -202,5 +245,16 @@ public static class TransformExtension
         IEnumerable<Transform> children = childTransforms.Where((x) => x.name.ToLower().Contains(match.ToLower()));
 
         return children as Transform[] ?? children.ToArray();
+    }
+
+    public static Transform[] GetChildren(this Transform t)
+    {
+        Transform[] children = new Transform[t.childCount];
+        for (int i = 0; i < t.childCount; i++)
+        {
+            children[i] = t.GetChild(i);
+        }
+
+        return children;
     }
 }

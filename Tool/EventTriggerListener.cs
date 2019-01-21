@@ -21,6 +21,7 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     public VoidDelegate onDrag;
     public VoidDelegate onSelect;
     public VoidDelegate onUpdateSelect;
+    public VoidDelegate onEndDrag;
 
     public delegate void DataDelegate(GameObject go, PointerEventData e);
     public DataDelegate onClick_Data;
@@ -66,6 +67,12 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
         if (onDrag != null) onDrag(gameObject);
         if (onDrag_Data != null) onDrag_Data(gameObject, eventData);
     }
+
+    public override void OnEndDrag(PointerEventData eventData)
+    {
+        if (onEndDrag != null) onEndDrag(gameObject);
+    }
+    
     public override void OnUpdateSelected(BaseEventData eventData)
     {
         if (onUpdateSelect != null) onUpdateSelect(gameObject);
