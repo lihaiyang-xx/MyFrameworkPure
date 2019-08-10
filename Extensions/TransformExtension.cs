@@ -51,11 +51,6 @@ public static class TransformExtension
         v.x = x;
         t.localPosition = v;
     }
-    /// <summary>
-    /// 设置Y坐标位置
-    /// </summary>
-    /// <param equimpentName="t"></param>
-    /// <param equimpentName="y"></param>
     public static void SetPosY(this Transform t, float y)
     {
         Vector3 v = t.position;
@@ -68,11 +63,6 @@ public static class TransformExtension
         v.y = y;
         t.localPosition = v;
     }
-    /// <summary>
-    /// 设置Z坐标位置
-    /// </summary>
-    /// <param equimpentName="t"></param>
-    /// <param name="z"></param>
     public static void SetPosZ(this Transform t, float z)
     {
         Vector3 v = t.position;
@@ -108,6 +98,42 @@ public static class TransformExtension
         t.localScale = v;
     }
 
+    public static void SetEulerX(this Transform t,float x)
+    {
+        Vector3 v = t.eulerAngles;
+        v.x = x;
+        t.eulerAngles = v;
+    }
+    public static void SetEulerY(this Transform t, float y)
+    {
+        Vector3 v = t.eulerAngles;
+        v.y = y;
+        t.eulerAngles = v;
+    }
+    public static void SetEulerZ(this Transform t, float z)
+    {
+        Vector3 v = t.eulerAngles;
+        v.z = z;
+        t.eulerAngles = v;
+    }
+    public static void SetLocalEulerX(this Transform t, float x)
+    {
+        Vector3 v = t.localEulerAngles;
+        v.x = x;
+        t.localEulerAngles = v;
+    }
+    public static void SetLocalEulerY(this Transform t, float y)
+    {
+        Vector3 v = t.localEulerAngles;
+        v.y = y;
+        t.localEulerAngles = v;
+    }
+    public static void SetLocalEulerZ(this Transform t, float z)
+    {
+        Vector3 v = t.localEulerAngles;
+        v.z = z;
+        t.localEulerAngles = v;
+    }
 
 
     /// <summary>
@@ -237,7 +263,11 @@ public static class TransformExtension
     /// <returns></returns>
     public static Transform[] FindByMatch(this Transform t, string match)
     {
-        Transform[] childTransforms = t.GetComponentsInChildren<Transform>(true);
+        Transform[] childTransforms = t.GetComponentsInChildren<Transform>();
+        //foreach (var child in childtransforms)
+        //{
+        //    debug.log(child.equimpentName + "," + match.tolower() + ":" + child.equimpentName.tolower().contains(match.tolower()));
+        //}
         IEnumerable<Transform> children = childTransforms.Where((x) => x.name.ToLower().Contains(match.ToLower()));
 
         return children as Transform[] ?? children.ToArray();
@@ -246,7 +276,7 @@ public static class TransformExtension
     public static Transform FindFirst(this Transform t,string name)
     {
         Transform[] childTransforms = t.GetComponentsInChildren<Transform>(true);
-        return childTransforms.FirstOrDefault(x => x.name == name);
+        return childTransforms.FirstOrDefault((x) => x.name == name);
     }
 
     public static Transform FindName(this Transform t, string name)

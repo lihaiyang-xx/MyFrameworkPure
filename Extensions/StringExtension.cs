@@ -40,4 +40,16 @@ public static class StringExtension
         Regex regex = new Regex("[^0-9]");
         return !regex.IsMatch(s);
     }
+
+    public static int[] ConvertToInts(this string s, char splitChar=',')
+    {
+        string[] splits = s.Split(splitChar);
+        int[] result = new int[splits.Length];
+        for (int i = 0; i < splits.Length; i++)
+        {
+            result[i] = int.Parse(splits[i]);
+        }
+
+        return result;
+    }
 }
