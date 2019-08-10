@@ -40,7 +40,8 @@ public class MonoBehaviorTool : CSingletonMono<MonoBehaviorTool>
     /// <param equimpentName="monoUpdate"></param>
     public void UnRegisterUpdate(IMonoUpdate monoUpdate)
     {
-        monoUpdateList.Remove(monoUpdate);
+        if(monoUpdateList.Contains(monoUpdate))
+            monoUpdateList.Remove(monoUpdate);
     }
 
     public void UnRegisterUpdate(UnityAction callback)
@@ -51,8 +52,9 @@ public class MonoBehaviorTool : CSingletonMono<MonoBehaviorTool>
 
     void Update()
     {
-        foreach (var monoUpdate in monoUpdateList)
+        for (int i = 0; i < monoUpdateList.Count; i++)
         {
+            IMonoUpdate monoUpdate = monoUpdateList[i];
             monoUpdate.MonoUpdate();
         }
 

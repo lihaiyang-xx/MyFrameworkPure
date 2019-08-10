@@ -7,6 +7,17 @@ using UnityEngine;
 public abstract class FlowNode
 {
     public FlowChart Chart { get; set; }//流程图
+    public string Name { get;private set; }
+
+    public FlowNode(string name)
+    {
+        Name = name;
+    }
+
+    public FlowNode()
+    {
+
+    }
     /// <summary>
     /// 进入执行
     /// </summary>
@@ -36,7 +47,7 @@ public abstract class FlowNode
 
     public virtual void Complete()
     {
-
+        
     }
 
     public virtual string GetTip()

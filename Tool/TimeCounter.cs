@@ -8,7 +8,7 @@ public class TimeCounter : MonoBehaviour
     private float counter;
     private float duration;
     private UnityAction updateCall;
-    private UnityAction endCall;
+    public  UnityAction endCall;
 
     public static TimeCounter CreateTimeCounter(float duration,UnityAction updateCall,UnityAction endCall)
     {
@@ -48,5 +48,42 @@ public class TimeCounter : MonoBehaviour
     public void Stop()
     {
         Destroy(gameObject);
+    }
+}
+
+public class TimeCounterSqueue
+{
+    public UnityAction onComplete;
+    private Queue<TimeCounter> queue = new Queue<TimeCounter>();
+    public void Add(params TimeCounter[] timeCounters)
+    {
+        foreach (var timeCounter in timeCounters)
+        {
+            timeCounter.gameObject.SetActive(false);
+            timeCounter.endCall += ExecuteNext;
+            queue.Enqueue(timeCounter);
+        }
+    }
+
+    public void Start()
+    {
+        ExecuteNext();
+    }
+
+    void ExecuteNext()
+    {
+        if (queue.Count == 0)
+        {
+            if (onComplete != null)
+                onComplete();
+            return;
+        }
+        TimeCounter timeCounter = queue.Dequeue();
+        timeCounter.gameObject.SetActive(true);
+    }
+
+    public static void StopAll()
+    {
+        TimeCounter.StopAll();
     }
 }

@@ -82,6 +82,11 @@ public static class GameObjectExtension
         return false;
     }
 
+    public static bool IsOnMouseDown(this GameObject go, Camera camera)
+    {
+        return Input.GetMouseButton(0) && go.IsOnMouse(camera);
+    }
+
     public static Bounds GetBounds(this GameObject go)
     {
         Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);

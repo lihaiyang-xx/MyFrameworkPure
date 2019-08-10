@@ -132,6 +132,7 @@ namespace MyFrameworkPure
 
         public static IEnumerator AsyncReadAudioFromUrl(string url,Action<AudioClip> action)
         {
+            Debug.Log(url);
             using (WWW www = new WWW(url))
             {
                 yield return www;

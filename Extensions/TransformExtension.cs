@@ -237,14 +237,22 @@ public static class TransformExtension
     /// <returns></returns>
     public static Transform[] FindByMatch(this Transform t, string match)
     {
-        Transform[] childTransforms = t.GetComponentsInChildren<Transform>();
-        //foreach (var child in childtransforms)
-        //{
-        //    debug.log(child.equimpentName + "," + match.tolower() + ":" + child.equimpentName.tolower().contains(match.tolower()));
-        //}
+        Transform[] childTransforms = t.GetComponentsInChildren<Transform>(true);
         IEnumerable<Transform> children = childTransforms.Where((x) => x.name.ToLower().Contains(match.ToLower()));
 
         return children as Transform[] ?? children.ToArray();
+    }
+
+    public static Transform FindFirst(this Transform t,string name)
+    {
+        Transform[] childTransforms = t.GetComponentsInChildren<Transform>(true);
+        return childTransforms.FirstOrDefault(x => x.name == name);
+    }
+
+    public static Transform FindName(this Transform t, string name)
+    {
+        Transform[] childTransforms = t.GetComponentsInChildren<Transform>(true);
+        return childTransforms.FirstOrDefault((x) => x.name.ToLower().Contains(name.ToLower()));
     }
 
     public static Transform[] GetChildren(this Transform t)
@@ -256,5 +264,17 @@ public static class TransformExtension
         }
 
         return children;
+    }
+
+    public static string GetHierarchyPath(this Transform t)
+    {
+        string str = t.name;
+        while (t.parent)
+        {
+            str = str.Insert(0, t.parent.name + "/");
+            t = t.parent;
+        }
+
+        return str;
     }
 }

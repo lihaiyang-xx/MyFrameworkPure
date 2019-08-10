@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace MyFrameworkPure
@@ -17,7 +20,7 @@ namespace MyFrameworkPure
             Transform[] trs = Object.FindObjectsOfType<Transform>();
             foreach (Transform tr in trs)
             {
-                if (tr.name == name)
+                if (tr.GetHierarchyPath() == name)
                 {
                     goList.Add(tr.gameObject);
                 }
@@ -25,14 +28,18 @@ namespace MyFrameworkPure
             return goList.ToArray();
         }
 
-        //public static GameObject FindPath(string path)
-        //{
-        //    GameObject.Find()
-        //    int index = path.IndexOf('/');
-        //    string root = 
-        //    string[] splits = path.Split('/');
-
-        //}
+        /// <summary>
+        /// 查找物体（包括非激活状态）
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static GameObject FindGameObject(string name)
+        {
+            Transform[] trs = Resources.FindObjectsOfTypeAll<Transform>();
+            Transform tr = trs.FirstOrDefault(x => Regex.IsMatch(x.GetHierarchyPath(),string.Format(@"^(.+/)*{0}$", name)));
+            
+            return tr ? tr.gameObject : null;
+        }
     }
 }
 

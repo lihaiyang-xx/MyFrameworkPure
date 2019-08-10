@@ -24,6 +24,21 @@ namespace MyFrameworkPure
 
             return byteList.ToArray();
         }
+
+        public static T[] GetRandomArray<T>(T[] array,int length)
+        {
+            if (array.Length < length)
+                return null;
+            List<T> temp = new List<T>(array);
+            T[] finalArray = new T[length];
+            for(int i = 0;i< finalArray.Length;i++)
+            {
+                int randomValue = Random.Range(0, temp.Count);
+                finalArray[i] = temp[randomValue];
+                temp.RemoveAt(randomValue);
+            }
+            return finalArray;
+        }
     }
 }
 

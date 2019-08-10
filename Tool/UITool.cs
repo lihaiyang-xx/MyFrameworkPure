@@ -47,6 +47,29 @@ public class UITool
         }
     }
 
+
+    public static void OnFillamount(GameObject go, float duration, UnityAction onComplete)
+    {
+        var fill = go.GetComponent<Image>();
+        if (!fill) return;
+        fill.fillAmount = 0;
+        fill.DOFillAmount(1, duration).onComplete += () =>
+        {
+            if (onComplete != null) onComplete();
+        };
+    }
+
+    public static void OutFillamount(GameObject go, float duration, UnityAction onComplete)
+    {
+        var fill = go.GetComponent<Image>();
+        if (!fill) return;
+        fill.fillAmount = 1;
+        fill.DOFillAmount(0, duration).onComplete += () =>
+        {
+            if (onComplete != null) onComplete();
+        };
+    }
+
     public static void FadeOut(GameObject go, float duration, UnityAction onComplete)
     {
         CanvasGroup canvasGroup = go.GetComponent<CanvasGroup>();
@@ -65,10 +88,10 @@ public class UITool
         if (!canvasGroup)
             canvasGroup = go.AddComponent<CanvasGroup>();
         canvasGroup.alpha = 0;
-        canvasGroup.DOFade(1, 1).onComplete+=(() =>
-        {
-            if (onComplete != null) onComplete();
-        });
+        canvasGroup.DOFade(1, 1).onComplete += (() =>
+          {
+              if (onComplete != null) onComplete();
+          });
     }
 
     public static void ScaleOut(GameObject go, float duration, UnityAction onComplete)
@@ -167,7 +190,7 @@ public class UITool
         return results.Count != 0;
     }
 
-    public static void SetInteractable(GameObject uiGameObject,bool interactable)
+    public static void SetInteractable(GameObject uiGameObject, bool interactable)
     {
         if (uiGameObject.GetComponent<RectTransform>() == null)
         {
@@ -176,6 +199,6 @@ public class UITool
         }
 
         Selectable[] selectables = uiGameObject.GetComponentsInChildren<Selectable>();
-        selectables.ForEach(x=>x.interactable = interactable);
+        selectables.ForEach(x => x.interactable = interactable);
     }
 }
