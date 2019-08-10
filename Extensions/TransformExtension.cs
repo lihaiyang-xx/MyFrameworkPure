@@ -159,7 +159,7 @@ public static class TransformExtension
     /// <summary>
     /// 搜索子物体组件
     /// </summary>
-    public static T Get<T>(this Transform t, string subnode) where T : Component
+    public static T GetCompoentFromChild<T>(this Transform t, string subnode) where T : Component
     {
         if (t != null)
         {
@@ -256,7 +256,7 @@ public static class TransformExtension
     }
 
     /// <summary>
-    /// 递归查找子物体名称包含match的所有子物体
+    /// 递归查找子物体名称包含match的所有子物体,忽略大小写
     /// </summary>
     /// <param equimpentName="t"></param>
     /// <param equimpentName="match"></param>
@@ -264,21 +264,29 @@ public static class TransformExtension
     public static Transform[] FindByMatch(this Transform t, string match)
     {
         Transform[] childTransforms = t.GetComponentsInChildren<Transform>();
-        //foreach (var child in childtransforms)
-        //{
-        //    debug.log(child.equimpentName + "," + match.tolower() + ":" + child.equimpentName.tolower().contains(match.tolower()));
-        //}
         IEnumerable<Transform> children = childTransforms.Where((x) => x.name.ToLower().Contains(match.ToLower()));
 
         return children as Transform[] ?? children.ToArray();
     }
 
+    /// <summary>
+    /// 查找第一个名称为name的子物体,大小写敏感
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public static Transform FindFirst(this Transform t,string name)
     {
         Transform[] childTransforms = t.GetComponentsInChildren<Transform>(true);
         return childTransforms.FirstOrDefault((x) => x.name == name);
     }
 
+    /// <summary>
+    /// 查找第一个名称为name的子物体,忽略大小写
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public static Transform FindName(this Transform t, string name)
     {
         Transform[] childTransforms = t.GetComponentsInChildren<Transform>(true);
