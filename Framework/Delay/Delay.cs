@@ -185,9 +185,9 @@ public class FadeinoutDelay : Delay
         }
     }
 
-    public FadeinoutDelay(string _text)
+    public FadeinoutDelay(string _text,GameObject go)
     {
-        fadeObj = SceneObjectManager.Instance.fadeinout;
+        fadeObj = go;
         text = _text;
     }
 
