@@ -217,4 +217,16 @@ public class UITool
         Selectable[] selectables = uiGameObject.GetComponentsInChildren<Selectable>();
         selectables.ForEach(x => x.interactable = interactable);
     }
+
+    public static int[] GetActiveToggleIndex(Toggle[] toggles)
+    {
+        List<int> list = new List<int>();
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            if(toggles[i].isOn)
+                list.Add(i);
+        }
+
+        return list.ToArray();
+    }
 }
