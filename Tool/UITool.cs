@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
@@ -190,6 +191,21 @@ public class UITool
         return results.Count != 0;
     }
 
+    public static GameObject GetUiFromMousePosition(string name)
+    {
+        if (EventSystem.current == null) return null;
+
+        Vector2 inputDevPos = Input.mousePosition;
+
+        PointerEventData eventDataCurrentPosition =
+            new PointerEventData(EventSystem.current) { position = new Vector2(inputDevPos.x, inputDevPos.y) };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        RaycastResult result = results.FirstOrDefault(x => x.gameObject.name == name);
+        return result.gameObject;
+
+    }
     public static void SetInteractable(GameObject uiGameObject, bool interactable)
     {
         if (uiGameObject.GetComponent<RectTransform>() == null)
@@ -200,5 +216,17 @@ public class UITool
 
         Selectable[] selectables = uiGameObject.GetComponentsInChildren<Selectable>();
         selectables.ForEach(x => x.interactable = interactable);
+    }
+
+    public static int[] GetActiveToggleIndex(Toggle[] toggles)
+    {
+        List<int> list = new List<int>();
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            if(toggles[i].isOn)
+                list.Add(i);
+        }
+
+        return list.ToArray();
     }
 }

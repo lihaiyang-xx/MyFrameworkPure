@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MyFrameworkPure
@@ -38,6 +39,12 @@ namespace MyFrameworkPure
                 temp.RemoveAt(randomValue);
             }
             return finalArray;
+        }
+
+        public static bool EqualArray<T>(T[] first, T[] second)
+        {
+            return first.SequenceEqual(second);
+
         }
     }
 }

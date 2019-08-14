@@ -73,6 +73,17 @@ public class TimeDelay : Delay
         counter += Time.deltaTime;
         return counter >= duration;
     }
+
+    public void Stop()
+    {
+        Active = false;
+        MonoBehaviorTool.Instance.UnRegisterUpdate(this);
+    }
+
+    public static TimeDelay Delay(float _duration, UnityAction _endCall)
+    {
+        return new TimeDelay(_duration,null,_endCall);
+    }
 }
 
 public class ConditionDelay:Delay
@@ -185,9 +196,9 @@ public class FadeinoutDelay : Delay
         }
     }
 
-    public FadeinoutDelay(string _text)
+    public FadeinoutDelay(string _text,GameObject go)
     {
-        fadeObj = SceneObjectManager.Instance.fadeinout;
+        fadeObj = go;
         text = _text;
     }
 
