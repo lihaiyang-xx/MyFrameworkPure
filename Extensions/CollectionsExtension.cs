@@ -22,6 +22,15 @@ public static class CollectionsExtension
         }
     }
 
+    public static void For<T>(this T[] array, UnityAction<T, int> callback)
+    {
+        for (int i = 0; i < array.Count(); i++)
+        {
+            if (callback != null)
+                callback(array[i], i);
+        }
+    }
+
     public static void Destroy<T>(this IEnumerable<T> ienumerable) where T:Object
     {
         foreach (var i in ienumerable)

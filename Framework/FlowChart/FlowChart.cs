@@ -53,6 +53,23 @@ public class FlowChart : IMonoUpdate
         ExecuteStep(curIndex-1);
     }
 
+    public void ExecuteStep(string name)
+    {
+        int step = nodeList.IndexOf(nodeList.Find(x => x.Name == name));
+        if (step == -1)
+        {
+            Debug.Log(name + "节点不存在!");
+            return;
+        }
+        ExecuteStep(step);
+    }
+
+    public string IndexToName(int step)
+    {
+        //int index = nodeList[step].Name.IndexOf("@");
+        //return index < 0 ? nodeList[step].Name : nodeList[step].Name.Remove(index);
+        return nodeList[step].Name;
+    }
     public void ExecuteStep(int step)
     {
         if (step < 0 || step > nodeList.Count)
@@ -62,6 +79,7 @@ public class FlowChart : IMonoUpdate
         else if(step == nodeList.Count)
         {
             Debug.Log("流程结束!");
+            nodeList[step -1].Complete();
             if (OnChartComplete != null) OnChartComplete();
         }
         else
@@ -79,8 +97,9 @@ public class FlowChart : IMonoUpdate
                 j++;
             }
             curIndex = step;
-            if (OnStepChanged != null) OnStepChanged(curIndex);
+            
             nodeList[curIndex].Enter();
+            if (OnStepChanged != null) OnStepChanged(curIndex);
         }
     }
 
