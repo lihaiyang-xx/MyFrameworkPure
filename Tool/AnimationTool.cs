@@ -7,6 +7,10 @@ public class AnimationTool
 {
     public static void PlayForward(Animation animation, string clipName,UnityAction onComplete = null)
     {
+        if (string.IsNullOrEmpty(clipName))
+        {
+            clipName = animation.clip.name;
+        }
         animation[clipName].speed = 1;
         animation[clipName].normalizedTime = 0;
         animation.Play();
@@ -19,6 +23,10 @@ public class AnimationTool
     }
     public static void PlayBack(Animation animation, string clipName, UnityAction onComplete = null)
     {
+        if (string.IsNullOrEmpty(clipName))
+        {
+            clipName = animation.clip.name;
+        }
         animation[clipName].speed = -1;
         animation[clipName].normalizedTime = 1;
         animation.Play();
