@@ -175,22 +175,22 @@ public class FadeinoutDelay : Delay
 
         set
         {
-            DOTweenAnimation tweenAni = fadeObj.GetComponent<DOTweenAnimation>();
-
             if (value)
             {
                 fadeObj.GetComponentInChildren<UnityEngine.UI.Text>().text = text;
-                tweenAni.DORestart();
-                fadeObj.transform.GetChild(0).GetComponent<DOTweenAnimation>().DORestart();
-                tweenAni.onComplete.RemoveAllListeners();
-                tweenAni.onComplete.AddListener(() => {
-                    if (endCall != null) endCall();
+                CanvasGroup canvasGroup = fadeObj.GetComponent<CanvasGroup>();
+                DOTween.Kill(canvasGroup);
+                canvasGroup.alpha = 0;
+                canvasGroup.DOFade(1, 1.5f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutQuad).OnComplete(() =>
+                {
+                    if (endCall != null)
+                        endCall();
                 });
             }
             else
             {
-                tweenAni.DOPause();
-                fadeObj.transform.GetChild(0).GetComponent<DOTweenAnimation>().DOPause();
+                CanvasGroup canvasGroup = fadeObj.GetComponent<CanvasGroup>();
+                DOTween.Kill(canvasGroup);
             }
             base.Active = value;
         }
