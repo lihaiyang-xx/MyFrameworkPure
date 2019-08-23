@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
@@ -29,6 +30,11 @@ public static class CollectionsExtension
             if (callback != null)
                 callback(array[i], i);
         }
+    }
+
+    public static T Random<T>(this T[] array)
+    {
+        return array[UnityEngine.Random.Range(0, array.Length)];
     }
 
     public static void Destroy<T>(this IEnumerable<T> ienumerable) where T:Object
