@@ -35,9 +35,8 @@ public abstract class FlowNode
     /// </summary>
     public virtual void Exit()
     {
-        Debug.Assert(Chart != null, "Chart cant be null!");
-        // ReSharper disable once PossibleNullReferenceException
-        Chart.ExecuteNext();//流程图调用下一步
+        if(Chart != null)
+            Chart.ExecuteNext();//流程图调用下一步
     }
 
     public virtual void Reset()
