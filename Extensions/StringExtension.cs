@@ -52,4 +52,15 @@ public static class StringExtension
 
         return result;
     }
+
+    public static bool Contains(this string s, string[] strs)
+    {
+        foreach (var str in strs)
+        {
+            if (s.Contains(str))
+                return true;
+        }
+
+        return false;
+    }
 }
