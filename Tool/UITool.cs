@@ -229,4 +229,9 @@ public class UITool
 
         return list.ToArray();
     }
+
+    public static void SimulateClick(GameObject go)
+    {
+        ExecuteEvents.Execute<IPointerClickHandler>(go, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
+    }
 }
