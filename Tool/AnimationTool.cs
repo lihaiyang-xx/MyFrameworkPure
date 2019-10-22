@@ -13,7 +13,7 @@ public class AnimationTool
         }
         animation[clipName].speed = 1;
         animation[clipName].normalizedTime = 0;
-        animation.Play();
+        animation.Play(clipName);
 
         TimeDelay.Delay(animation[clipName].length, () =>
         {
@@ -29,7 +29,7 @@ public class AnimationTool
         }
         animation[clipName].speed = -1;
         animation[clipName].normalizedTime = 1;
-        animation.Play();
+        animation.Play(clipName);
 
         TimeDelay.Delay(animation[clipName].length, () =>
         {
