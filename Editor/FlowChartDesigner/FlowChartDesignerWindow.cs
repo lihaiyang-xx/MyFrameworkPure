@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class LogicDesignerWindow : EditorWindow
+public class FlowchartDesignerWindow : EditorWindow
 {
     private Vector2 mActionScrollPosition;
     private Vector2 mActionSize = new Vector2(300,800);
@@ -11,8 +11,8 @@ public class LogicDesignerWindow : EditorWindow
     private Vector2 mLogicScrollPosition;
     private Vector2 mLogicAreaOffset;
 
-    private Rect mLogicRect = new Rect(300,20,0,0);
-    private Rect mLogicScrollRect = new Rect(0,0,30000,30000);
+    private Rect mChartRect = new Rect(300,20,0,0);
+    private Rect mChartScrollRect = new Rect(0,0,30000,30000);
 
     private float mSearchFieldWidth = 300;
     private float mWindowWidth;//窗体宽度
@@ -24,11 +24,11 @@ public class LogicDesignerWindow : EditorWindow
 
     private Material mGridMaterial;
 
-    [MenuItem("Tools/Logic Designer Editor _F1")]
+    [MenuItem("Tools/FlowChart Designer Editor _F1")]
     static void OpenLogicDesignerWindow()
     {
-        LogicDesignerWindow window = EditorWindow.GetWindow<LogicDesignerWindow>();
-        window.titleContent = new GUIContent("Logic Designer Window");
+        FlowchartDesignerWindow window = EditorWindow.GetWindow<FlowchartDesignerWindow>();
+        window.titleContent = new GUIContent("FlowChart Designer");
         window.Show();
     }
 
@@ -54,13 +54,13 @@ public class LogicDesignerWindow : EditorWindow
         GUILayout.EndScrollView();
         GUILayout.EndVertical();
 
-        mLogicRect.width = mWindowWidth-mActionSize.x;
-        mLogicRect.height = mWindowHeight-mLogicRect.y;
-        Debug.Log(mLogicRect);
-        mLogicScrollPosition = GUI.BeginScrollView(mLogicRect, mLogicScrollPosition,mLogicScrollRect,true,true);
+        mChartRect.width = mWindowWidth-mActionSize.x;
+        mChartRect.height = mWindowHeight-mChartRect.y;
+        Debug.Log(mChartRect);
+        mLogicScrollPosition = GUI.BeginScrollView(mChartRect, mLogicScrollPosition,mChartScrollRect,true,true);
 
         GUI.EndScrollView();
-        mLogicAreaOffset = mLogicScrollPosition - mLogicRect.size * 0.5f;
+        mLogicAreaOffset = mLogicScrollPosition - mChartRect.size * 0.5f;
         DrawGrid();
     }
 
@@ -86,23 +86,23 @@ public class LogicDesignerWindow : EditorWindow
     //绘制线条
     private void DrawGridLines(float gridSize, Vector2 offset)
     {
-        float num = mLogicRect.x + offset.x;
+        float num = mChartRect.x + offset.x;
         if (offset.x < 0f)
         {
             num += gridSize;
         }
-        for (float num2 = num; num2 < mLogicRect.x + mLogicRect.width; num2 += gridSize)
+        for (float num2 = num; num2 < mChartRect.x + mChartRect.width; num2 += gridSize)
         {
-            this.DrawLine(new Vector2(num2, mLogicRect.y), new Vector2(num2, mLogicRect.y + mLogicRect.height));
+            this.DrawLine(new Vector2(num2, mChartRect.y), new Vector2(num2, mChartRect.y + mChartRect.height));
         }
-        float num3 = mLogicRect.y + offset.y;
+        float num3 = mChartRect.y + offset.y;
         if (offset.y < 0f)
         {
             num3 += gridSize;
         }
-        for (float num4 = num3; num4 < mLogicRect.y + mLogicRect.height; num4 += gridSize)
+        for (float num4 = num3; num4 < mChartRect.y + mChartRect.height; num4 += gridSize)
         {
-            this.DrawLine(new Vector2(mLogicRect.x, num4), new Vector2(mLogicRect.x + mLogicRect.width, num4));
+            this.DrawLine(new Vector2(mChartRect.x, num4), new Vector2(mChartRect.x + mChartRect.width, num4));
         }
     }
 
