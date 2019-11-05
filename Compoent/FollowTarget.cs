@@ -11,12 +11,19 @@ public class FollowTarget : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        transform.position = target.position;
+        if(target)
+            transform.position = target.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
+    }
+
+    public Transform Target
+    {
+        get => target;
+        set => target = value;
     }
 }

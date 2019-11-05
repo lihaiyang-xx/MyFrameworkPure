@@ -12,7 +12,7 @@ public class LookAtTarget : MonoBehaviour
 {
     [SerializeField] private Transform target;
 
-    [SerializeField] private bool keepHorizonta;
+    [SerializeField] private bool keepHorizontal;
 
     [SerializeField] private FacePivot facePivot;
     // Start is called before the first frame update
@@ -25,7 +25,7 @@ public class LookAtTarget : MonoBehaviour
     void Update()
     {
         Vector3 dir = target.position - transform.position;
-        if (keepHorizonta)
+        if (keepHorizontal)
             dir.y = 0;
         if (dir == Vector3.zero)
             return;
@@ -39,5 +39,23 @@ public class LookAtTarget : MonoBehaviour
                 transform.forward = -dir;
                 break;
         }
+    }
+
+    public Transform Target
+    {
+        get => target;
+        set => target = value;
+    }
+
+    public bool KeepHorizontal
+    {
+        get => keepHorizontal;
+        set => keepHorizontal = value;
+    }
+
+    public FacePivot ForwardPivot
+    {
+        get => facePivot;
+        set => facePivot = value;
     }
 }
