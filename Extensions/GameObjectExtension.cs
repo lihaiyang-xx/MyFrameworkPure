@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 /// <summary>
 /// 游戏对象扩展类
@@ -108,5 +110,34 @@ public static class GameObjectExtension
         if (!t)
             t = go.AddComponent<T>();
         return t;
+    }
+
+    public static Material[] GetMaterialsInChildren(this GameObject go,bool includeInactive = false)
+    {
+        List<Material> matlist = new List<Material>();
+        MeshRenderer[] renderers = go.GetComponentsInChildren<MeshRenderer>(false);
+        renderers.ForEach(x =>
+        {
+            matlist.AddRange(Application.isPlaying? x.materials:x.sharedMaterials);
+        });
+        return matlist.ToArray();
+    }
+
+    public static Material[] GetMaterialsInChildren(this GameObject go,Predicate<Material> predicate, bool includeInactive = false)
+    {
+        List<Material> matlist = new List<Material>();
+        MeshRenderer[] renderers = go.GetComponentsInChildren<MeshRenderer>(includeInactive);
+        renderers.ForEach(x =>
+        {
+            Material[] mats = Application.isPlaying ? x.materials : x.sharedMaterials;
+            mats.ForEach(m =>
+            {
+                if (predicate != null && predicate(m))
+                {
+                    matlist.Add(m);
+                }
+            });
+        });
+        return matlist.ToArray();
     }
 }
