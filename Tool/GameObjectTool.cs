@@ -40,6 +40,17 @@ namespace MyFrameworkPure
             
             return tr ? tr.gameObject : null;
         }
+
+        public static T FindObjectOfType<T>() where  T:Component
+        {
+            T[] trs = Resources.FindObjectsOfTypeAll<T>();
+            return trs != null && trs.Length != 0 ? trs[0] : null;
+        }
+
+        public static T[] FindObjectsOfType<T>() where T : Component
+        {
+            return Resources.FindObjectsOfTypeAll<T>();
+        }
     }
 }
 

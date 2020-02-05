@@ -1,54 +1,53 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// ReSharper disable All
 
 namespace MyFrameworkPure
 {
-    public enum Message
-    {
-
-    }
-
     public static class MessageTool
     {
         public delegate void Handler(params object[] args);
 
-        public static void Listen(Message message, Handler action)
+        public static void Listen(Enum message, Handler action)
         {
-            var actions = Listeners[message] as Handler;
-            if (actions != null)
+            int messageId = message.GetHashCode();
+            if (Listeners[messageId] is Handler actions)
             {
-                Listeners[message] = actions + action;
+                Listeners[messageId] = actions + action;
             }
             else
             {
-                Listeners[message] = action;
+                Listeners[messageId] = action;
             }
         }
 
-        public static void Remove(Message message, Handler action)
+        public static void Remove(Enum message, Handler action)
         {
-            var actions = Listeners[message] as Handler;
-            if (actions != null)
+            int messageId = message.GetHashCode();
+
+            if (Listeners[messageId] is Handler actions)
             {
-                Listeners[message] = actions - action;
+                Listeners[messageId] = actions - action;
             }
         }
 
-        public static void Clean(Message message)
+        public static void Clean(Enum message)
         {
-            var actions = Listeners[message] as Handler;
-            if (actions != null)
+            int messageId = message.GetHashCode();
+
+            if (Listeners[messageId] is Handler actions)
             {
-                Listeners[message] = null;
+                Listeners[messageId] = null;
             }
         }
 
-        public static void Send(Message message, params object[] args)
+        public static void Send(Enum message, params object[] args)
         {
-            Debug.Log("广播消息：" + message);
-            var actions = Listeners[message] as Handler;
-            if (actions != null)
+            int messageId = message.GetHashCode();
+
+            if (Listeners[messageId] is Handler actions)
             {
                 actions(args);
             }
