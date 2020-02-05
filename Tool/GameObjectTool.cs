@@ -40,7 +40,26 @@ namespace MyFrameworkPure
             
             return tr ? tr.gameObject : null;
         }
+		
+		/// <summary>
+        /// 查找物体(要求根物体处于激活状态)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static GameObject FindGameObjectQuick(string name)
+        {
+            int index = name.IndexOf('/');
+            string rootName = name.Substring(0, index);
 
+            GameObject rootGameObject = GameObject.Find(rootName);
+            if (!rootGameObject)
+                return null;
+            Transform target = rootGameObject.transform.Find(name.Substring(index + 1));
+            if (target)
+                return target.gameObject;
+            else
+                return null;
+        }
         public static T FindObjectOfType<T>() where  T:Component
         {
             T[] trs = Resources.FindObjectsOfTypeAll<T>();
@@ -50,7 +69,6 @@ namespace MyFrameworkPure
         public static T[] FindObjectsOfType<T>() where T : Component
         {
             return Resources.FindObjectsOfTypeAll<T>();
-        }
-    }
+        }    }
 }
 

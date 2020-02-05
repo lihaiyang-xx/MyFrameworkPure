@@ -8,6 +8,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
@@ -23,11 +24,15 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     public VoidDelegate onUpdateSelect;
     public VoidDelegate onEndDrag;
 
+    public UnityAction onPressed;
+
     public delegate void DataDelegate(GameObject go, PointerEventData e);
     public DataDelegate onClick_Data;
     public DataDelegate onDown_Data;
     public DataDelegate onUp_Data;
     public DataDelegate onDrag_Data;
+
+    private bool pressed;
 
     static public EventTriggerListener Get(GameObject go)
     {
@@ -44,7 +49,10 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     {
         if (onDown != null) onDown(gameObject);
         if (onDown_Data != null) onDown_Data(gameObject, eventData);
+
+        pressed = true;
     }
+
     public override void OnPointerEnter(PointerEventData eventData)
     {
         if (onEnter != null) onEnter(gameObject);
@@ -57,6 +65,8 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     {
         if (onUp != null) onUp(gameObject);
         if (onUp_Data != null) onUp_Data(gameObject, eventData);
+
+        pressed = false;
     }
     public override void OnSelect(BaseEventData eventData)
     {
@@ -76,5 +86,11 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     public override void OnUpdateSelected(BaseEventData eventData)
     {
         if (onUpdateSelect != null) onUpdateSelect(gameObject);
+    }
+
+    void Update()
+    {
+        if(pressed)
+            onPressed?.Invoke();
     }
 }
