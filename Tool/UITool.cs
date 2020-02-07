@@ -191,6 +191,11 @@ public class UITool
         return results.Count != 0;
     }
 
+    /// <summary>
+    /// 获取鼠标位置的ui物体
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public static GameObject GetUiFromMousePosition(string name)
     {
         if (EventSystem.current == null) return null;
@@ -206,6 +211,12 @@ public class UITool
         return result.gameObject;
 
     }
+
+    /// <summary>
+    /// 设置ui的交互状态,包括子物体
+    /// </summary>
+    /// <param name="uiGameObject"></param>
+    /// <param name="interactable"></param>
     public static void SetInteractable(GameObject uiGameObject, bool interactable)
     {
         if (uiGameObject.GetComponent<RectTransform>() == null)
@@ -218,6 +229,11 @@ public class UITool
         selectables.ForEach(x => x.interactable = interactable);
     }
 
+    /// <summary>
+    /// 获取激活toggle的索引
+    /// </summary>
+    /// <param name="toggles"></param>
+    /// <returns></returns>
     public static int[] GetActiveToggleIndex(Toggle[] toggles)
     {
         List<int> list = new List<int>();
@@ -230,8 +246,82 @@ public class UITool
         return list.ToArray();
     }
 
+    /// <summary>
+    /// 模拟鼠标点击ui
+    /// </summary>
+    /// <param name="go"></param>
     public static void SimulateClick(GameObject go)
     {
         ExecuteEvents.Execute<IPointerClickHandler>(go, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
+    }
+
+    /// <summary>
+    /// 绑定滑动条和文本输入框
+    /// </summary>
+    /// <param name="scrollbar"></param>
+    /// <param name="inputField"></param>
+    /// <param name="minValue"></param>
+    /// <param name="maxValue"></param>
+    public static void Bind(Scrollbar scrollbar, InputField inputField, float minValue, float maxValue)
+    {
+        inputField.contentType = InputField.ContentType.DecimalNumber;
+        inputField.onEndEdit.AddListener(s =>
+        {
+            bool success = float.TryParse(s, out float result);
+            if (!success)
+            {
+                MessageBox.Show("数值类型输入不合法!",()=>inputField.text = Mathf.Lerp(minValue, maxValue, scrollbar.value).ToString("F2"));
+                return;
+            }
+
+            if (result < minValue || result > maxValue)
+            {
+                MessageBox.Show("数值范围输入不合法!", () => inputField.text = Mathf.Lerp(minValue, maxValue, scrollbar.value).ToString("F2"));
+                return;
+            }
+            scrollbar.value = (result - minValue) / (maxValue - minValue);
+        });
+
+        scrollbar.numberOfSteps = 0;
+        scrollbar.onValueChanged.AddListener(v => inputField.text = Mathf.Lerp(minValue, maxValue, v).ToString("F2"));
+        scrollbar.onValueChanged.Invoke(scrollbar.value);
+    }
+
+    /// <summary>
+    /// 绑定滑动条和文本输入框
+    /// </summary>
+    /// <param name="scrollbar"></param>
+    /// <param name="inputField"></param>
+    /// <param name="minValue"></param>
+    /// <param name="maxValue"></param>
+    public static void Bind(Scrollbar scrollbar, InputField inputField, int minValue, int maxValue)
+    {
+        inputField.contentType = InputField.ContentType.IntegerNumber;
+        inputField.onEndEdit.AddListener(s =>
+        {
+            bool success = int.TryParse(s, out int result);
+            if (!success)
+            {
+                MessageBox.Show("数值类型输入不合法!", () => inputField.text = Mathf.RoundToInt(Mathf.Lerp(minValue, maxValue, scrollbar.value)).ToString("G"));
+                return;
+            }
+
+            if (result < minValue || result > maxValue)
+            {
+                MessageBox.Show("数值范围输入不合法!", () => inputField.text = Mathf.RoundToInt(Mathf.Lerp(minValue, maxValue, scrollbar.value)).ToString("G"));
+                return;
+            }
+
+            scrollbar.value = (result - minValue) * 1.0f / (maxValue - minValue);
+        });
+        scrollbar.numberOfSteps = maxValue - minValue;
+        scrollbar.onValueChanged.AddListener(v => inputField.text = Mathf.RoundToInt(Mathf.Lerp(minValue, maxValue, v)).ToString("G"));
+        scrollbar.onValueChanged.Invoke(scrollbar.value);
+    }
+
+    public static void Bind(Toggle toggle, Selectable selectable)
+    {
+        toggle.onValueChanged.AddListener(v=>selectable.interactable = v);
+        toggle.onValueChanged.Invoke(toggle.isOn);
     }
 }

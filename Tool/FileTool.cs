@@ -166,6 +166,12 @@ namespace MyFrameworkPure
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
             return Encoding.ASCII;
         }
+
+        public static void Rename(string fileName, string newFileName)
+        {
+            FileInfo fi = new FileInfo(fileName);
+            fi.MoveTo(newFileName);
+        }
     }
 
 }
