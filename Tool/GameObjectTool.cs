@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace MyFrameworkPure
 {
@@ -69,6 +71,22 @@ namespace MyFrameworkPure
         public static T[] FindObjectsOfType<T>() where T : Component
         {
             return Resources.FindObjectsOfTypeAll<T>();
-        }    }
+        }
+
+        private static Dictionary<Type, Component> cacheDictionary;
+
+        public static T FindTypeWithCache<T>() where T : Component
+        {
+            if (cacheDictionary == null)
+                cacheDictionary = new Dictionary<Type, Component>();
+            Type t = typeof(T);
+            if (cacheDictionary.ContainsKey(t))
+            {
+                return cacheDictionary[t] as T;
+            }
+
+            return GameObjectTool.FindObjectOfType<T>();
+        }
+    }
 }
 
