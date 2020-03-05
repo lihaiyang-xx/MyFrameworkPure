@@ -304,6 +304,19 @@ public static class TransformExtension
         return children;
     }
 
+    public static Transform[] GetActiveChildren(this Transform t)
+    {
+        List<Transform> list = new List<Transform>();
+        for (int i = 0; i < t.childCount; i++)
+        {
+            Transform child = t.GetChild(i);
+            if(child.gameObject.activeSelf)
+                list.Add(child);
+        }
+
+        return list.ToArray();
+    }
+
     public static string GetHierarchyPath(this Transform t)
     {
         string str = t.name;

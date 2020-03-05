@@ -87,6 +87,11 @@ namespace MyFrameworkPure
 
             return GameObjectTool.FindObjectOfType<T>();
         }
+
+        public static void ClearFindCache()
+        {
+            cacheDictionary.Clear();
+        }
     }
 }
 
