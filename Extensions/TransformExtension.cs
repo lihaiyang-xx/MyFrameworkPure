@@ -304,6 +304,30 @@ public static class TransformExtension
         return children;
     }
 
+    /// <summary>
+    /// 获取符合条件的子变换
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    public static Transform[] GetChildren(this Transform t, Predicate<Transform> predicate)
+    {
+        List<Transform> list = new List<Transform>();
+        for (int i = 0; i < t.childCount; i++)
+        {
+            Transform child = t.GetChild(i);
+            if (predicate != null && predicate(child))
+                list.Add(child);
+        }
+        return list.ToArray();
+    }
+
+    /// <summary>
+    /// 获取激活的子变换
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    [Obsolete("请用 GetChildren(this Transform t, Predicate<Transform> predicate) 替换")]
     public static Transform[] GetActiveChildren(this Transform t)
     {
         List<Transform> list = new List<Transform>();

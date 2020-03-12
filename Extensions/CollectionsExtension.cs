@@ -73,6 +73,13 @@ public static class CollectionsExtension
         return newArray;
     }
 
+    public static T[] Remove<T>(this T[] array, T element)
+    {
+        var list = array.ToList();
+        list.Remove(element);
+        return list.ToArray();
+    }
+
     /// <summary>
     /// 数组是否为null或长度为0
     /// </summary>

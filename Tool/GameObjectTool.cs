@@ -62,6 +62,12 @@ namespace MyFrameworkPure
             else
                 return null;
         }
+
+        /// <summary>
+        /// 查找类型组件,包括激活和非激活组件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static T FindObjectOfType<T>() where  T:Component
         {
             T[] trs = Resources.FindObjectsOfTypeAll<T>();

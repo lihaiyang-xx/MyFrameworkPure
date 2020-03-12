@@ -36,6 +36,19 @@ public class CatmullRom
         return splinePoints;
     }
 
+    public Vector3[] ControlPoints => controlPoints;
+
+    public float GetDistance()
+    {
+        float distance = 0;
+        for (int i = 1; i < splinePoints.Length; i++)
+        {
+            distance += Vector3.Distance(splinePoints[i].position, splinePoints[i - 1].position);
+        }
+
+        return distance;
+    }
+
     public CatmullRom(Transform[] controlPoints, int resolution, bool closedLoop)
     {
         //if (controlPoints == null || controlPoints.Length <= 2 || resolution < 2)

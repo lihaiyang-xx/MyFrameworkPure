@@ -1,15 +1,11 @@
-﻿/*
-	功能描述：
-	
-	时间：
-	
-	作者：李海洋
-*/
-
-using MyFrameworkPure;
+﻿using MyFrameworkPure;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+
+/// <summary>
+/// 右键菜单
+/// </summary>
 public class RightMenu : MonoBehaviour
 {
 
