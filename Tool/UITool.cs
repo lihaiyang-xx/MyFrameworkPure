@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -286,7 +287,30 @@ public class UITool
         scrollbar.onValueChanged.AddListener(v => inputField.text = Mathf.Lerp(minValue, maxValue, v).ToString("F2"));
         scrollbar.onValueChanged.Invoke(scrollbar.value);
     }
+    public static void Bind(Scrollbar scrollbar, TMP_InputField inputField, float minValue, float maxValue)
+    {
+        inputField.contentType = TMP_InputField.ContentType.DecimalNumber;
+        inputField.onEndEdit.AddListener(s =>
+        {
+            bool success = float.TryParse(s, out float result);
+            if (!success)
+            {
+                MessageBox.Show("数值类型输入不合法!", () => inputField.text = Mathf.Lerp(minValue, maxValue, scrollbar.value).ToString("F2"));
+                return;
+            }
 
+            if (result < minValue || result > maxValue)
+            {
+                MessageBox.Show("数值范围输入不合法!", () => inputField.text = Mathf.Lerp(minValue, maxValue, scrollbar.value).ToString("F2"));
+                return;
+            }
+            scrollbar.value = (result - minValue) / (maxValue - minValue);
+        });
+
+        scrollbar.numberOfSteps = 0;
+        scrollbar.onValueChanged.AddListener(v => inputField.text = Mathf.Lerp(minValue, maxValue, v).ToString("F2"));
+        scrollbar.onValueChanged.Invoke(scrollbar.value);
+    }
     /// <summary>
     /// 绑定滑动条和文本输入框
     /// </summary>
@@ -297,6 +321,31 @@ public class UITool
     public static void Bind(Scrollbar scrollbar, InputField inputField, int minValue, int maxValue)
     {
         inputField.contentType = InputField.ContentType.IntegerNumber;
+        inputField.onEndEdit.AddListener(s =>
+        {
+            bool success = int.TryParse(s, out int result);
+            if (!success)
+            {
+                MessageBox.Show("数值类型输入不合法!", () => inputField.text = Mathf.RoundToInt(Mathf.Lerp(minValue, maxValue, scrollbar.value)).ToString("G"));
+                return;
+            }
+
+            if (result < minValue || result > maxValue)
+            {
+                MessageBox.Show("数值范围输入不合法!", () => inputField.text = Mathf.RoundToInt(Mathf.Lerp(minValue, maxValue, scrollbar.value)).ToString("G"));
+                return;
+            }
+
+            scrollbar.value = (result - minValue) * 1.0f / (maxValue - minValue);
+        });
+        scrollbar.numberOfSteps = maxValue - minValue;
+        scrollbar.onValueChanged.AddListener(v => inputField.text = Mathf.RoundToInt(Mathf.Lerp(minValue, maxValue, v)).ToString("G"));
+        scrollbar.onValueChanged.Invoke(scrollbar.value);
+    }
+
+    public static void Bind(Scrollbar scrollbar, TMP_InputField inputField, int minValue, int maxValue)
+    {
+        inputField.contentType = TMP_InputField.ContentType.IntegerNumber;
         inputField.onEndEdit.AddListener(s =>
         {
             bool success = int.TryParse(s, out int result);
