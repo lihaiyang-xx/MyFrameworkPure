@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if DoTween
 public class DelayTest : MonoBehaviour {
+
     public DG.Tweening.DOTweenAnimation ani;
+
     public UnityEngine.UI.Button btn;
 
     private int click = 0;
@@ -24,3 +27,4 @@ public class DelayTest : MonoBehaviour {
 		
 	}
 }
+#endif

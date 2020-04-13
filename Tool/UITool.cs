@@ -2,7 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
+#if DoTween
 using DG.Tweening;
+#endif
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,7 +18,7 @@ using Random = UnityEngine.Random;
 public class UITool
 {
     #region UI Animation
-
+#if DoTween
     public static void AnimationOut(GameObject go, float duration, UnityAction onComplete)
     {
         int random = Random.Range(0, 3);
@@ -48,7 +52,6 @@ public class UITool
                 break;
         }
     }
-
 
     public static void OnFillamount(GameObject go, float duration, UnityAction onComplete)
     {
@@ -171,7 +174,8 @@ public class UITool
         };
 
     }
-    #endregion
+#endif
+#endregion
 
     /// <summary>
     /// 判断鼠标是否在UI界面上

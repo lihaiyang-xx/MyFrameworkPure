@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+#if DoTween
 using DG.Tweening;
+#endif
 
 public abstract class Delay : IMonoUpdate
 {
@@ -117,6 +119,7 @@ public class ConditionDelay:Delay
     }
 }
 
+#if DoTween
 public class DotweenDelay : Delay
 {
     private DOTweenAnimation tweenAni;
@@ -159,7 +162,9 @@ public class DotweenDelay : Delay
         
     }
 }
+#endif
 
+#if DoTween
 public class FadeinoutDelay : Delay
 {
     private string text;
@@ -212,6 +217,7 @@ public class FadeinoutDelay : Delay
         
     }
 }
+#endif
 
 public class DelaySqueue
 {
