@@ -41,11 +41,16 @@ public static class CollectionsExtension
     /// 获取数组中的随机元素
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="array"></param>
+    /// <param name="iList"></param>
     /// <returns></returns>
-    public static T Random<T>(this T[] array)
+    //public static T Random<T>(this T[] array)
+    //{
+    //    return array[UnityEngine.Random.Range(0, array.Length)];
+    //}
+
+    public static T Random<T>(this IList<T> iList)
     {
-        return array[UnityEngine.Random.Range(0, array.Length)];
+        return iList[UnityEngine.Random.Range(0, iList.Count)];
     }
 
     public static T[] Add<T>(this T[] array,T element)
@@ -96,5 +101,13 @@ public static class CollectionsExtension
             Object.Destroy(i);
         }
     }
-	
+
+    public static void DestroyImmediate<T>(this IEnumerable<T> ienumerable) where T : Object
+    {
+        foreach (var i in ienumerable)
+        {
+            Object.DestroyImmediate(i);
+        }
+    }
+
 }

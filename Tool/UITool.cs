@@ -17,7 +17,7 @@ using Random = UnityEngine.Random;
 
 public class UITool
 {
-    #region UI Animation
+#region UI Animation
 #if DoTween
     public static void AnimationOut(GameObject go, float duration, UnityAction onComplete)
     {
