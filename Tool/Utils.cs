@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Utils
+namespace MyFrameworkPure
 {
-    public static string GenerateUID()
+    public static class Utils
     {
-       return Guid.NewGuid().ToString("N");
-    }
+        public static string GenerateUID()
+        {
+            return Guid.NewGuid().ToString("N");
+        }
 
+    }
 }

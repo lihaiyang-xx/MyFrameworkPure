@@ -67,7 +67,8 @@ public class RandomGeneratorWindow : EditorWindow
                 float randomX = Random.Range(-halfSideLength, halfSideLength);
                 float randomZ = Random.Range(-halfSideLength, halfSideLength);
                 GameObject prefab = prefabList.Random();
-                GameObject instance = PrefabUtility.InstantiatePrefab(prefab, buildingRoot) as GameObject;
+                GameObject instance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+                instance.transform.SetParent(buildingRoot);
                 instance.transform.position = new Vector3(randomX, 0, randomZ);
                 instance.transform.eulerAngles = new Vector3(0, Random.value * 360, 0);
                 instance.transform.localScale *= Random.Range(minScale, maxScale);

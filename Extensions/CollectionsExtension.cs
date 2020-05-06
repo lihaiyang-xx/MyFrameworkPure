@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
@@ -108,6 +109,25 @@ public static class CollectionsExtension
         {
             Object.DestroyImmediate(i);
         }
+    }
+
+    /// <summary>
+    /// 拼接集合,以字符串输出
+    /// </summary>
+    /// <param name="iEnumerable"></param>
+    /// <param name="jointChar"></param>
+    /// <returns></returns>
+    public static string Joint(this IEnumerable iEnumerable,char jointChar)
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (var i in iEnumerable)
+        {
+            if (sb.Length != 0)
+                sb.Append(jointChar);
+            sb.Append(i);
+        }
+
+        return sb.ToString();
     }
 
 }

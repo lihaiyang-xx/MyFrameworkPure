@@ -297,6 +297,40 @@ public static class TransformExtension
         return childTransforms.FirstOrDefault((x) => x.name.ToLower().Contains(name.ToLower()));
     }
 
+    /// <summary>
+    /// 获取符合条件的第一个子物体
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    public static Transform GetChild(this Transform t, Predicate<Transform> predicate)
+    {
+        foreach (Transform child in t)
+        {
+            if (predicate(child))
+                return child;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// 获取第一个符合条件的索引
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    public static int GetChildIndex(this Transform t, Predicate<Transform> predicate)
+    {
+        for (int i = 0; i < t.childCount; i++)
+        {
+            if (predicate(t.GetChild(i)))
+                return i;
+        }
+
+        return -1;
+    }
+
     public static Transform[] GetChildren(this Transform t)
     {
         Transform[] children = new Transform[t.childCount];
@@ -355,5 +389,13 @@ public static class TransformExtension
         }
 
         return str;
+    }
+
+    public static void TravesalChild(this Transform t,UnityAction<Transform> action)
+    {
+        foreach (Transform child in t)
+        {
+            action(child);
+        }
     }
 }
