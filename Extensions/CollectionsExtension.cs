@@ -87,11 +87,11 @@ public static class CollectionsExtension
     /// <summary>
     /// 数组是否为null或长度为0
     /// </summary>
-    /// <param name="array"></param>
+    /// <param name="list"></param>
     /// <returns></returns>
-    public static bool IsNullOrEmpty(this Array array)
+    public static bool IsNullOrEmpty(this IList list)
     {
-        return array == null || array.Length == 0;
+        return list == null || list.Count == 0;
     }
 
     public static void Destroy<T>(this IEnumerable<T> ienumerable) where T:Object

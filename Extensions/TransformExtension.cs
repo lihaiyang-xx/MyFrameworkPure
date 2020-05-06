@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public static class TransformExtension
 {
@@ -202,18 +203,21 @@ public static class TransformExtension
     /// </summary>
     /// <param equimpentName="t"></param>
     /// <param equimpentName="immediate">是否立刻销毁</param>
-    public static void ClearChild(this Transform t, bool immediate = false)
+    public static void ClearChild(this Transform t, bool immediate = false,Predicate<Transform> exclude = null)
     {
         if (!t) return;
         for (int i = t.childCount - 1; i >= 0; i--)
         {
+            Transform child = t.GetChild(i);
+            if (exclude != null && exclude.Invoke(child))
+                continue;
             if (immediate)
             {
-                UnityEngine.Object.DestroyImmediate(t.GetChild(i).gameObject);
+                UnityEngine.Object.DestroyImmediate(child.gameObject);
             }
             else
             {
-                UnityEngine.Object.Destroy(t.GetChild(i).gameObject);
+                UnityEngine.Object.Destroy(child.gameObject);
             }
         }
     }
