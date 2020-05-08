@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
 public class PrefabLightmapData : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class PrefabLightmapData : MonoBehaviour
 	RendererInfo[]	m_RendererInfo;
 	[SerializeField]
 	Texture2D[] 	m_Lightmaps;
+
+    void Awake()
+    {
+        LoadLightMap();
+    }
 
 	public void LoadLightMap ()
 	{
@@ -83,11 +89,12 @@ public class PrefabLightmapData : MonoBehaviour
 			instance.m_RendererInfo = rendererInfos.ToArray();
 			instance.m_Lightmaps = lightmaps.ToArray();
 
-			var targetPrefab = UnityEditor.PrefabUtility.GetPrefabParent(gameObject) as GameObject;
+			var targetPrefab = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(gameObject) as GameObject;
 			if (targetPrefab != null)
 			{
 				//UnityEditor.Prefab
-				UnityEditor.PrefabUtility.ReplacePrefab(gameObject, targetPrefab);
+				//UnityEditor.PrefabUtility.SaveAsPrefabAsset(gameObject, AssetDatabase.GetAssetPath(targetPrefab));
+                PrefabUtility.ApplyPrefabInstance(gameObject,InteractionMode.AutomatedAction);
 			}
 		}
 	}
