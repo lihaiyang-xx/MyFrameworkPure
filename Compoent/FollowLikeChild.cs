@@ -21,12 +21,15 @@ public class FollowLikeChild : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(Target == null)
+        if(target == null)
             return;
         transform.position = target.TransformPoint(relativePos);
         transform.rotation = relativeRot * target.rotation;
     }
 
+    /// <summary>
+    /// 目标变换
+    /// </summary>
     public Transform Target
     {
         get => target;

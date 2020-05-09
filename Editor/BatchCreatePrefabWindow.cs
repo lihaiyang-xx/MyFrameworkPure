@@ -5,6 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// 批量生成预设窗口
+/// </summary>
 public class BatchCreatePrefabWindow : EditorWindow
 {
     [MenuItem("Tools/批量生成Prefab")]

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 物体旋转
+/// </summary>
 public class Rotator : MonoBehaviour
 {
     [SerializeField] private float speed;

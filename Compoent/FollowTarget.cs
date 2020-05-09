@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// 跟随目标
+/// </summary>
 public class FollowTarget : MonoBehaviour
 {
     [SerializeField] private Transform target;

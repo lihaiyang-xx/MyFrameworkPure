@@ -7,7 +7,9 @@ public enum FacePivot
     PositiveZ,
     NegativeZ
 }
-
+/// <summary>
+/// 控制物体朝向目标
+/// </summary>
 public class LookAtTarget : MonoBehaviour
 {
     [SerializeField] private Transform target;
@@ -41,18 +43,27 @@ public class LookAtTarget : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 目标变换
+    /// </summary>
     public Transform Target
     {
         get => target;
         set => target = value;
     }
 
+    /// <summary>
+    /// 物体是否保持水平
+    /// </summary>
     public bool KeepHorizontal
     {
         get => keepHorizontal;
         set => keepHorizontal = value;
     }
 
+    /// <summary>
+    /// 物体正朝向轴
+    /// </summary>
     public FacePivot ForwardPivot
     {
         get => facePivot;

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+/// <summary>
+/// 粒子缩放窗口
+/// </summary>
 public class ParticleScaleWindow : EditorWindow
 {
     private GameObject particleGO;
     private float scaleFactor = 1;
-    [MenuItem("Tools/ScaleParticleWindow")]
+    [MenuItem("Tools/粒子缩放窗口")]
     static void InitWindow()
     {
         ParticleScaleWindow window = GetWindow<ParticleScaleWindow>();

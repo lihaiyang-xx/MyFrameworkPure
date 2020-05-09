@@ -8,6 +8,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
 
+/// <summary>
+/// 集合类拓展
+/// </summary>
 public static class CollectionsExtension
 {
     /// <summary>
@@ -44,11 +47,6 @@ public static class CollectionsExtension
     /// <typeparam name="T"></typeparam>
     /// <param name="iList"></param>
     /// <returns></returns>
-    //public static T Random<T>(this T[] array)
-    //{
-    //    return array[UnityEngine.Random.Range(0, array.Length)];
-    //}
-
     public static T Random<T>(this IList<T> iList)
     {
         return iList[UnityEngine.Random.Range(0, iList.Count)];
@@ -117,7 +115,7 @@ public static class CollectionsExtension
     /// <param name="iEnumerable"></param>
     /// <param name="jointChar"></param>
     /// <returns></returns>
-    public static string Joint(this IEnumerable iEnumerable,char jointChar)
+    public static string JointToString(this IEnumerable iEnumerable,char jointChar)
     {
         StringBuilder sb = new StringBuilder();
         foreach (var i in iEnumerable)
