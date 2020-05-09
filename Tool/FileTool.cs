@@ -83,12 +83,12 @@ namespace MyFrameworkPure
             }
         }
 
-        public static void ReadTextureFromUrl(string url, Action<Texture2D> action)
+        public static void ReadTextureFromUrl(string url, Action<Texture2D> action,Action<string> onError = null)
         {
-            CoroutineTool.DoCoroutine(AsyncReadTextureFromUrl(url, action));
+            CoroutineTool.DoCoroutine(AsyncReadTextureFromUrl(url, action,onError));
         }
 
-        public static IEnumerator AsyncReadTextureFromUrl(string url, Action<Texture2D> action)
+        public static IEnumerator AsyncReadTextureFromUrl(string url, Action<Texture2D> action,Action<string> onError = null)
         {
             Debug.Log(url);
             using (WWW www = new WWW(url))
@@ -102,6 +102,7 @@ namespace MyFrameworkPure
                 }
                 else
                 {
+                    onError?.Invoke(www.error);
                     Debug.LogError(www.error);
                 }
             }
