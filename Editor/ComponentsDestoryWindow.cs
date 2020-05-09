@@ -6,6 +6,9 @@ using MyFrameworkPure;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// 批量删除场景中的组件窗口
+/// </summary>
 public class ComponentsDestoryWindow : EditorWindow
 {
     [SerializeField]
@@ -17,7 +20,7 @@ public class ComponentsDestoryWindow : EditorWindow
     private SerializedObject serializedObject;
     private SerializedProperty serializedProperty;
 
-    [MenuItem("Tools/删除组件窗口")]
+    [MenuItem("Tools/批量删除场景组件窗口")]
     static void InitWindow()
     {
         ComponentsDestoryWindow window = EditorWindow.GetWindow<ComponentsDestoryWindow>();

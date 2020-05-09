@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 显示帧率(OnGUI方式)
+/// </summary>
 public class FPSDisplay : MonoBehaviour
 {
     float deltaTime = 0.0f;

@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// 通过缩放物体模拟摄像机正交渲染
+/// </summary>
 public class OrthographicRender : MonoBehaviour
 {
     public Camera renderCamera;
@@ -30,7 +34,7 @@ public class OrthographicRender : MonoBehaviour
             Vector3 a = camera.WorldToScreenPoint(position2 + transform.TransformDirection(new Vector3(0f, 0f, z)));
             Vector3 b = camera.WorldToScreenPoint(position2 + transform.TransformDirection(new Vector3(1f, 0f, z)));
             float magnitude = (a - b).magnitude;
-            result = 80f / Mathf.Max(magnitude, 0.0001f) ;
+            result = 80f / Mathf.Max(magnitude, 0.0001f);
         }
         else
         {

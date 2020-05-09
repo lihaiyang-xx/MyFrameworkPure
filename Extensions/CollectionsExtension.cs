@@ -8,6 +8,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
 
+/// <summary>
+/// 集合类拓展
+/// </summary>
 public static class CollectionsExtension
 {
     /// <summary>
@@ -44,11 +47,6 @@ public static class CollectionsExtension
     /// <typeparam name="T"></typeparam>
     /// <param name="iList"></param>
     /// <returns></returns>
-    //public static T Random<T>(this T[] array)
-    //{
-    //    return array[UnityEngine.Random.Range(0, array.Length)];
-    //}
-
     public static T Random<T>(this IList<T> iList)
     {
         return iList[UnityEngine.Random.Range(0, iList.Count)];
@@ -88,11 +86,11 @@ public static class CollectionsExtension
     /// <summary>
     /// 数组是否为null或长度为0
     /// </summary>
-    /// <param name="array"></param>
+    /// <param name="list"></param>
     /// <returns></returns>
-    public static bool IsNullOrEmpty(this Array array)
+    public static bool IsNullOrEmpty(this IList list)
     {
-        return array == null || array.Length == 0;
+        return list == null || list.Count == 0;
     }
 
     public static void Destroy<T>(this IEnumerable<T> ienumerable) where T:Object
@@ -117,7 +115,7 @@ public static class CollectionsExtension
     /// <param name="iEnumerable"></param>
     /// <param name="jointChar"></param>
     /// <returns></returns>
-    public static string Joint(this IEnumerable iEnumerable,char jointChar)
+    public static string JointToString(this IEnumerable iEnumerable,char jointChar)
     {
         StringBuilder sb = new StringBuilder();
         foreach (var i in iEnumerable)
