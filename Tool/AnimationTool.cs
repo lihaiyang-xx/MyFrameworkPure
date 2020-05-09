@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class AnimationTool
 {
-    public static TimeDelay PlayForward(Animation animation, string clipName,UnityAction onComplete = null)
+    public static TimeDelay PlayForward(Animation animation, string clipName = "",UnityAction onComplete = null)
     {
         if (string.IsNullOrEmpty(clipName))
         {
@@ -21,7 +21,7 @@ public class AnimationTool
                 onComplete();
         });
     }
-    public static TimeDelay PlayBack(Animation animation, string clipName, UnityAction onComplete = null)
+    public static TimeDelay PlayBack(Animation animation, string clipName = "", UnityAction onComplete = null)
     {
         if (string.IsNullOrEmpty(clipName))
         {
