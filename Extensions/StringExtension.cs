@@ -10,9 +10,9 @@ public static class StringExtension
     /// <summary>
     /// 获取字符串前缀
     /// </summary>
-    /// <param equimpentName="source">原字符串</param>
-    /// <param equimpentName="flag">前缀标识符</param>
-    /// <returns>前缀字符串</returns>
+    /// <param name="source"></param>
+    /// <param name="flag"></param>
+    /// <returns></returns>
     public static string GetPostfix(this string source, char flag)
     {
         int position = source.LastIndexOf(flag);
@@ -22,9 +22,9 @@ public static class StringExtension
     /// <summary>
     /// 字符串编码转换
     /// </summary>
-    /// <param equimpentName="source">字符串</param>
-    /// <param equimpentName="srcEncoding">原始编码</param>
-    /// <param equimpentName="dstEncoding">目标编码</param>
+    /// <param name="source"></param>
+    /// <param name="srcEncoding"></param>
+    /// <param name="dstEncoding"></param>
     /// <returns></returns>
     public static string EncodeConvert(this string source, Encoding srcEncoding,Encoding dstEncoding)
     {
@@ -33,7 +33,7 @@ public static class StringExtension
     }
 
     /// <summary>
-    /// 是否为数字
+    /// 判断字符串是否为数字
     /// </summary>
     public static bool IsNumber(this string s)
     {
@@ -41,6 +41,12 @@ public static class StringExtension
         return !regex.IsMatch(s);
     }
 
+    /// <summary>
+    /// 将字符串转换为整形数组
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="splitChar"></param>
+    /// <returns></returns>
     public static int[] ConvertToInts(this string s, char splitChar=',')
     {
         string[] splits = s.Split(splitChar);
@@ -53,6 +59,12 @@ public static class StringExtension
         return result;
     }
 
+    /// <summary>
+    /// 字符串是否包含所有数组中的元素
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="strs"></param>
+    /// <returns></returns>
     public static bool Contains(this string s, string[] strs)
     {
         foreach (var str in strs)

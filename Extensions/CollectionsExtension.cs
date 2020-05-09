@@ -52,6 +52,13 @@ public static class CollectionsExtension
         return iList[UnityEngine.Random.Range(0, iList.Count)];
     }
 
+    /// <summary>
+    /// 添加一个元素到数组尾
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="array"></param>
+    /// <param name="element"></param>
+    /// <returns></returns>
     public static T[] Add<T>(this T[] array,T element)
     {
         T[] newArray = new T[array.Length+1];
@@ -60,6 +67,13 @@ public static class CollectionsExtension
         return newArray;
     }
 
+    /// <summary>
+    /// 添加一个元素到数组头
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="array"></param>
+    /// <param name="element"></param>
+    /// <returns></returns>
     public static T[] AddToHead<T>(this T[] array, T element)
     {
         T[] newArray = new T[array.Length + 1];
@@ -68,6 +82,13 @@ public static class CollectionsExtension
         return newArray;
     }
 
+    /// <summary>
+    /// 添加一个数组到数组尾
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="array"></param>
+    /// <param name="elements"></param>
+    /// <returns></returns>
     public static T[] Add<T>(this T[] array, T[] elements)
     {
         T[] newArray = new T[array.Length + elements.Length];
@@ -76,6 +97,13 @@ public static class CollectionsExtension
         return newArray;
     }
 
+    /// <summary>
+    /// 从数组移除一个元素
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="array"></param>
+    /// <param name="element"></param>
+    /// <returns></returns>
     public static T[] Remove<T>(this T[] array, T element)
     {
         var list = array.ToList();
@@ -93,6 +121,11 @@ public static class CollectionsExtension
         return list == null || list.Count == 0;
     }
 
+    /// <summary>
+    /// 删除整个迭代器中的物体
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="ienumerable"></param>
     public static void Destroy<T>(this IEnumerable<T> ienumerable) where T:Object
     {
         foreach (var i in ienumerable)
@@ -101,6 +134,11 @@ public static class CollectionsExtension
         }
     }
 
+    /// <summary>
+    /// 立刻删除整个迭代器中的物体
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="ienumerable"></param>
     public static void DestroyImmediate<T>(this IEnumerable<T> ienumerable) where T : Object
     {
         foreach (var i in ienumerable)

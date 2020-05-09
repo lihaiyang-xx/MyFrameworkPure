@@ -10,9 +10,9 @@ public static class TransformExtension
     /// <summary>
     /// 设置位置坐标分量
     /// </summary>
-    /// <param equimpentName="t"></param>
-    /// <param equimpentName="pivot">分量字符,x,y,z</param>
-    /// <param equimpentName="v">分量值</param>
+    /// <param name="t"></param>
+    /// <param name="pivot"></param>
+    /// <param name="v"></param>
     public static void SetPos(this Transform t,char pivot, float v)
     {
         Vector3 pos = t.position;
@@ -35,10 +35,10 @@ public static class TransformExtension
         t.position = pos;
     }
     /// <summary>
-    /// 设置X坐标位置
+    /// 设置世界坐标位置x
     /// </summary>
-    /// <param equimpentName="t"></param>
-    /// <param equimpentName="x"></param>
+    /// <param name="t"></param>
+    /// <param name="x"></param>
     public static void SetPosX(this Transform t, float x)
     {
         Vector3 v = t.position;
@@ -46,24 +46,47 @@ public static class TransformExtension
         t.position = v;
     }
 
+    /// <summary>
+    /// 设置本地坐标分量x
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="x"></param>
     public static void SetLocalPosX(this Transform t, float x)
     {
         Vector3 v = t.localPosition;
         v.x = x;
         t.localPosition = v;
     }
+
+    /// <summary>
+    /// 设置世界坐标分量y
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="y"></param>
     public static void SetPosY(this Transform t, float y)
     {
         Vector3 v = t.position;
         v.y = y;
         t.position = v;
     }
+
+    /// <summary>
+    /// 设置本地坐标分量y
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="y"></param>
     public static void SetLocalPosY(this Transform t, float y)
     {
         Vector3 v = t.localPosition;
         v.y = y;
         t.localPosition = v;
     }
+
+    /// <summary>
+    /// 设置世界坐标分量z
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="z"></param>
     public static void SetPosZ(this Transform t, float z)
     {
         Vector3 v = t.position;
@@ -71,6 +94,11 @@ public static class TransformExtension
         t.position = v;
     }
 
+    /// <summary>
+    /// 设置本地坐标分量z
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="z"></param>
     public static void SetLocalPosZ(this Transform t, float z)
     {
         Vector3 v = t.localPosition;
@@ -78,6 +106,11 @@ public static class TransformExtension
         t.localPosition = v;
     }
 
+    /// <summary>
+    /// 设置本地缩放分量x
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="x"></param>
     public static void SetLocalScaleX(this Transform t, float x)
     {
         Vector3 v = t.localScale;
@@ -85,6 +118,11 @@ public static class TransformExtension
         t.localScale = v;
     }
 
+    /// <summary>
+    /// 设置本地缩放分量y
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="y"></param>
     public static void SetLocalScaleY(this Transform t, float y)
     {
         Vector3 v = t.localScale;
@@ -92,6 +130,11 @@ public static class TransformExtension
         t.localScale = v;
     }
 
+    /// <summary>
+    /// 设置本地缩放分量z
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="z"></param>
     public static void SetLocalScaleZ(this Transform t, float z)
     {
         Vector3 v = t.localScale;
@@ -99,36 +142,71 @@ public static class TransformExtension
         t.localScale = v;
     }
 
+    /// <summary>
+    /// 设置世界欧拉角分量x
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="x"></param>
     public static void SetEulerX(this Transform t,float x)
     {
         Vector3 v = t.eulerAngles;
         v.x = x;
         t.eulerAngles = v;
     }
+
+    /// <summary>
+    /// 设置世界欧拉角分量y
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="y"></param>
     public static void SetEulerY(this Transform t, float y)
     {
         Vector3 v = t.eulerAngles;
         v.y = y;
         t.eulerAngles = v;
     }
+
+    /// <summary>
+    /// 设置世界欧拉角分量z
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="z"></param>
     public static void SetEulerZ(this Transform t, float z)
     {
         Vector3 v = t.eulerAngles;
         v.z = z;
         t.eulerAngles = v;
     }
+
+    /// <summary>
+    /// 设置本地欧拉角分量x
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="x"></param>
     public static void SetLocalEulerX(this Transform t, float x)
     {
         Vector3 v = t.localEulerAngles;
         v.x = x;
         t.localEulerAngles = v;
     }
+
+    /// <summary>
+    /// 设置本地欧拉角分量y
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="y"></param>
     public static void SetLocalEulerY(this Transform t, float y)
     {
         Vector3 v = t.localEulerAngles;
         v.y = y;
         t.localEulerAngles = v;
     }
+
+    /// <summary>
+    /// 设置本地欧拉角分量z
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="z"></param>
     public static void SetLocalEulerZ(this Transform t, float z)
     {
         Vector3 v = t.localEulerAngles;
@@ -136,12 +214,11 @@ public static class TransformExtension
         t.localEulerAngles = v;
     }
 
-
     /// <summary>
     /// 获取第level级父物体
     /// </summary>
-    /// <param equimpentName="self"></param>
-    /// <param equimpentName="level"></param>
+    /// <param name="self"></param>
+    /// <param name="level"></param>
     /// <returns></returns>
     public static Transform GetParentByLevel(this Transform self, int level)
     {
@@ -160,7 +237,7 @@ public static class TransformExtension
     /// <summary>
     /// 搜索子物体组件
     /// </summary>
-    public static T GetCompoentFromChild<T>(this Transform t, string subnode) where T : Component
+    public static T GetComponentInSingleChild<T>(this Transform t, string subnode) where T : Component
     {
         if (t != null)
         {
@@ -176,9 +253,9 @@ public static class TransformExtension
     /// 若找到，返回相隔层数（临近子物体于其父物体相隔1层）
     /// outNearChild表示找到的父物体的与其相隔1层的子物体
     /// </summary>
-    /// <param equimpentName="self"></param>
-    /// <param equimpentName="parentName"></param>
-    /// <param equimpentName="NearChild"></param>
+    /// <param name="self"></param>
+    /// <param name="parentName"></param>
+    /// <param name="NearChild"></param>
     /// <returns></returns>
     public static int FindParents(this Transform self, string parentName, out Transform NearChild)
     {
@@ -201,8 +278,9 @@ public static class TransformExtension
     /// <summary>
     /// 清除所有子物体
     /// </summary>
-    /// <param equimpentName="t"></param>
-    /// <param equimpentName="immediate">是否立刻销毁</param>
+    /// <param name="t"></param>
+    /// <param name="immediate"></param>
+    /// <param name="exclude"></param>
     public static void ClearChild(this Transform t, bool immediate = false,Predicate<Transform> exclude = null)
     {
         if (!t) return;
@@ -225,9 +303,8 @@ public static class TransformExtension
     /// <summary>
     /// 复制填充Transform参数
     /// </summary>
-    /// <param equimpentName="t"></param>
-    /// <param equimpentName="copy"></param>
-    /// <param equimpentName="isLocal"></param>
+    /// <param name="t"></param>
+    /// <param name="copy"></param>
     public static void CopyTransform(this Transform t, Transform copy)
     {
         t.transform.localPosition = copy.transform.localPosition;
@@ -238,7 +315,7 @@ public static class TransformExtension
     /// <summary>
     /// 重置变换
     /// </summary>
-    /// <param equimpentName="t"></param>
+    /// <param name="t"></param>
     public static void Reset(this Transform t)
     {
         t.localPosition = Vector3.zero;
@@ -247,10 +324,10 @@ public static class TransformExtension
     }
 
     /// <summary>
-    /// 获取子变换,如果超出边界则返回空
+    /// 获取子变换,如果超出边界则返回空,不会抛出异常
     /// </summary>
-    /// <param equimpentName="t"></param>
-    /// <param equimpentName="index"></param>
+    /// <param name="t"></param>
+    /// <param name="index"></param>
     /// <returns></returns>
     public static Transform GetChildOrDefault(this Transform t, int index)
     {
@@ -262,8 +339,8 @@ public static class TransformExtension
     /// <summary>
     /// 递归查找子物体名称包含match的所有子物体,忽略大小写
     /// </summary>
-    /// <param equimpentName="t"></param>
-    /// <param equimpentName="match"></param>
+    /// <param name="t"></param>
+    /// <param name="match"></param>
     /// <returns></returns>
     public static Transform[] FindByMatch(this Transform t, string match)
     {
@@ -365,7 +442,6 @@ public static class TransformExtension
     /// </summary>
     /// <param name="t"></param>
     /// <returns></returns>
-    [Obsolete("请用 GetChildren(this Transform t, Predicate<Transform> predicate) 替换")]
     public static Transform[] GetActiveChildren(this Transform t)
     {
         List<Transform> list = new List<Transform>();
@@ -379,6 +455,11 @@ public static class TransformExtension
         return list.ToArray();
     }
 
+    /// <summary>
+    /// 获取层级路径
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
     public static string GetHierarchyPath(this Transform t)
     {
         string str = t.name;
@@ -387,10 +468,14 @@ public static class TransformExtension
             str = str.Insert(0, t.parent.name + "/");
             t = t.parent;
         }
-
         return str;
     }
 
+    /// <summary>
+    /// 遍历子物体
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="action"></param>
     public static void TravesalChild(this Transform t,UnityAction<Transform> action)
     {
         foreach (Transform child in t)

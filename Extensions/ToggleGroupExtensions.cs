@@ -7,7 +7,7 @@ public static class ToggleGroupExtensions
     private static System.Reflection.FieldInfo _toggleListMember;
 
     /// <summary>
-    /// Gets the list of toggles. Do NOT add to the list, only read from it.
+    /// 获取组中的所有Toggle
     /// </summary>
     /// <param name="grp"></param>
     /// <returns></returns>
@@ -22,11 +22,22 @@ public static class ToggleGroupExtensions
         return _toggleListMember.GetValue(grp) as IList<Toggle>;
     }
 
+    /// <summary>
+    /// 组中所有Toggle数量
+    /// </summary>
+    /// <param name="grp"></param>
+    /// <returns></returns>
     public static int Count(this ToggleGroup grp)
     {
         return GetToggles(grp).Count;
     }
 
+    /// <summary>
+    /// 通过索引值获取Toggle
+    /// </summary>
+    /// <param name="grp"></param>
+    /// <param name="index"></param>
+    /// <returns></returns>
     public static Toggle Get(this ToggleGroup grp, int index)
     {
         return GetToggles(grp)[index];
