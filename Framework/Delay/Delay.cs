@@ -28,6 +28,16 @@ public abstract class Delay : IMonoUpdate
         MonoBehaviorTool.Instance.UnRegisterUpdate(this);
     }
 
+    public static Delay DoDelay(float _duration, UnityAction _endCall)
+    {
+        return new TimeDelay(_duration, null, _endCall);
+    }
+
+    public static Delay DelayUntil(ConditionDelay.Predicate _predicate, UnityAction _endCall)
+    {
+        return new ConditionDelay(_predicate,_endCall);
+    }
+
 }
 
 public class TimeDelay : Delay

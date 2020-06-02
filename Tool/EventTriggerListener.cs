@@ -34,6 +34,8 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
 
     private bool pressed;
 
+    public bool IsPressed => pressed;
+
     static public EventTriggerListener Get(GameObject go)
     {
         EventTriggerListener listener = go.GetComponent<EventTriggerListener>();
