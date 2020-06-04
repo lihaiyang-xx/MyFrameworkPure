@@ -117,7 +117,7 @@ namespace MyFrameworkPure
         {
             if (!System.IO.File.Exists(path))
             {
-                Debug.LogError(path + "不存在！");
+                Debug.LogWarning(path + "不存在！");
                 return null;
             }
             byte[] bytes = System.IO.File.ReadAllBytes(path);

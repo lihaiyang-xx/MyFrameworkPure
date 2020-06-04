@@ -1,5 +1,4 @@
-﻿using Ludiq;
-using MyFrameworkPure;
+﻿using MyFrameworkPure;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,7 +17,7 @@ public class DragEventBlocker : MonoBehaviour
         scrollRects.ForEach(x =>
         {
             Selectable[] selectables = x.GetComponentsInChildren<Selectable>(true);
-            selectables.ForEach(y =>  y.GetOrAddComponent<DragEventBlocker>());
+            selectables.ForEach(y =>  y.gameObject.GetOrAddCompoent<DragEventBlocker>());
         });
 
     }

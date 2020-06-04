@@ -25,7 +25,7 @@ public class FlowchartDesignerWindow : EditorWindow
 
     private Material mGridMaterial;
 
-    [MenuItem("Tools/流程图 编辑器 _F1")]
+    [MenuItem("Tools/流程图 编辑器 %F1")]
     static void OpenLogicDesignerWindow()
     {
         FlowchartDesignerWindow window = EditorWindow.GetWindow<FlowchartDesignerWindow>();
