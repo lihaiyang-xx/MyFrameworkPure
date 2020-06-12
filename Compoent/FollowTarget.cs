@@ -2,50 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 跟随目标
-/// </summary>
-public class FollowTarget : MonoBehaviour
+namespace MyFrameworkPure
 {
-    [SerializeField] private Transform target;
-
-    [SerializeField] private float speed = 1;
-
-    [SerializeField] private bool attach = false;
-    // Start is called before the first frame update
-    void OnEnable()
+    /// <summary>
+    /// 跟随目标
+    /// </summary>
+    public class FollowTarget : MonoBehaviour
     {
-        FollowQuick();
-    }
+        [SerializeField] private Transform target;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(!target)
-            return;
-        transform.position = Vector3.Lerp(transform.position, target.position,attach?1:Time.deltaTime * speed);
+        [SerializeField] private float speed = 1;
 
-        if (attach)
+        [SerializeField] private bool attach = false;
+        // Start is called before the first frame update
+        void OnEnable()
         {
-            transform.rotation = target.rotation;
+            FollowQuick();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (!target)
+                return;
+            transform.position = Vector3.Lerp(transform.position, target.position, attach ? 1 : Time.deltaTime * speed);
+
+            if (attach)
+            {
+                transform.rotation = target.rotation;
+            }
+        }
+
+        public Transform Target
+        {
+            get => target;
+            set => target = value;
+        }
+
+        public bool IsAttach
+        {
+            get => attach;
+            set => attach = value;
+        }
+
+        public void FollowQuick()
+        {
+            if (target)
+                transform.position = target.position;
         }
     }
-
-    public Transform Target
-    {
-        get => target;
-        set => target = value;
-    }
-
-    public bool IsAttach
-    {
-        get => attach;
-        set => attach = value;
-    }
-
-    public void FollowQuick()
-    {
-        if (target)
-            transform.position = target.position;
-    }
 }
+
