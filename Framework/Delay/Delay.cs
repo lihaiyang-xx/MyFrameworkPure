@@ -42,20 +42,23 @@ public abstract class Delay : IMonoUpdate
 
 public class TimeDelay : Delay
 {
-    private float counter;
+    
+    private float timeCounter;
     private float duration;
     private float frequency;
     private float frequencyCounter;
 
+    private bool useFrame;
+
     private UnityAction updateCall;
 
-    public TimeDelay(float _duration, UnityAction _updateCall, UnityAction _endCall,float _frequency = 0) : base()
+    public TimeDelay(float _duration, UnityAction _updateCall, UnityAction _endCall,float _frequency = 0,bool _useFrame =false) : base()
     {
         duration = _duration;
         updateCall = _updateCall;
         endCall = _endCall;
         frequency = _frequency;
-
+        useFrame = _useFrame;
         Active = true;
         MonoBehaviorTool.Instance.RegisterUpdate(this);
     }
@@ -82,8 +85,8 @@ public class TimeDelay : Delay
     }
     public override bool IsEnd()
     {
-        counter += Time.deltaTime;
-        return counter >= duration;
+        timeCounter += useFrame ? 1 : Time.deltaTime;
+        return timeCounter >= duration;
     }
 
     public void Stop()
@@ -95,6 +98,11 @@ public class TimeDelay : Delay
     public static TimeDelay Delay(float _duration, UnityAction _endCall)
     {
         return new TimeDelay(_duration,null,_endCall);
+    }
+
+    public static TimeDelay DelayFrame(float _duration, UnityAction _endCall)
+    {
+        return new TimeDelay(_duration, null, _endCall,0,true);
     }
 }
 
