@@ -147,6 +147,14 @@ public static class CollectionsExtension
         }
     }
 
+    public static void DestroyImmediate<T>(this IEnumerable<T> ienumerable,bool allowDestroyingAssets) where T : Object
+    {
+        foreach (var i in ienumerable)
+        {
+            Object.DestroyImmediate(i,allowDestroyingAssets);
+        }
+    }
+
     /// <summary>
     /// 拼接集合,以字符串输出
     /// </summary>
@@ -164,6 +172,31 @@ public static class CollectionsExtension
         }
 
         return sb.ToString();
+    }
+
+    public static void Log(this IEnumerable iEnumerable)
+    {
+        foreach (var i in iEnumerable)
+        {
+            Debug.Log(i);
+        }
+    }
+
+    /// <summary>
+    /// 获取元素的索引
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="array"></param>
+    /// <param name="element"></param>
+    /// <returns></returns>
+    public static int IndexOf<T>(this T[] array, T element)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            if (array[i].Equals(element))
+                return i;
+        }
+        return -1;
     }
 
 }

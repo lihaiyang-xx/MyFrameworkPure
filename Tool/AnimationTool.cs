@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -53,5 +54,11 @@ public class AnimationTool
         if (string.IsNullOrEmpty(clipName))
             clipName = animation.clip.name;
         animation[clipName].normalizedTime = 1;
+    }
+
+    public static void Complete(Animator animator, string clipName)
+    {
+        //AnimationClip clip = animator.runtimeAnimatorController.animationClips.First(x => x.name == clipName);
+        animator.Play(clipName,0,1);
     }
 }

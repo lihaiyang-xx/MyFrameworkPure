@@ -89,6 +89,24 @@ namespace MyFrameworkPure
             byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
             return Encoding.UTF8.GetString(resultArray);
         }
+
+        public static string Base16Encrypt(string str, string[] autoCode = null)
+        {
+            string innerStr = string.Empty;
+            StringBuilder strEn = new StringBuilder();
+            if (autoCode == null || autoCode.Length < 16)
+                autoCode = new string[] { "a", "2", "B", "g", "E", "5", "f", "6", "C", "8", "o", "9", "Z", "p", "k", "M" };
+            System.Collections.ArrayList arr = new System.Collections.ArrayList(System.Text.Encoding.Default.GetBytes(str));
+            for (int i = 0; i < arr.Count; i++)
+            {
+                byte data = (byte)arr[i];
+                int v1 = data >> 4;
+                strEn.Append(autoCode[v1]);
+                int v2 = ((data & 0x0f) << 4) >> 4;
+                strEn.Append(autoCode[v2]);
+            }
+            return strEn.ToString();
+        }
     }
 
 }

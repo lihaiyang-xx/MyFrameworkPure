@@ -11,7 +11,7 @@ public class FollowLikeChild : MonoBehaviour
 
     private Quaternion relativeRot;
 
-    private Transform target;
+    [SerializeField] private Transform target;
     // Start is called before the first frame update
     void Start()
     {

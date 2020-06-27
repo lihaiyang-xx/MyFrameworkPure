@@ -2,12 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
-#if DoTween
-using DG.Tweening;
-#endif
-
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -15,6 +9,12 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+#if DoTween
+using DG.Tweening;
+#endif
+#if TMPro
+using TMPro;
+#endif
 public class UITool
 {
 #region UI Animation
@@ -81,8 +81,10 @@ public class UITool
         if (!canvasGroup)
             canvasGroup = go.AddComponent<CanvasGroup>();
         canvasGroup.alpha = 1;
-        canvasGroup.DOFade(0, 1).onComplete += (() =>
+        canvasGroup.interactable = false;
+        canvasGroup.DOFade(0, duration).onComplete += (() =>
         {
+            go.SetActive(false);
             if (onComplete != null) onComplete();
         });
     }
@@ -93,8 +95,11 @@ public class UITool
         if (!canvasGroup)
             canvasGroup = go.AddComponent<CanvasGroup>();
         canvasGroup.alpha = 0;
-        canvasGroup.DOFade(1, 1).onComplete += (() =>
-          {
+        canvasGroup.interactable = false;
+        go.SetActive(true);
+        canvasGroup.DOFade(1, duration).onComplete += (() =>
+        {
+            canvasGroup.interactable = true;
               if (onComplete != null) onComplete();
           });
     }
@@ -291,6 +296,8 @@ public class UITool
         scrollbar.onValueChanged.AddListener(v => inputField.text = Mathf.Lerp(minValue, maxValue, v).ToString("F2"));
         scrollbar.onValueChanged.Invoke(scrollbar.value);
     }
+
+#if TMPro
     public static void Bind(Scrollbar scrollbar, TMP_InputField inputField, float minValue, float maxValue)
     {
         inputField.contentType = TMP_InputField.ContentType.DecimalNumber;
@@ -315,6 +322,7 @@ public class UITool
         scrollbar.onValueChanged.AddListener(v => inputField.text = Mathf.Lerp(minValue, maxValue, v).ToString("F2"));
         scrollbar.onValueChanged.Invoke(scrollbar.value);
     }
+#endif
     /// <summary>
     /// 绑定滑动条和文本输入框
     /// </summary>
@@ -347,6 +355,7 @@ public class UITool
         scrollbar.onValueChanged.Invoke(scrollbar.value);
     }
 
+#if TMPro
     public static void Bind(Scrollbar scrollbar, TMP_InputField inputField, int minValue, int maxValue)
     {
         inputField.contentType = TMP_InputField.ContentType.IntegerNumber;
@@ -371,7 +380,7 @@ public class UITool
         scrollbar.onValueChanged.AddListener(v => inputField.text = Mathf.RoundToInt(Mathf.Lerp(minValue, maxValue, v)).ToString("G"));
         scrollbar.onValueChanged.Invoke(scrollbar.value);
     }
-
+#endif
     public static void Bind(Toggle toggle, Selectable selectable)
     {
         toggle.onValueChanged.AddListener(v=>selectable.interactable = v);

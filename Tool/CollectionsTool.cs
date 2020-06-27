@@ -44,7 +44,6 @@ namespace MyFrameworkPure
         public static bool EqualArray<T>(T[] first, T[] second)
         {
             return first.SequenceEqual(second);
-
         }
     }
 }
