@@ -19,6 +19,12 @@ namespace MyFrameworkPure
             long timeStamp = (long)(DateTime.Now - startTime).TotalMilliseconds; // 相差毫秒数
             return timeStamp;
         }
+
+        public static string GetTimeStr()
+        {
+            DateTime dateTime = DateTime.Now;
+            return dateTime.ToString("yyyy-MM-dd hh:mm:ss.f");
+        }
     }
 }
 

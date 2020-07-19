@@ -20,6 +20,12 @@ namespace MyFrameworkPure
             }
             return Vector3.zero;
         }
+
+        public static float Angle360(Vector3 from, Vector3 to,Vector3 axis)
+        {
+            float angle = Vector3.SignedAngle(from, to, axis);
+            return angle < 0 ? 360 + angle : angle;
+        }
     }
 }
 

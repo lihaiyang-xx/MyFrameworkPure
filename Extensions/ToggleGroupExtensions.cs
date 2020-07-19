@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.UI;
 
 public static class ToggleGroupExtensions
@@ -41,6 +42,21 @@ public static class ToggleGroupExtensions
     public static Toggle Get(this ToggleGroup grp, int index)
     {
         return GetToggles(grp)[index];
+    }
+
+    public static void SetActiveToggleByIndex(this  ToggleGroup grp,int index)
+    {
+        IList<Toggle> toggles = GetToggles(grp);
+        toggles = toggles.OrderBy(x => x.transform.GetSiblingIndex()).ToList();
+        grp.SetAllTogglesOff();
+        toggles[index].isOn = true;
+    }
+
+    public static void SetActiveToggleByName(this ToggleGroup grp, string name)
+    {
+        IList<Toggle> toggles = GetToggles(grp);
+        grp.SetAllTogglesOff();
+        toggles.First(x => x.name == name).isOn = true;
     }
 
 }
