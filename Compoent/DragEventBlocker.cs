@@ -11,26 +11,39 @@ public class DragEventBlocker : MonoBehaviour
         
     }
 
-    public static void BlockScrollRect()
+    public static void Block(GameObject go)
+    {
+        Selectable[] selectables = go.GetComponentsInChildren<Selectable>(true);
+        selectables.ForEach(x => 
+        {
+            DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddCompoent<DragEventBlocker>();
+            dragEventBlocker.enabled = true;
+        });
+    }
+
+    public static void RemoveBlock(GameObject go)
+    {
+        Selectable[] selectables = go.GetComponentsInChildren<Selectable>(true);
+        selectables.ForEach(x =>
+        {
+            DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddCompoent<DragEventBlocker>();
+            dragEventBlocker.enabled = false;
+        });
+    }
+
+    public static void BlockAllScrollRect()
     {
         ScrollRect[] scrollRects = GameObjectTool.FindObjectsOfType<ScrollRect>();
-        scrollRects.ForEach(x =>
+        scrollRects?.ForEach(x =>
         {
             Selectable[] selectables = x.GetComponentsInChildren<Selectable>(true);
-            selectables.ForEach(y =>  y.gameObject.GetOrAddCompoent<DragEventBlocker>());
+            selectables.ForEach(y=>y.gameObject.GetOrAddCompoent<DragEventBlocker>());
         });
-
     }
 
-    public static void ClearBlockScrollRect()
+    public static void RemoveAllBlock()
     {
-        ScrollRect[] scrollRects = GameObjectTool.FindObjectsOfType<ScrollRect>();
-        scrollRects.ForEach(x =>
-        {
-            DragEventBlocker[] dragEventBlockers = x.GetComponentsInChildren<DragEventBlocker>(true);
-            dragEventBlockers.DestroyImmediate(true);
-        });
+        DragEventBlocker[] dragEventBlockers = GameObjectTool.FindObjectsOfType<DragEventBlocker>();
+        dragEventBlockers?.DestroyImmediate(true);
     }
-
-
 }

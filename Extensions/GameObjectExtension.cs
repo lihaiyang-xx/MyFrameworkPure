@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -74,6 +75,12 @@ public static class GameObjectExtension
         if (!t)
             t = go.AddComponent<T>();
         return t;
+    }
+
+    public static T[] GetComnponentsInChildrenWithoutSelf<T>(this GameObject go) where T : Component
+    {
+        T[] components = go.GetComponentsInChildren<T>();
+        return components.Except(go.GetComponents<T>()).ToArray();
     }
 
     /// <summary>

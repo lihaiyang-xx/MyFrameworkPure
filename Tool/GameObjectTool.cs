@@ -100,7 +100,7 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static T FindObjectOfType<T>() where  T:Component
         {
-            T[] trs = Resources.FindObjectsOfTypeAll<T>();
+            T[] trs = FindObjectsOfType<T>();
             return trs != null && trs.Length != 0 ? trs[0] : null;
         }
 
@@ -112,7 +112,12 @@ namespace MyFrameworkPure
 
         public static T[] FindObjectsOfType<T>() where T : Component
         {
-            return Resources.FindObjectsOfTypeAll<T>();
+            return Resources.FindObjectsOfTypeAll<T>().Where(x=>!string.IsNullOrEmpty(x.gameObject.scene.name)).ToArray();
+        }
+
+        public static T[] FindObjectsOfTypeInScene<T>(Scene scene) where T : Component
+        {
+            return Resources.FindObjectsOfTypeAll<T>().Where(x => x.gameObject.scene == scene).ToArray();
         }
 
         private static Dictionary<Type, Component> cacheDictionary;

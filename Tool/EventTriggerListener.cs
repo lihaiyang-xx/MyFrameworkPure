@@ -31,6 +31,7 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     public DataDelegate onDown_Data;
     public DataDelegate onUp_Data;
     public DataDelegate onDrag_Data;
+    public DataDelegate onBeginDrag_Data;
 
     private bool pressed;
 
@@ -74,6 +75,12 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     {
         if (onSelect != null) onSelect(gameObject);
     }
+
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        onBeginDrag_Data?.Invoke(gameObject,eventData);
+    }
+
     public override void OnDrag(PointerEventData eventData)
     {
         if (onDrag != null) onDrag(gameObject);

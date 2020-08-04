@@ -126,11 +126,19 @@ public static class CollectionsExtension
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="ienumerable"></param>
-    public static void Destroy<T>(this IEnumerable<T> ienumerable) where T:Object
+    //public static void Destroy<T>(this IEnumerable<T> ienumerable) where T:Component
+    //{
+    //    foreach (var i in ienumerable)
+    //    {
+    //        Object.Destroy(i);
+    //    }
+    //}
+
+    public static void Destroy<T>(this IList<T> list) where T : Component
     {
-        foreach (var i in ienumerable)
+        for (int i = list.Count - 1; i >= 0; i--)
         {
-            Object.Destroy(i);
+            Object.Destroy(list[i]);
         }
     }
 
