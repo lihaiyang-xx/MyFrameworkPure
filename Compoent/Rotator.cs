@@ -2,25 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 物体旋转
-/// </summary>
-public class Rotator : MonoBehaviour
+namespace MyFrameworkPure
 {
-    [SerializeField] private float speed;
-
-    [SerializeField] private Vector3 pivot;
-
-    [SerializeField] private Space relativeto;
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// 物体旋转
+    /// </summary>
+    public class Rotator : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private float speed;
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Rotate(pivot * speed * Time.deltaTime,relativeto);
+        [SerializeField] private Vector3 pivot;
+
+        [SerializeField] private Space relativeto;
+        // Start is called before the first frame update
+        void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            transform.Rotate(pivot * speed * Time.deltaTime, relativeto);
+        }
     }
 }
+

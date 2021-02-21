@@ -3,47 +3,53 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DragEventBlocker : MonoBehaviour
-    , IDragHandler
+namespace MyFrameworkPure
 {
-    public void OnDrag(PointerEventData eventData)
+    /// <summary>
+    /// 在VR交互中,用射线点击滚动框里的按钮时,由于手部的轻微抖动,可能会触发滚动框滚动,导致按钮点击无效;将此脚本添加到按钮上可以避免此问题
+    /// </summary>
+    public class DragEventBlocker : MonoBehaviour
+        , IDragHandler
     {
-        
-    }
-
-    public static void Block(GameObject go)
-    {
-        Selectable[] selectables = go.GetComponentsInChildren<Selectable>(true);
-        selectables.ForEach(x => 
+        public void OnDrag(PointerEventData eventData)
         {
-            DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddCompoent<DragEventBlocker>();
-            dragEventBlocker.enabled = true;
-        });
-    }
 
-    public static void RemoveBlock(GameObject go)
-    {
-        Selectable[] selectables = go.GetComponentsInChildren<Selectable>(true);
-        selectables.ForEach(x =>
+        }
+
+        public static void Block(GameObject go)
         {
-            DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddCompoent<DragEventBlocker>();
-            dragEventBlocker.enabled = false;
-        });
-    }
+            Selectable[] selectables = go.GetComponentsInChildren<Selectable>(true);
+            selectables.ForEach(x =>
+            {
+                DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddCompoent<DragEventBlocker>();
+                dragEventBlocker.enabled = true;
+            });
+        }
 
-    public static void BlockAllScrollRect()
-    {
-        ScrollRect[] scrollRects = GameObjectTool.FindObjectsOfType<ScrollRect>();
-        scrollRects?.ForEach(x =>
+        public static void RemoveBlock(GameObject go)
         {
-            Selectable[] selectables = x.GetComponentsInChildren<Selectable>(true);
-            selectables.ForEach(y=>y.gameObject.GetOrAddCompoent<DragEventBlocker>());
-        });
-    }
+            Selectable[] selectables = go.GetComponentsInChildren<Selectable>(true);
+            selectables.ForEach(x =>
+            {
+                DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddCompoent<DragEventBlocker>();
+                dragEventBlocker.enabled = false;
+            });
+        }
 
-    public static void RemoveAllBlock()
-    {
-        DragEventBlocker[] dragEventBlockers = GameObjectTool.FindObjectsOfType<DragEventBlocker>();
-        dragEventBlockers?.DestroyImmediate(true);
+        public static void BlockAllScrollRect()
+        {
+            ScrollRect[] scrollRects = GameObjectTool.FindObjectsOfType<ScrollRect>();
+            scrollRects?.ForEach(x =>
+            {
+                Selectable[] selectables = x.GetComponentsInChildren<Selectable>(true);
+                selectables.ForEach(y => y.gameObject.GetOrAddCompoent<DragEventBlocker>());
+            });
+        }
+
+        public static void RemoveAllBlock()
+        {
+            DragEventBlocker[] dragEventBlockers = GameObjectTool.FindObjectsOfType<DragEventBlocker>();
+            dragEventBlockers?.DestroyImmediate(true);
+        }
     }
 }

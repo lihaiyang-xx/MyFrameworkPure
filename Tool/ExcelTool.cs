@@ -9,41 +9,44 @@ using ExcelDataReader;
 using MyFrameworkPure;
 using UnityEngine;
 
-public class ExcelTool
+namespace MyFrameworkPure
 {
-    static ExcelTool()
+    public class ExcelTool
     {
-        ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 65001;
-    }
-    public static string[,] GetExcelData(string path, string sheetName = "sheet1")
-    {
-        using (var stream = File.Open(path, FileMode.Open, FileAccess.Read,FileShare.ReadWrite))
+        static ExcelTool()
         {
-            using (var reader = ExcelReaderFactory.CreateReader(stream))
+            ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 65001;
+        }
+        public static string[,] GetExcelData(string path, string sheetName = "sheet1")
+        {
+            using (var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
+                    DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
                     {
-                        UseHeaderRow = false
-                    },
+                        ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
+                        {
+                            UseHeaderRow = false
+                        },
 
-                    UseColumnDataType = false
-                });
-                DataTable table = result.Tables[sheetName];
-                int row = table.Rows.Count;
-                int colmon = table.Columns.Count;
-                string[,] data = new string[row, colmon];
-                for (int i = 0; i < row; i++)
-                {
-                    for (int j = 0; j < colmon; j++)
+                        UseColumnDataType = false
+                    });
+                    DataTable table = result.Tables[sheetName];
+                    int row = table.Rows.Count;
+                    int colmon = table.Columns.Count;
+                    string[,] data = new string[row, colmon];
+                    for (int i = 0; i < row; i++)
                     {
-                        data[i, j] = table.Rows[i][j].ToString();
+                        for (int j = 0; j < colmon; j++)
+                        {
+                            data[i, j] = table.Rows[i][j].ToString();
+                        }
                     }
+
+                    return data;
+
                 }
-
-                return data;
-
             }
         }
     }

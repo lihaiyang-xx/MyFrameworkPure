@@ -5,8 +5,17 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 向量工具类
+    /// </summary>
     public static class VectorTool
     {
+        /// <summary>
+        /// 将英文逗号分隔的字符串转换为Vector3
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="c"></param>
+        /// <returns></returns>
         public static Vector3 ConvertStringToVecotr3(string str, char c = ',')
         {
             try
@@ -22,7 +31,7 @@ namespace MyFrameworkPure
         }
 
         /// <summary>
-        /// 计算两个向量直接的角度(0-360)
+        /// 计算两个向量之间的角度(0-360)
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
@@ -35,7 +44,7 @@ namespace MyFrameworkPure
         }
 
         /// <summary>
-        /// 将欧拉角分量范围0-360(默认)转为-180~180
+        /// 将欧拉角分量默认范围0-360转为-180~180
         /// </summary>
         /// <param name="euler"></param>
         /// <returns></returns>

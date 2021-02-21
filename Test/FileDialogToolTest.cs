@@ -7,7 +7,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 
 using System;
-
+using MyFrameworkPure;
 public class FileDialogToolTest : MonoBehaviour
 {
 

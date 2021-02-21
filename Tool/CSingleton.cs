@@ -1,5 +1,9 @@
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// µ¥Àý»ùÀà
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class CSingleton<T> where T : new()
     {
         private static readonly object lockHelper = new object();

@@ -6,274 +6,278 @@ using UnityEngine.Events;
 using DG.Tweening;
 #endif
 
-public abstract class Delay : IMonoUpdate
+namespace MyFrameworkPure
 {
-    public UnityAction endCall;
-
-    public virtual bool Active { get; set; }
-
-    public Delay()
+    public abstract class Delay : IMonoUpdate
     {
-        
-    }
+        public UnityAction endCall;
 
-    public abstract void MonoUpdate();
+        public virtual bool Active { get; set; }
 
-    public abstract bool IsEnd();
-
-    public void Destroy()
-    {
-        Active = false;
-        endCall = null;
-        MonoBehaviorTool.Instance.UnRegisterUpdate(this);
-    }
-
-    public static Delay DoDelay(float _duration, UnityAction _endCall)
-    {
-        return new TimeDelay(_duration, null, _endCall);
-    }
-
-    public static Delay DelayUntil(ConditionDelay.Predicate _predicate, UnityAction _endCall)
-    {
-        return new ConditionDelay(_predicate,_endCall);
-    }
-
-}
-
-public class TimeDelay : Delay
-{
-    
-    private float timeCounter;
-    private float duration;
-    private float frequency;
-    private float frequencyCounter;
-
-    private bool useFrame;
-
-    private UnityAction updateCall;
-
-    public TimeDelay(float _duration, UnityAction _updateCall, UnityAction _endCall,float _frequency = 0,bool _useFrame =false) : base()
-    {
-        duration = _duration;
-        updateCall = _updateCall;
-        endCall = _endCall;
-        frequency = _frequency;
-        useFrame = _useFrame;
-        Active = true;
-        MonoBehaviorTool.Instance.RegisterUpdate(this);
-    }
-
-    public override void MonoUpdate()
-    {
-        if (!Active)
-            return;
-        if (IsEnd())
+        public Delay()
         {
-            if(endCall != null)
-                endCall();
-            MonoBehaviorTool.Instance.UnRegisterUpdate(this);
+
         }
-        else if (updateCall != null)
+
+        public abstract void MonoUpdate();
+
+        public abstract bool IsEnd();
+
+        public void Destroy()
         {
-            frequencyCounter += Time.deltaTime;
-            if(frequencyCounter >= frequency)
-            {
-                frequencyCounter = 0;
-                updateCall();
-            }
-        }
-    }
-    public override bool IsEnd()
-    {
-        timeCounter += useFrame ? 1 : Time.deltaTime;
-        return timeCounter >= duration;
-    }
-
-    public void Stop()
-    {
-        Active = false;
-        MonoBehaviorTool.Instance.UnRegisterUpdate(this);
-    }
-
-    public static TimeDelay Delay(float _duration, UnityAction _endCall)
-    {
-        return new TimeDelay(_duration,null,_endCall);
-    }
-
-    public static TimeDelay DelayFrame(float _duration, UnityAction _endCall)
-    {
-        return new TimeDelay(_duration, null, _endCall,0,true);
-    }
-}
-
-public class ConditionDelay:Delay
-{
-    public delegate bool Predicate();
-    public Predicate predicate;
-    
-    public ConditionDelay(Predicate _predicate, UnityAction _endCall)
-    {
-        endCall = _endCall;
-        predicate = _predicate;
-
-        Active = true;
-        MonoBehaviorTool.Instance.RegisterUpdate(this);
-    }
-    public override void MonoUpdate()
-    {
-        if (!Active)
-            return;
-        if (predicate())
-        {
-            if (endCall != null)
-                endCall();
+            Active = false;
+            endCall = null;
             MonoBehaviorTool.Instance.UnRegisterUpdate(this);
         }
 
-    }
-    public override bool IsEnd()
-    {
-        return true;
-    }
-}
-
-#if DoTween
-public class DotweenDelay : Delay
-{
-    private DOTweenAnimation tweenAni;
-
-    public override bool Active
-    {
-        get
+        public static Delay DoDelay(float _duration, UnityAction _endCall)
         {
-            return base.Active;
+            return new TimeDelay(_duration, null, _endCall);
         }
 
-        set
+        public static Delay DelayUntil(ConditionDelay.Predicate _predicate, UnityAction _endCall)
         {
-            if(value)
+            return new ConditionDelay(_predicate, _endCall);
+        }
+
+    }
+
+    public class TimeDelay : Delay
+    {
+
+        private float timeCounter;
+        private float duration;
+        private float frequency;
+        private float frequencyCounter;
+
+        private bool useFrame;
+
+        private UnityAction updateCall;
+
+        public TimeDelay(float _duration, UnityAction _updateCall, UnityAction _endCall, float _frequency = 0, bool _useFrame = false) : base()
+        {
+            duration = _duration;
+            updateCall = _updateCall;
+            endCall = _endCall;
+            frequency = _frequency;
+            useFrame = _useFrame;
+            Active = true;
+            MonoBehaviorTool.Instance.RegisterUpdate(this);
+        }
+
+        public override void MonoUpdate()
+        {
+            if (!Active)
+                return;
+            if (IsEnd())
             {
-                tweenAni.DOPlay();
+                if (endCall != null)
+                    endCall();
+                MonoBehaviorTool.Instance.UnRegisterUpdate(this);
             }
-            else
+            else if (updateCall != null)
             {
-                tweenAni.DOPause();
-            }
-            base.Active = value;
-        }
-    }
-    public DotweenDelay(DOTweenAnimation _tweenAni)
-    {
-        tweenAni = _tweenAni;
-        tweenAni.onComplete.AddListener(()=> {
-            if (endCall != null) endCall();
-        });
-        
-    }
-    public override bool IsEnd()
-    {
-        return true;
-    }
-
-    public override void MonoUpdate()
-    {
-        
-    }
-}
-#endif
-
-#if DoTween
-public class FadeinoutDelay : Delay
-{
-    private string text;
-
-    private GameObject fadeObj;
-
-    public override bool Active
-    {
-        get
-        {
-            return base.Active;
-        }
-
-        set
-        {
-            if (value)
-            {
-                fadeObj.GetComponentInChildren<UnityEngine.UI.Text>().text = text;
-                CanvasGroup canvasGroup = fadeObj.GetComponent<CanvasGroup>();
-                DOTween.Kill(canvasGroup);
-                canvasGroup.alpha = 0;
-                canvasGroup.DOFade(1, 1.5f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutQuad).OnComplete(() =>
+                frequencyCounter += Time.deltaTime;
+                if (frequencyCounter >= frequency)
                 {
-                    if (endCall != null)
-                        endCall();
-                });
+                    frequencyCounter = 0;
+                    updateCall();
+                }
             }
-            else
-            {
-                CanvasGroup canvasGroup = fadeObj.GetComponent<CanvasGroup>();
-                DOTween.Kill(canvasGroup);
-            }
-            base.Active = value;
+        }
+        public override bool IsEnd()
+        {
+            timeCounter += useFrame ? 1 : Time.deltaTime;
+            return timeCounter >= duration;
+        }
+
+        public void Stop()
+        {
+            Active = false;
+            MonoBehaviorTool.Instance.UnRegisterUpdate(this);
+        }
+
+        public static TimeDelay Delay(float _duration, UnityAction _endCall)
+        {
+            return new TimeDelay(_duration, null, _endCall);
+        }
+
+        public static TimeDelay DelayFrame(float _duration, UnityAction _endCall)
+        {
+            return new TimeDelay(_duration, null, _endCall, 0, true);
         }
     }
 
-    public FadeinoutDelay(string _text,GameObject go)
+    public class ConditionDelay : Delay
     {
-        fadeObj = go;
-        text = _text;
+        public delegate bool Predicate();
+        public Predicate predicate;
+
+        public ConditionDelay(Predicate _predicate, UnityAction _endCall)
+        {
+            endCall = _endCall;
+            predicate = _predicate;
+
+            Active = true;
+            MonoBehaviorTool.Instance.RegisterUpdate(this);
+        }
+        public override void MonoUpdate()
+        {
+            if (!Active)
+                return;
+            if (predicate())
+            {
+                if (endCall != null)
+                    endCall();
+                MonoBehaviorTool.Instance.UnRegisterUpdate(this);
+            }
+
+        }
+        public override bool IsEnd()
+        {
+            return true;
+        }
     }
 
-    public override bool IsEnd()
+#if DoTween
+    public class DotweenDelay : Delay
     {
-        return true;
-    }
+        private DOTweenAnimation tweenAni;
 
-    public override void MonoUpdate()
-    {
-        
+        public override bool Active
+        {
+            get
+            {
+                return base.Active;
+            }
+
+            set
+            {
+                if (value)
+                {
+                    tweenAni.DOPlay();
+                }
+                else
+                {
+                    tweenAni.DOPause();
+                }
+                base.Active = value;
+            }
+        }
+        public DotweenDelay(DOTweenAnimation _tweenAni)
+        {
+            tweenAni = _tweenAni;
+            tweenAni.onComplete.AddListener(() => {
+                if (endCall != null) endCall();
+            });
+
+        }
+        public override bool IsEnd()
+        {
+            return true;
+        }
+
+        public override void MonoUpdate()
+        {
+
+        }
     }
-}
 #endif
 
-public class DelaySqueue
-{
-    private Queue<Delay> queue = new Queue<Delay>();
-
-    private Delay activeDelay;
-    public void Add(params Delay[] delays)
+#if DoTween
+    public class FadeinoutDelay : Delay
     {
-        foreach (var delay in delays)
+        private string text;
+
+        private GameObject fadeObj;
+
+        public override bool Active
         {
-            delay.Active = false;
-            delay.endCall += ExecuteNext;
-            queue.Enqueue(delay);
+            get
+            {
+                return base.Active;
+            }
+
+            set
+            {
+                if (value)
+                {
+                    fadeObj.GetComponentInChildren<UnityEngine.UI.Text>().text = text;
+                    CanvasGroup canvasGroup = fadeObj.GetComponent<CanvasGroup>();
+                    DOTween.Kill(canvasGroup);
+                    canvasGroup.alpha = 0;
+                    canvasGroup.DOFade(1, 1.5f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutQuad).OnComplete(() =>
+                    {
+                        if (endCall != null)
+                            endCall();
+                    });
+                }
+                else
+                {
+                    CanvasGroup canvasGroup = fadeObj.GetComponent<CanvasGroup>();
+                    DOTween.Kill(canvasGroup);
+                }
+                base.Active = value;
+            }
+        }
+
+        public FadeinoutDelay(string _text, GameObject go)
+        {
+            fadeObj = go;
+            text = _text;
+        }
+
+        public override bool IsEnd()
+        {
+            return true;
+        }
+
+        public override void MonoUpdate()
+        {
+
         }
     }
+#endif
 
-    public void Start()
+    public class DelaySqueue
     {
-        ExecuteNext();
-    }
+        private Queue<Delay> queue = new Queue<Delay>();
 
-    public void Stop()
-    {
-        foreach (Delay delay in queue)
+        private Delay activeDelay;
+        public void Add(params Delay[] delays)
         {
-            delay.Destroy();
+            foreach (var delay in delays)
+            {
+                delay.Active = false;
+                delay.endCall += ExecuteNext;
+                queue.Enqueue(delay);
+            }
         }
-        activeDelay.Destroy();
-        queue.Clear();
-    }
 
-    void ExecuteNext()
-    {
-        if (queue.Count == 0)
-            return;
-        Delay delay = queue.Dequeue();
-        delay.Active = true;
-        activeDelay = delay;
+        public void Start()
+        {
+            ExecuteNext();
+        }
+
+        public void Stop()
+        {
+            foreach (Delay delay in queue)
+            {
+                delay.Destroy();
+            }
+            activeDelay.Destroy();
+            queue.Clear();
+        }
+
+        void ExecuteNext()
+        {
+            if (queue.Count == 0)
+                return;
+            Delay delay = queue.Dequeue();
+            delay.Active = true;
+            activeDelay = delay;
+        }
     }
 }
+
 

@@ -5,74 +5,77 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public static class StringExtension
+namespace MyFrameworkPure
 {
-    /// <summary>
-    /// 获取字符串前缀
-    /// </summary>
-    /// <param name="source"></param>
-    /// <param name="flag"></param>
-    /// <returns></returns>
-    public static string GetPostfix(this string source, char flag)
+    public static class StringExtension
     {
-        int position = source.LastIndexOf(flag);
-        return source.Remove(0, position + 1);
-    }
-
-    /// <summary>
-    /// 字符串编码转换
-    /// </summary>
-    /// <param name="source"></param>
-    /// <param name="srcEncoding"></param>
-    /// <param name="dstEncoding"></param>
-    /// <returns></returns>
-    public static string EncodeConvert(this string source, Encoding srcEncoding,Encoding dstEncoding)
-    {
-        byte[] bytes = srcEncoding.GetBytes(source);
-        return dstEncoding.GetString(bytes);
-    }
-
-    /// <summary>
-    /// 判断字符串是否为数字
-    /// </summary>
-    public static bool IsNumber(this string s)
-    {
-        Regex regex = new Regex("[^0-9]");
-        return !regex.IsMatch(s);
-    }
-
-    /// <summary>
-    /// 将字符串转换为整形数组
-    /// </summary>
-    /// <param name="s"></param>
-    /// <param name="splitChar"></param>
-    /// <returns></returns>
-    public static int[] ConvertToInts(this string s, char splitChar=',')
-    {
-        string[] splits = s.Split(splitChar);
-        int[] result = new int[splits.Length];
-        for (int i = 0; i < splits.Length; i++)
+        /// <summary>
+        /// 获取字符串后缀
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
+        public static string GetPostfix(this string source, char flag)
         {
-            result[i] = int.Parse(splits[i]);
+            int position = source.LastIndexOf(flag);
+            return source.Remove(0, position + 1);
         }
 
-        return result;
-    }
-
-    /// <summary>
-    /// 字符串是否包含所有数组中的元素
-    /// </summary>
-    /// <param name="s"></param>
-    /// <param name="strs"></param>
-    /// <returns></returns>
-    public static bool Contains(this string s, string[] strs)
-    {
-        foreach (var str in strs)
+        /// <summary>
+        /// 字符串编码转换
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="srcEncoding"></param>
+        /// <param name="dstEncoding"></param>
+        /// <returns></returns>
+        public static string EncodeConvert(this string source, Encoding srcEncoding, Encoding dstEncoding)
         {
-            if (s.Contains(str))
-                return true;
+            byte[] bytes = srcEncoding.GetBytes(source);
+            return dstEncoding.GetString(bytes);
         }
 
-        return false;
+        /// <summary>
+        /// 判断字符串是否为数字
+        /// </summary>
+        public static bool IsNumber(this string s)
+        {
+            Regex regex = new Regex("[^0-9]");
+            return !regex.IsMatch(s);
+        }
+
+        /// <summary>
+        /// 将字符串转换为整形数组
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="splitChar"></param>
+        /// <returns></returns>
+        public static int[] ConvertToInts(this string s, char splitChar = ',')
+        {
+            string[] splits = s.Split(splitChar);
+            int[] result = new int[splits.Length];
+            for (int i = 0; i < splits.Length; i++)
+            {
+                result[i] = int.Parse(splits[i]);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 字符串是否包含任意数组中的元素
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="strs"></param>
+        /// <returns></returns>
+        public static bool Contains(this string s, string[] strs)
+        {
+            foreach (var str in strs)
+            {
+                if (s.Contains(str))
+                    return true;
+            }
+            return false;
+        }
     }
 }
+

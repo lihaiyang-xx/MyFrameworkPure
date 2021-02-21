@@ -6,70 +6,72 @@ using MyFrameworkPure;
 using UnityEditor;
 using UnityEngine;
 
-/// <summary>
-/// 批量删除场景中的组件窗口
-/// </summary>
-public class ComponentsDestoryWindow : EditorWindow
+namespace MyFrameworkPure
 {
-    [SerializeField]
-    private List<Component> componentList;
-
-    [SerializeField]
-    private bool includeChildren;
-
-    private SerializedObject serializedObject;
-    private SerializedProperty serializedProperty;
-
-    [MenuItem("Tools/批量删除场景组件窗口")]
-    static void InitWindow()
+    /// <summary>
+    /// 批量删除场景中的组件窗口
+    /// </summary>
+    public class ComponentsDestoryWindow : EditorWindow
     {
-        ComponentsDestoryWindow window = EditorWindow.GetWindow<ComponentsDestoryWindow>();
-        window.Show();
-    }
+        [SerializeField]
+        private List<Component> componentList;
 
-    void OnEnable()
-    {
-        serializedObject = new SerializedObject(this);
-        serializedProperty = serializedObject.FindProperty("componentList");
-    }
+        [SerializeField]
+        private bool includeChildren;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        private SerializedObject serializedObject;
+        private SerializedProperty serializedProperty;
 
-    void OnGUI()
-    {
-        serializedObject.Update();
-        EditorGUI.BeginChangeCheck();
-        EditorGUILayout.PropertyField(serializedProperty, true);
-        if (EditorGUI.EndChangeCheck())
+        [MenuItem("Tools/批量删除场景组件窗口")]
+        static void InitWindow()
         {
-            serializedObject.ApplyModifiedProperties();
+            ComponentsDestoryWindow window = EditorWindow.GetWindow<ComponentsDestoryWindow>();
+            window.Show();
         }
 
-        includeChildren = EditorGUILayout.Toggle("包括子物体",includeChildren);
-
-        if (GUILayout.Button("删除"))
+        void OnEnable()
         {
-            if (Selection.activeGameObject == null)
+            serializedObject = new SerializedObject(this);
+            serializedProperty = serializedObject.FindProperty("componentList");
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        void OnGUI()
+        {
+            serializedObject.Update();
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(serializedProperty, true);
+            if (EditorGUI.EndChangeCheck())
             {
-                Debug.LogError("所选物体为空!");
-                return;
+                serializedObject.ApplyModifiedProperties();
             }
-            foreach (Component component in componentList)
+
+            includeChildren = EditorGUILayout.Toggle("包括子物体", includeChildren);
+
+            if (GUILayout.Button("删除"))
             {
-                if (includeChildren)
+                if (Selection.activeGameObject == null)
                 {
-                    Selection.activeGameObject.GetComponentsInChildren(component.GetType()).DestroyImmediate();
-
+                    Debug.LogError("所选物体为空!");
+                    return;
                 }
-                else
-                    DestroyImmediate(Selection.activeGameObject.GetComponent(component.GetType()));
+                foreach (Component component in componentList)
+                {
+                    if (includeChildren)
+                    {
+                        Selection.activeGameObject.GetComponentsInChildren(component.GetType()).DestroyImmediate();
+
+                    }
+                    else
+                        DestroyImmediate(Selection.activeGameObject.GetComponent(component.GetType()));
+                }
             }
         }
     }
-
-
 }
+

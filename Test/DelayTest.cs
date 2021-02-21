@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyFrameworkPure;
 
 #if DoTween
 public class DelayTest : MonoBehaviour {

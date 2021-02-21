@@ -2,27 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ComponentTool : MonoBehaviour
+namespace MyFrameworkPure
 {
-
-    T CopyComponent<T>(T original, GameObject destination) where T : Component
+    /// <summary>
+    /// 组件工具类
+    /// </summary>
+    public class ComponentTool : MonoBehaviour
     {
-        System.Type type = original.GetType();
-        var dst = destination.GetComponent(type) as T;
-        if (!dst) dst = destination.AddComponent(type) as T;
-        var fields = type.GetFields();
-        foreach (var field in fields)
+        /// <summary>
+        /// 复制组件到目标物体上
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="original"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+        T CopyComponent<T>(T original, GameObject destination) where T : Component
         {
-            if (field.IsStatic) continue;
-            field.SetValue(dst, field.GetValue(original));
+            System.Type type = original.GetType();
+            var dst = destination.GetComponent(type) as T;
+            if (!dst) dst = destination.AddComponent(type) as T;
+            var fields = type.GetFields();
+            foreach (var field in fields)
+            {
+                if (field.IsStatic) continue;
+                field.SetValue(dst, field.GetValue(original));
+            }
+            var props = type.GetProperties();
+            foreach (var prop in props)
+            {
+                if (!prop.CanWrite || !prop.CanRead || prop.Name == "name") continue;
+                prop.SetValue(dst, prop.GetValue(original, null), null);
+            }
+            return (T)dst;
         }
-        var props = type.GetProperties();
-        foreach (var prop in props)
-        {
-            if (!prop.CanWrite || !prop.CanRead || prop.Name == "name") continue;
-            prop.SetValue(dst, prop.GetValue(original, null), null);
-        }
-        return (T) dst;
-    }
 
+    }
 }
+

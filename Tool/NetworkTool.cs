@@ -11,6 +11,9 @@ using UnityEngine.Networking;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 网络工具
+    /// </summary>
     public class NetworkTool
     {
         /// <summary>
@@ -41,6 +44,10 @@ namespace MyFrameworkPure
             return new string[]{};
         }
 
+        /// <summary>
+        /// 获取mac地址
+        /// </summary>
+        /// <returns></returns>
         public static string GetMacAddress()
         {
             return NetworkInterface.GetAllNetworkInterfaces()
@@ -48,6 +55,11 @@ namespace MyFrameworkPure
                 .Select(x => x.GetPhysicalAddress().ToString()).FirstOrDefault();
         }
 
+        /// <summary>
+        /// 获取公网ip地址
+        /// </summary>
+        /// <param name="onGet"></param>
+        /// <returns></returns>
         public static IEnumerator GetPublicIp(UnityAction<string> onGet)
         {
             using (UnityWebRequest webRequest = UnityWebRequest.Get("http://pv.sohu.com/cityjson?ie=utf-8"))

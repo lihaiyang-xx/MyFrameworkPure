@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeshTool
+namespace MyFrameworkPure
 {
-    public static void UpdateSkinMeshCollider(GameObject go)
+    /// <summary>
+    /// 网格工具
+    /// </summary>
+    public class MeshTool
     {
-        Mesh mesh = new Mesh();
-        go.GetComponent<SkinnedMeshRenderer>().BakeMesh(mesh);
-        go.GetComponent<MeshCollider>().sharedMesh = mesh;
+        public static void UpdateSkinMeshCollider(GameObject go)
+        {
+            Mesh mesh = new Mesh();
+            go.GetComponent<SkinnedMeshRenderer>().BakeMesh(mesh);
+            go.GetComponent<MeshCollider>().sharedMesh = mesh;
+        }
     }
-	
 }
+

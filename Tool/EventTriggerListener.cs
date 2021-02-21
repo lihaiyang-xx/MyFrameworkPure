@@ -1,11 +1,4 @@
-﻿/*
-	功能描述：UI事件侦听器
-	
-	时间：2017-05-02
-	
-	作者：李海洋
-*/
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;

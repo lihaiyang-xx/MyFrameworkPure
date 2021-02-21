@@ -7,6 +7,9 @@ namespace MyFrameworkPure
     {
     }
 
+    /// <summary>
+    /// 协程工具类
+    /// </summary>
     public static class CoroutineTool
     {
         private static MonoManagerMonoBehaviour _monoManagerMonoBehaviour;
@@ -40,6 +43,5 @@ namespace MyFrameworkPure
             _monoManagerMonoBehaviourNormal = go1.AddComponent<MonoManagerMonoBehaviour>();
         }
     }
-
 }
 

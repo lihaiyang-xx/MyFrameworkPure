@@ -2,43 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 像子物体一样跟随目标
-/// </summary>
-public class FollowLikeChild : MonoBehaviour
+namespace MyFrameworkPure
 {
-    private Vector3 relativePos;
-
-    private Quaternion relativeRot;
-
-    [SerializeField] private Transform target;
-    // Start is called before the first frame update
-    void Start()
-    {
-        relativePos = target.InverseTransformPoint(transform.position);
-        relativeRot = Quaternion.Inverse(target.rotation) * transform.rotation;
-    }
-
-    // Update is called once per frame
-    void LateUpdate()
-    {
-        if(target == null)
-            return;
-        transform.position = target.TransformPoint(relativePos);
-        transform.rotation = relativeRot * target.rotation;
-    }
-
     /// <summary>
-    /// 目标变换
+    /// 像子物体一样跟随目标
     /// </summary>
-    public Transform Target
+    public class FollowLikeChild : MonoBehaviour
     {
-        get => target;
-        set
+        private Vector3 relativePos;
+
+        private Quaternion relativeRot;
+
+        [SerializeField] private Transform target;
+        // Start is called before the first frame update
+        void Start()
         {
-            target = value;
             relativePos = target.InverseTransformPoint(transform.position);
             relativeRot = Quaternion.Inverse(target.rotation) * transform.rotation;
         }
+
+        // Update is called once per frame
+        void LateUpdate()
+        {
+            if (target == null)
+                return;
+            transform.position = target.TransformPoint(relativePos);
+            transform.rotation = relativeRot * target.rotation;
+        }
+
+        /// <summary>
+        /// 目标变换
+        /// </summary>
+        public Transform Target
+        {
+            get => target;
+            set
+            {
+                target = value;
+                relativePos = target.InverseTransformPoint(transform.position);
+                relativeRot = Quaternion.Inverse(target.rotation) * transform.rotation;
+            }
+        }
     }
 }
+

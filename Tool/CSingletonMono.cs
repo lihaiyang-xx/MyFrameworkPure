@@ -4,7 +4,7 @@ using System.Collections;
 namespace MyFrameworkPure
 {
     /// <summary>
-    /// 单例
+    /// 基于monobehavior的单例基类
     /// </summary>
     /// <typeparam equimpentName="T"></typeparam>
     public class CSingletonMono<T> : MonoBehaviour

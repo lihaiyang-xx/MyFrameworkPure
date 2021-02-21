@@ -1,10 +1,4 @@
-﻿/*
-	功能描述：
-	
-	时间：
-	
-	作者：李海洋
-*/
+﻿
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +8,9 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 文件处理工具
+    /// </summary>
     public static class FileTool
     {
         /// <summary>
@@ -44,11 +41,24 @@ namespace MyFrameworkPure
             return text;
         }
 
+        /// <summary>
+        /// 从远程地址读取文本信息
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="encoding"></param>
+        /// <param name="action"></param>
         public static void ReadTextFromUrl(string url, Encoding encoding,Action<string> action)
         {
             CoroutineTool.DoCoroutine(AsyncReadAllText(url, encoding, action));
         }
 
+        /// <summary>
+        /// 异步读取文本
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="encoding"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
         public static IEnumerator AsyncReadAllText(string path, Encoding encoding, Action<string> action)
         {
             using (WWW www = new WWW(path))
@@ -83,11 +93,24 @@ namespace MyFrameworkPure
             }
         }
 
+        /// <summary>
+        /// 远程读取图片信息
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="action"></param>
+        /// <param name="onError"></param>
         public static void ReadTextureFromUrl(string url, Action<Texture2D> action,Action<string> onError = null)
         {
             CoroutineTool.DoCoroutine(AsyncReadTextureFromUrl(url, action,onError));
         }
 
+        /// <summary>
+        /// 异步读取图片
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="action"></param>
+        /// <param name="onError"></param>
+        /// <returns></returns>
         public static IEnumerator AsyncReadTextureFromUrl(string url, Action<Texture2D> action,Action<string> onError = null)
         {
             Debug.Log(url);
@@ -126,6 +149,11 @@ namespace MyFrameworkPure
             return texture;
         }
 
+        /// <summary>
+        /// 读取远程音频信息
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="action"></param>
         public static void ReadAudioFromUrl(string url, Action<AudioClip> action)
         {
             CoroutineTool.DoCoroutine(AsyncReadAudioFromUrl(url, action));
@@ -168,6 +196,11 @@ namespace MyFrameworkPure
             return Encoding.ASCII;
         }
 
+        /// <summary>
+        /// 重命名文件
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="newFileName"></param>
         public static void Rename(string fileName, string newFileName)
         {
             FileInfo fi = new FileInfo(fileName);

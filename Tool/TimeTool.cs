@@ -5,21 +5,35 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 时间工具
+    /// </summary>
     public static class TimeTool
     {
-        public static long GetTime()
-        {
-            TimeSpan ts = new TimeSpan(DateTime.UtcNow.Ticks - new DateTime(1970, 1, 1, 0, 0, 0).Ticks);
-            return (long)ts.TotalMilliseconds;
-        }
-
+        /// <summary>
+        /// 获取时间戳(秒)
+        /// </summary>
+        /// <returns></returns>
         public static long GetTimeStamp()
         {
-            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
-            long timeStamp = (long)(DateTime.Now - startTime).TotalMilliseconds; // 相差毫秒数
+            long timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
             return timeStamp;
         }
 
+        /// <summary>
+        /// 获取13位时间戳(毫秒)
+        /// </summary>
+        /// <returns></returns>
+        public static long GetTimeStamp13()
+        {
+            long timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+            return timeStamp;
+        }
+
+        /// <summary>
+        /// 获取时间字符串
+        /// </summary>
+        /// <returns></returns>
         public static string GetTimeStr()
         {
             DateTime dateTime = DateTime.Now;

@@ -6,10 +6,15 @@ using System.Collections;
  *作   者 ::      李海洋
  *编写日期 ::     2015-10-14
  */
-public abstract class State<T> where T : class
+
+namespace MyFrameworkPure
 {
-    public abstract void Enter(T entity);
-    public abstract void Execute(T entity);
-    public abstract void Exit(T entity);
+    public abstract class State<T> where T : class
+    {
+        public abstract void Enter(T entity);
+        public abstract void Execute(T entity);
+        public abstract void Exit(T entity);
+    }
 }
+
 

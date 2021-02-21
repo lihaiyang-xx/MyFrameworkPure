@@ -4,35 +4,39 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// 自由落体组件(h=1/2gt²)
-/// </summary>
-public class FreeFallDown : MonoBehaviour
+namespace MyFrameworkPure
 {
-    private float timeCounter = 0;
-
-    private Vector3 originPos;
-
-    private float gravity;
-
-    public UnityAction onFallToGround;
-    // Start is called before the first frame update
-    void OnEnable()
+    /// <summary>
+    /// 自由落体组件(h=1/2gt²)
+    /// </summary>
+    public class FreeFallDown : MonoBehaviour
     {
-        originPos = transform.position;
-        gravity = Physics.gravity.y;
-    }
+        private float timeCounter = 0;
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        timeCounter += Time.fixedDeltaTime;
-        float height = originPos.y + 0.5f * gravity * timeCounter * timeCounter;
-        transform.position = originPos.Set('y', height);
+        private Vector3 originPos;
 
-        if (height < 0)
+        private float gravity;
+
+        public UnityAction onFallToGround;
+        // Start is called before the first frame update
+        void OnEnable()
         {
-            onFallToGround?.Invoke();
+            originPos = transform.position;
+            gravity = Physics.gravity.y;
+        }
+
+        // Update is called once per frame
+        void FixedUpdate()
+        {
+            timeCounter += Time.fixedDeltaTime;
+            float height = originPos.y + 0.5f * gravity * timeCounter * timeCounter;
+            transform.position = originPos.Set('y', height);
+
+            if (height < 0)
+            {
+                onFallToGround?.Invoke();
+            }
         }
     }
 }
+

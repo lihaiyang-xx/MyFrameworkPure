@@ -7,6 +7,9 @@ using Object = UnityEngine.Object;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 内存工具
+    /// </summary>
     public static class MemoryTool
     {
         /// <summary>

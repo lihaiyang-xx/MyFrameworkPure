@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 加密工具类
+    /// </summary>
     public static class EncryptTool
     {
         /// <summary>
@@ -90,6 +93,12 @@ namespace MyFrameworkPure
             return Encoding.UTF8.GetString(resultArray);
         }
 
+        /// <summary>
+        /// base16编码
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="autoCode"></param>
+        /// <returns></returns>
         public static string Base16Encrypt(string str, string[] autoCode = null)
         {
             string innerStr = string.Empty;
@@ -106,6 +115,28 @@ namespace MyFrameworkPure
                 strEn.Append(autoCode[v2]);
             }
             return strEn.ToString();
+        }
+
+        /// <summary>
+        /// base64编码
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Base64Encode(string str)
+        {
+            var bytes = Encoding.UTF8.GetBytes(str);
+            return Convert.ToBase64String(bytes);
+        }
+
+        /// <summary>
+        /// base64解码
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Base64Decode(string str)
+        {
+            var bytes = Convert.FromBase64String(str);
+            return Encoding.UTF8.GetString(bytes);
         }
     }
 

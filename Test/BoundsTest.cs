@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MyFrameworkPure;
 public class BoundsTest : MonoBehaviour {
 
 	// Use this for initialization
