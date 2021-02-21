@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MyFrameworkPure;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public interface IMonoUpdate
 {
@@ -18,6 +20,20 @@ public class MonoBehaviorTool : CSingletonMono<MonoBehaviorTool>
     void Awake()
     {
         monoUpdateList = new List<IMonoUpdate>();
+    }
+
+    public static MonoBehaviorTool GetInstanceInActiveScene()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        MonoBehaviorTool instance =
+            FindObjectsOfType<MonoBehaviorTool>()?.Where(x => x.gameObject.scene == activeScene).FirstOrDefault();
+        if (!instance)
+        {
+            GameObject go = new GameObject("MonoBehaviorTool");
+            instance = go.AddComponent<MonoBehaviorTool>();
+        }
+
+        return instance;
     }
 
     /// <summary>

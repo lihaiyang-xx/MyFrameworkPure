@@ -120,6 +120,11 @@ namespace MyFrameworkPure
             return Resources.FindObjectsOfTypeAll<T>().Where(x => x.gameObject.scene == scene).ToArray();
         }
 
+        public static T FindObjectOfTypeInScene<T>(Scene scene) where T : Component
+        {
+            return FindObjectsOfTypeInScene<T>(scene).FirstOrDefault();
+        }
+
         private static Dictionary<Type, Component> cacheDictionary;
 
         public static T FindTypeWithCache<T>() where T : Component

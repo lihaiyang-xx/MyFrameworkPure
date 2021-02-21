@@ -305,11 +305,25 @@ public static class TransformExtension
     /// </summary>
     /// <param name="t"></param>
     /// <param name="copy"></param>
-    public static void CopyTransform(this Transform t, Transform copy)
+    public static void CopyTransform(this Transform t, Transform copy,bool isLocal = true)
     {
-        t.transform.localPosition = copy.transform.localPosition;
-        t.transform.localRotation = copy.transform.localRotation;
+        CopyTransformWithoutScale(t,copy,isLocal);
         t.transform.localScale = copy.transform.localScale;
+
+    }
+
+    public static void CopyTransformWithoutScale(this Transform t, Transform copy,bool isLocal = true)
+    {
+        if (isLocal)
+        {
+            t.transform.localPosition = copy.transform.localPosition;
+            t.transform.localRotation = copy.transform.localRotation;
+        }
+        else
+        {
+            t.transform.position = copy.transform.position;
+            t.transform.rotation = copy.transform.rotation;
+        }
     }
 
     /// <summary>

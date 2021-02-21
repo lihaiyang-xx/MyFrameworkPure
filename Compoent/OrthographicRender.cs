@@ -9,7 +9,9 @@ public class OrthographicRender : MonoBehaviour
 {
     public Camera renderCamera;
 
-    public float scale = 0.3f;
+    [SerializeField] private float scale = 0.3f;
+
+    [SerializeField] private bool lateUpdate;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +22,16 @@ public class OrthographicRender : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(lateUpdate)
+            return;
         transform.localScale = Vector3.one * GetHandleSize(renderCamera,transform.position) * scale;
+    }
+
+    void LateUpdate()
+    {
+        if(!lateUpdate)
+            return;
+        transform.localScale = Vector3.one * GetHandleSize(renderCamera, transform.position) * scale;
     }
 
     public static float GetHandleSize(Camera camera, Vector3 position)

@@ -25,7 +25,8 @@ namespace MyFrameworkPure
         {
             nodeList = new List<FlowNode>();
             curIndex = 0;
-            MonoBehaviorTool.Instance.RegisterUpdate(this);
+            //MonoBehaviorTool.Instance.RegisterUpdate(this);
+            MonoBehaviorTool.GetInstanceInActiveScene().RegisterUpdate(this);
         }
 
         public int Count
@@ -125,7 +126,7 @@ namespace MyFrameworkPure
         public void Clear()
         {
             nodeList.Clear();
-            MonoBehaviorTool.Instance.UnRegisterUpdate(this);
+            MonoBehaviorTool.GetInstanceInActiveScene().UnRegisterUpdate(this);
         }
 
         /// <summary>

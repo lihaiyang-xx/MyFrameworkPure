@@ -5,18 +5,15 @@ using UnityEngine;
 /// <summary>
 /// 像子物体一样跟随目标
 /// </summary>
-public class FollowLikeChild : MonoBehaviour
+public class FollowLikeChildWithoutRot : MonoBehaviour
 {
     private Vector3 relativePos;
-
-    private Quaternion relativeRot;
 
     [SerializeField] private Transform target;
     // Start is called before the first frame update
     void Start()
     {
         relativePos = target.InverseTransformPoint(transform.position);
-        relativeRot = Quaternion.Inverse(target.rotation) * transform.rotation;
     }
 
     // Update is called once per frame
@@ -25,7 +22,6 @@ public class FollowLikeChild : MonoBehaviour
         if(target == null)
             return;
         transform.position = target.TransformPoint(relativePos);
-        transform.rotation = relativeRot * target.rotation;
     }
 
     /// <summary>
@@ -38,7 +34,6 @@ public class FollowLikeChild : MonoBehaviour
         {
             target = value;
             relativePos = target.InverseTransformPoint(transform.position);
-            relativeRot = Quaternion.Inverse(target.rotation) * transform.rotation;
         }
     }
 }
