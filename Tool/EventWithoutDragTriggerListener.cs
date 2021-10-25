@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
+public class EventWithoutDragTriggerListener : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler, IUpdateSelectedHandler, ISelectHandler, IEventSystemHandler
 {
     public delegate void VoidDelegate(GameObject go);
     public VoidDelegate onClick;
@@ -12,11 +12,8 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     public VoidDelegate onEnter;
     public VoidDelegate onExit;
     public VoidDelegate onUp;
-    public VoidDelegate onDrag;
     public VoidDelegate onSelect;
-    public VoidDelegate onDeselect;
     public VoidDelegate onUpdateSelect;
-    public VoidDelegate onEndDrag;
 
     public UnityAction onPressed;
 
@@ -24,25 +21,23 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     public DataDelegate onClick_Data;
     public DataDelegate onDown_Data;
     public DataDelegate onUp_Data;
-    public DataDelegate onDrag_Data;
-    public DataDelegate onBeginDrag_Data;
 
     private bool pressed;
 
     public bool IsPressed => pressed;
 
-    static public EventTriggerListener Get(GameObject go)
+    static public EventWithoutDragTriggerListener Get(GameObject go)
     {
-        EventTriggerListener listener = go.GetComponent<EventTriggerListener>();
-        if (listener == null) listener = go.AddComponent<EventTriggerListener>();
+        EventWithoutDragTriggerListener listener = go.GetComponent<EventWithoutDragTriggerListener>();
+        if (listener == null) listener = go.AddComponent<EventWithoutDragTriggerListener>();
         return listener;
     }
-    public override void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
         if (onClick != null) onClick(gameObject);
         if (onClick_Data != null) onClick_Data(gameObject, eventData);
     }
-    public override void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         if (onDown != null) onDown(gameObject);
         if (onDown_Data != null) onDown_Data(gameObject, eventData);
@@ -50,48 +45,27 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
         pressed = true;
     }
 
-    public override void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
         if (onEnter != null) onEnter(gameObject);
     }
-    public override void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
         if (onExit != null) onExit(gameObject);
     }
-    public override void OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
         if (onUp != null) onUp(gameObject);
         if (onUp_Data != null) onUp_Data(gameObject, eventData);
 
         pressed = false;
     }
-    public override void OnSelect(BaseEventData eventData)
+    public void OnSelect(BaseEventData eventData)
     {
         if (onSelect != null) onSelect(gameObject);
     }
-
-    public override void OnDeselect(BaseEventData eventData)
-    {
-        onDeselect?.Invoke(gameObject);
-    }
-
-    public override void OnBeginDrag(PointerEventData eventData)
-    {
-        onBeginDrag_Data?.Invoke(gameObject,eventData);
-    }
-
-    public override void OnDrag(PointerEventData eventData)
-    {
-        if (onDrag != null) onDrag(gameObject);
-        if (onDrag_Data != null) onDrag_Data(gameObject, eventData);
-    }
-
-    public override void OnEndDrag(PointerEventData eventData)
-    {
-        if (onEndDrag != null) onEndDrag(gameObject);
-    }
     
-    public override void OnUpdateSelected(BaseEventData eventData)
+    public void OnUpdateSelected(BaseEventData eventData)
     {
         if (onUpdateSelect != null) onUpdateSelect(gameObject);
     }

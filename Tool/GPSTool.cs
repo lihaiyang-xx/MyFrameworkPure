@@ -12,7 +12,7 @@ namespace MyFrameworkPure
         /// 笛卡尔坐标系转换为gps
         /// </summary>
         /// <param name="position"></param>
-        /// <param name="localOrigin"></param>
+        /// <param name="localOrigin">X为纬度，Y为经度</param>
         /// <returns></returns>
         public static Vector2 USCToGPS(Vector3 position, Vector2 localOrigin)
         {
@@ -29,7 +29,7 @@ namespace MyFrameworkPure
         /// <param name="gps"></param>
         /// <param name="localOrigin"></param>
         /// <returns></returns>
-        private static Vector3 GPStoUCS(Vector2 gps, Vector2 localOrigin)
+        public static Vector3 GPStoUCS(Vector2 gps, Vector2 localOrigin)
         {
             FindMetersPerLat(localOrigin.x, out float metersPerLat, out float metersPerLon);
             float zPosition = metersPerLat * (gps.x - localOrigin.x); //Calc current lat
@@ -64,7 +64,7 @@ namespace MyFrameworkPure
         return geoLocation;
     }
 
-    private static Vector3d GPStoUCS(Vector2d gps, Vector2d localOrigin)
+    public static Vector3d GPStoUCS(Vector2d gps, Vector2d localOrigin)
     {
         FindMetersPerLat(localOrigin.x, out double metersPerLat, out double metersPerLon);
         double zPosition = metersPerLat * (gps.x - localOrigin.x); 

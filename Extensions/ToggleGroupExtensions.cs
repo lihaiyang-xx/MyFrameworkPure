@@ -61,5 +61,14 @@ namespace MyFrameworkPure
             toggles.First(x => x.name == name).isOn = true;
         }
 
+        public static int GetActiveIndex(this ToggleGroup grp)
+        {
+            Toggle activeToggle = grp.ActiveToggles().FirstOrDefault();
+            if (!activeToggle)
+                return -1;
+            List<Toggle> toggles = grp.GetToggles().OrderBy(x => x.transform.GetSiblingIndex()).ToList();
+            return toggles.IndexOf(activeToggle);
+        }
+
     }
 }

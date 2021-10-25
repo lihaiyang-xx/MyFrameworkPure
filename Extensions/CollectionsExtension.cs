@@ -136,7 +136,7 @@ namespace MyFrameworkPure
         //    }
         //}
 
-        public static void Destroy<T>(this IList<T> list) where T : Component
+        public static void Destroy<T>(this IList<T> list) where T : Object
         {
             for (int i = list.Count - 1; i >= 0; i--)
             {

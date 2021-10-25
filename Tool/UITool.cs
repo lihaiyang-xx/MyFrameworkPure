@@ -225,6 +225,22 @@ namespace MyFrameworkPure
 
         }
 
+        public static GameObject GetUiFromMousePosition(Type type)
+        {
+            if (EventSystem.current == null) return null;
+
+            Vector2 inputDevPos = Input.mousePosition;
+
+            PointerEventData eventDataCurrentPosition =
+                new PointerEventData(EventSystem.current) { position = new Vector2(inputDevPos.x, inputDevPos.y) };
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+            RaycastResult result = results.FirstOrDefault(x => x.gameObject.GetComponent(type) != null);
+            return result.gameObject;
+
+        }
+
         /// <summary>
         /// 设置ui的交互状态,包括子物体
         /// </summary>

@@ -39,6 +39,16 @@ namespace MyFrameworkPure
             DateTime dateTime = DateTime.Now;
             return dateTime.ToString("yyyy-MM-dd hh:mm:ss.f");
         }
+
+        public static string TimeStationToString(long timeStation)
+        {
+            DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            long lTime = timeStation * 10000000;
+            TimeSpan toNow = new TimeSpan(lTime);
+            DateTime dateTime = dtStart.Add(toNow);
+
+            return dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+        }
     }
 }
 

@@ -85,6 +85,12 @@ namespace MyFrameworkPure
             return components.Except(go.GetComponents<T>()).ToArray();
         }
 
+        public static Component GetBaseComponentInParent<T>(this GameObject go) where T:Component
+        {
+            T[] components = go.GetComponentsInParent<T>();
+            return components.FirstOrDefault(x => x.GetType() == typeof(T)) as Component;
+        }
+
         /// <summary>
         /// 获取子物体的所有材质（包括自身）
         /// </summary>
@@ -108,6 +114,15 @@ namespace MyFrameworkPure
                 });
             });
             return matlist.ToArray();
+        }
+
+        /// <summary>
+        /// 反转Active
+        /// </summary>
+        /// <param name="go"></param>
+        public static void InverseActive(this GameObject go)
+        {
+            go.SetActive(!go.activeSelf);
         }
     }
 }

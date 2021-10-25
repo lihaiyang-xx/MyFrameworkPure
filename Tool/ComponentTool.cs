@@ -16,7 +16,7 @@ namespace MyFrameworkPure
         /// <param name="original"></param>
         /// <param name="destination"></param>
         /// <returns></returns>
-        T CopyComponent<T>(T original, GameObject destination) where T : Component
+        public static T CopyComponent<T>(T original, GameObject destination) where T : Component
         {
             System.Type type = original.GetType();
             var dst = destination.GetComponent(type) as T;
