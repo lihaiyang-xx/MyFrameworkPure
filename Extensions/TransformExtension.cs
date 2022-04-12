@@ -499,5 +499,15 @@ namespace MyFrameworkPure
                 action(child);
             }
         }
+
+        /// <summary>
+        /// 设置激活状态
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="active"></param>
+        public static void SetActive(this Transform t,bool active)
+        {
+            t.gameObject.SetActive(active);
+        }
     }
 }

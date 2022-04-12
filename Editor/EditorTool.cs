@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using MyFrameworkPure;
 using TMPro;
 using UnityEditor;
@@ -10,7 +11,7 @@ namespace MyFrameworkPure
 {
     public class EditorTool : MonoBehaviour
     {
-        [MenuItem("Tools/重命名Button的Text")]
+        [MenuItem("Tools/EditorTools/重命名子物体的Text内容")]
         static void RenameButtonText()
         {
             GameObject[] gos = Selection.gameObjects;
@@ -25,7 +26,7 @@ namespace MyFrameworkPure
             }
         }
 
-        [MenuItem("Tools/Text内容作为物体名称")]
+        [MenuItem("Tools/EditorTools/Text内容作为物体名称")]
         static void RenameText()
         {
             GameObject[] gos = Selection.gameObjects;
@@ -40,7 +41,7 @@ namespace MyFrameworkPure
             }
         }
 
-        [MenuItem("Tools/text替换成textmeshpro")]
+        [MenuItem("Tools/EditorTools/text替换成textmeshpro")]
         static void ReplaceToTextMeshPro()
         {
             Text[] texts = Selection.activeGameObject.GetComponentsInChildren<Text>();
@@ -59,7 +60,7 @@ namespace MyFrameworkPure
             }
         }
 
-        [MenuItem("Tools/textmeshpro替换成text")]
+        [MenuItem("Tools/EditorTools/textmeshpro替换成text")]
         static void ReplaceToText()
         {
             TextMeshProUGUI[] texts = Selection.activeGameObject.GetComponentsInChildren<TextMeshProUGUI>();
@@ -78,7 +79,7 @@ namespace MyFrameworkPure
             }
         }
 
-        [MenuItem("Tools/放大选中Text字体")]
+        [MenuItem("Tools/EditorTools/放大选中Text字体")]
         static void ScaleUpTextFont()
         {
             Text[] texts = Selection.activeGameObject.GetComponentsInChildren<Text>();
@@ -90,6 +91,19 @@ namespace MyFrameworkPure
                 label.horizontalOverflow = HorizontalWrapMode.Overflow;
                 label.verticalOverflow = VerticalWrapMode.Overflow;
             }
+        }
+
+        [MenuItem("Tools/EditorTools/重新编译脚本")]
+        static void ReCompileScripts()
+        {
+#if UNITY_2019_3_OR_NEWER
+                 CompilationPipeline.RequestScriptCompilation();
+#elif UNITY_2017_1_OR_NEWER
+            var editorAssembly = Assembly.GetAssembly(typeof(Editor));
+            var editorCompilationInterfaceType = editorAssembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface");
+            var dirtyAllScriptsMethod = editorCompilationInterfaceType.GetMethod("DirtyAllScripts", BindingFlags.Static | BindingFlags.Public);
+            dirtyAllScriptsMethod.Invoke(editorCompilationInterfaceType, null);
+#endif
         }
     }
 }
