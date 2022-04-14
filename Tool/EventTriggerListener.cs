@@ -17,8 +17,8 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     public VoidDelegate onDeselect;
     public VoidDelegate onUpdateSelect;
     public VoidDelegate onEndDrag;
-
-    public UnityAction onPressed;
+    public VoidDelegate onPressed;
+    public VoidDelegate onLongPressed;
 
     public delegate void DataDelegate(GameObject go, PointerEventData e);
     public DataDelegate onClick_Data;
@@ -28,10 +28,12 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     public DataDelegate onBeginDrag_Data;
 
     private bool pressed;
+    private float pressTimeCount;
+    private const float LongPressedTimeThreshold = 0.5f;
 
     public bool IsPressed => pressed;
 
-    static public EventTriggerListener Get(GameObject go)
+    public static EventTriggerListener Get(GameObject go)
     {
         EventTriggerListener listener = go.GetComponent<EventTriggerListener>();
         if (listener == null) listener = go.AddComponent<EventTriggerListener>();
@@ -39,35 +41,35 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     }
     public override void OnPointerClick(PointerEventData eventData)
     {
-        if (onClick != null) onClick(gameObject);
-        if (onClick_Data != null) onClick_Data(gameObject, eventData);
+        onClick?.Invoke(gameObject);
+        onClick_Data?.Invoke(gameObject, eventData);
     }
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (onDown != null) onDown(gameObject);
-        if (onDown_Data != null) onDown_Data(gameObject, eventData);
+        onDown?.Invoke(gameObject);
+        onDown_Data?.Invoke(gameObject, eventData);
 
         pressed = true;
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
-        if (onEnter != null) onEnter(gameObject);
+        onEnter?.Invoke(gameObject);
     }
     public override void OnPointerExit(PointerEventData eventData)
     {
-        if (onExit != null) onExit(gameObject);
+        onExit?.Invoke(gameObject);
     }
     public override void OnPointerUp(PointerEventData eventData)
     {
-        if (onUp != null) onUp(gameObject);
-        if (onUp_Data != null) onUp_Data(gameObject, eventData);
+        onUp?.Invoke(gameObject);
+        onUp_Data?.Invoke(gameObject, eventData);
 
         pressed = false;
     }
     public override void OnSelect(BaseEventData eventData)
     {
-        if (onSelect != null) onSelect(gameObject);
+        onSelect?.Invoke(gameObject);
     }
 
     public override void OnDeselect(BaseEventData eventData)
@@ -82,23 +84,33 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
 
     public override void OnDrag(PointerEventData eventData)
     {
-        if (onDrag != null) onDrag(gameObject);
-        if (onDrag_Data != null) onDrag_Data(gameObject, eventData);
+        onDrag?.Invoke(gameObject);
+        onDrag_Data?.Invoke(gameObject, eventData);
     }
 
     public override void OnEndDrag(PointerEventData eventData)
     {
-        if (onEndDrag != null) onEndDrag(gameObject);
+        onEndDrag?.Invoke(gameObject);
     }
     
     public override void OnUpdateSelected(BaseEventData eventData)
     {
-        if (onUpdateSelect != null) onUpdateSelect(gameObject);
+        onUpdateSelect?.Invoke(gameObject);
     }
 
     void Update()
     {
-        if(pressed)
-            onPressed?.Invoke();
+        if (pressed)
+        {
+            onPressed?.Invoke(gameObject);
+            pressTimeCount += Time.deltaTime;
+            if(pressTimeCount > LongPressedTimeThreshold)
+                onLongPressed?.Invoke(gameObject);
+
+        }
+        else
+        {
+            pressTimeCount = 0;
+        }
     }
 }

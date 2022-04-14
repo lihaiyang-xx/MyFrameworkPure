@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using MyFrameworkPure;
 using TMPro;
@@ -96,6 +97,13 @@ namespace MyFrameworkPure
         [MenuItem("Tools/EditorTools/重新编译脚本")]
         static void ReCompileScripts()
         {
+            string tempPath = Path.Combine(Directory.GetCurrentDirectory(), "Temp");
+            string[] dllFiles = Directory.GetFiles(tempPath, "*.dll");
+            foreach (var file in dllFiles)
+            {
+                File.Delete(file);
+            }
+            return;
 #if UNITY_2019_3_OR_NEWER
                  CompilationPipeline.RequestScriptCompilation();
 #elif UNITY_2017_1_OR_NEWER
