@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using MyFrameworkPure;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,7 +17,7 @@ namespace MyFrameworkPure
         [SerializeField]
         private Text messageText;
         [SerializeField]
-        private Button templateBtn;
+        private Button[] templateBtns;
         [SerializeField]
         private Transform btnParent;
 
@@ -57,11 +58,11 @@ namespace MyFrameworkPure
             instance.titleText.text = title;
             instance.messageText.text = message;
 
-            instance.btnParent.ClearChild();
+            instance.btnParent.ClearChild(exclude:x=>!x.gameObject.activeSelf);
             for (var i = 0; i < btns.Length; i++)
             {
                 var str = btns[i];
-                Button btn = Instantiate(instance.templateBtn, instance.btnParent);
+                Button btn = Instantiate(instance.templateBtns[i], instance.btnParent);
                 btn.gameObject.SetActive(true);
                 btn.GetComponentInChildren<Text>().text = str;
                 var locali = i;

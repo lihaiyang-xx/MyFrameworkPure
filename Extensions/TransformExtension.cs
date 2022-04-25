@@ -486,28 +486,18 @@ namespace MyFrameworkPure
             }
             return str;
         }
-
+        
         /// <summary>
         /// 遍历子物体
         /// </summary>
         /// <param name="t"></param>
         /// <param name="action"></param>
-        public static void TravesalChild(this Transform t, UnityAction<Transform> action)
+        public static void TraversalChild(this Transform t, UnityAction<Transform> action)
         {
             foreach (Transform child in t)
             {
                 action(child);
             }
-        }
-
-        /// <summary>
-        /// 设置激活状态
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="active"></param>
-        public static void SetActive(this Transform t,bool active)
-        {
-            t.gameObject.SetActive(active);
         }
     }
 }

@@ -94,16 +94,16 @@ namespace MyFrameworkPure
             }
         }
 
-        [MenuItem("Tools/EditorTools/重新编译脚本")]
+        [MenuItem("Tools/EditorTools/重新编译脚本 %#R")]
         static void ReCompileScripts()
         {
+            Debug.Log("重新编译中...");
             string tempPath = Path.Combine(Directory.GetCurrentDirectory(), "Temp");
             string[] dllFiles = Directory.GetFiles(tempPath, "*.dll");
             foreach (var file in dllFiles)
             {
                 File.Delete(file);
             }
-            return;
 #if UNITY_2019_3_OR_NEWER
                  CompilationPipeline.RequestScriptCompilation();
 #elif UNITY_2017_1_OR_NEWER

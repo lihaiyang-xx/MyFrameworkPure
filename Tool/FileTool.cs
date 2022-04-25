@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -205,6 +206,47 @@ namespace MyFrameworkPure
         {
             FileInfo fi = new FileInfo(fileName);
             fi.MoveTo(newFileName);
+        }
+
+        public static string[,] ReadCsvData(string path)
+        {
+            string str = ReadAllText(path);
+            string[] lines = str.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            string[,] data = ReadCsvFromLines(lines);
+            return data;
+        }
+
+        public static string[,] ReadCsvData(byte[] bytes)
+        {
+            string[,] data = new string[,] { };
+            try
+            {
+                string str = Encoding.UTF8.GetString(bytes);
+                string[] lines = str.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries); ;
+                data = ReadCsvFromLines(lines);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
+            return data;
+        }
+
+        static string[,] ReadCsvFromLines(string[] lines)
+        {
+            int row = lines.Length;
+            int col = lines.Max(x => x.Split(',').Length);
+            string[,] data = new string[row, col];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string[] splits = lines[i].Split(',');
+                for (int j = 0; j < splits.Length; j++)
+                {
+                    data[i, j] = splits[j];
+                }
+            }
+
+            return data;
         }
     }
 

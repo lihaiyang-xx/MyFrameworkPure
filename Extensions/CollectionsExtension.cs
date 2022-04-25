@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -209,6 +210,34 @@ namespace MyFrameworkPure
             return -1;
         }
 
+        /// <summary>
+        /// 获取数组范围
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        /// <param name="startIndex"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public static T[] GetRange<T>(this T[] array, int startIndex, int count)
+        {
+            return array.ToList().GetRange(startIndex, count).ToArray();
+        }
+
+        public static IEnumerable<T> ToIEnumerable<T>(this IEnumerator<T> enumerator)
+        {
+            while (enumerator.MoveNext())
+            {
+                yield return enumerator.Current;
+            }
+        }
+
+        public static void Clear<T>(this ConcurrentBag<T> bag)
+        {
+            while (!bag.IsEmpty)
+            {
+                bag.TryTake(out T _);
+            }
+        }
     }
 }
 
