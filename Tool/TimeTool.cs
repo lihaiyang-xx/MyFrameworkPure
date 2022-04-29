@@ -34,10 +34,10 @@ namespace MyFrameworkPure
         /// 获取时间字符串
         /// </summary>
         /// <returns></returns>
-        public static string GetTimeStr()
+        public static string GetTimeStr(string format= "yyyy-MM-dd hh:mm:ss")
         {
             DateTime dateTime = DateTime.Now;
-            return dateTime.ToString("yyyy-MM-dd hh:mm:ss.f");
+            return dateTime.ToString(format);
         }
 
         public static string TimeStationToString(long timeStation)
