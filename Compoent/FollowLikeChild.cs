@@ -6,6 +6,7 @@ namespace MyFrameworkPure
 {
     /// <summary>
     /// 像子物体一样跟随目标
+    /// 要确保上层物体缩放是等比的,否则旋转时可能会发生缩放扭曲
     /// </summary>
     public class FollowLikeChild : MonoBehaviour
     {
@@ -14,11 +15,17 @@ namespace MyFrameworkPure
         private Quaternion relativeRot;
 
         [SerializeField] private Transform target;
+
+        [SerializeField] private bool tween = false;
+        [SerializeField] private float rotSpeed = 90;
+        [SerializeField] private float moveSpeed = 1;
         // Start is called before the first frame update
         void Start()
         {
-            relativePos = target.InverseTransformPoint(transform.position);
-            relativeRot = Quaternion.Inverse(target.rotation) * transform.rotation;
+            if (target != null)
+            {
+                Target = target;
+            }
         }
 
         // Update is called once per frame
@@ -26,8 +33,11 @@ namespace MyFrameworkPure
         {
             if (target == null)
                 return;
-            transform.position = target.TransformPoint(relativePos);
-            transform.rotation = relativeRot * target.rotation;
+            Vector3 pos = target.TransformPoint(relativePos);
+            Quaternion rot = relativeRot * target.rotation;
+
+            transform.position = tween ? Vector3.Lerp(transform.position, pos, Time.deltaTime * moveSpeed) : pos;
+            transform.rotation = tween ? Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * rotSpeed) : rot;
         }
 
         /// <summary>
@@ -40,7 +50,9 @@ namespace MyFrameworkPure
             {
                 target = value;
                 relativePos = target.InverseTransformPoint(transform.position);
+                
                 relativeRot = Quaternion.Inverse(target.rotation) * transform.rotation;
+                Debug.Log(relativePos + " " + relativeRot);
             }
         }
     }

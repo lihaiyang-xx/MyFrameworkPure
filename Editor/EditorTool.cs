@@ -5,7 +5,9 @@ using System.Reflection;
 using MyFrameworkPure;
 using TMPro;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MyFrameworkPure
@@ -20,11 +22,18 @@ namespace MyFrameworkPure
             {
                 Text labelText = go.GetComponentInChildren<Text>();
                 if (labelText)
+                {
+                    Undo.RecordObject(labelText, "Change Text");
                     labelText.text = go.name;
+                }
                 TMP_Text textPro = go.GetComponentInChildren<TMP_Text>();
                 if (textPro)
+                {
+                    Undo.RecordObject(textPro, "Change Text");
                     textPro.text = go.name;
+                }
             }
+            //EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }
 
         [MenuItem("Tools/EditorTools/Text内容作为物体名称")]
