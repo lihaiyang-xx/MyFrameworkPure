@@ -27,6 +27,8 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
     public DataDelegate onDrag_Data;
     public DataDelegate onBeginDrag_Data;
 
+    public UnityAction<PointerEventData.InputButton, Vector3> onGlobalMouseDown;
+
     private bool pressed;
     private float pressTimeCount;
     private const float LongPressedTimeThreshold = 0.5f;
@@ -111,6 +113,19 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
         else
         {
             pressTimeCount = 0;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            onGlobalMouseDown?.Invoke(PointerEventData.InputButton.Left, Input.mousePosition);
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            onGlobalMouseDown?.Invoke(PointerEventData.InputButton.Right, Input.mousePosition);
+        }
+        else if (Input.GetMouseButtonDown(2))
+        {
+            onGlobalMouseDown?.Invoke(PointerEventData.InputButton.Middle, Input.mousePosition);
         }
     }
 }

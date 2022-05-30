@@ -34,7 +34,7 @@ namespace MyFrameworkPure
         /// 获取时间字符串
         /// </summary>
         /// <returns></returns>
-        public static string GetTimeStr(string format= "yyyy-MM-dd hh:mm:ss")
+        public static string GetTimeStr(string format= "yyyy-MM-dd HH:mm:ss")
         {
             DateTime dateTime = DateTime.Now;
             return dateTime.ToString(format);
