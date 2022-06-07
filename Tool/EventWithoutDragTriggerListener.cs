@@ -16,6 +16,7 @@ public class EventWithoutDragTriggerListener : MonoBehaviour, IPointerEnterHandl
     public VoidDelegate onUpdateSelect;
 
     public UnityAction onPressed;
+    public UnityAction onDoubleClick;
 
     public delegate void DataDelegate(GameObject go, PointerEventData e);
     public DataDelegate onClick_Data;
@@ -23,6 +24,7 @@ public class EventWithoutDragTriggerListener : MonoBehaviour, IPointerEnterHandl
     public DataDelegate onUp_Data;
 
     private bool pressed;
+    private float lastClickTime = -1;
 
     public bool IsPressed => pressed;
 
@@ -36,6 +38,14 @@ public class EventWithoutDragTriggerListener : MonoBehaviour, IPointerEnterHandl
     {
         if (onClick != null) onClick(gameObject);
         if (onClick_Data != null) onClick_Data(gameObject, eventData);
+
+        if (Time.timeSinceLevelLoad - lastClickTime < 0.5f)
+        {
+            onDoubleClick?.Invoke();
+            lastClickTime = -1;
+        }
+        lastClickTime = Time.timeSinceLevelLoad;
+
     }
     public void OnPointerDown(PointerEventData eventData)
     {
