@@ -14,8 +14,9 @@ public class EventWithoutDragTriggerListener : MonoBehaviour, IPointerEnterHandl
     public VoidDelegate onUp;
     public VoidDelegate onSelect;
     public VoidDelegate onUpdateSelect;
+    public VoidDelegate onLongPressed;
+    public VoidDelegate onPressed;
 
-    public UnityAction onPressed;
     public UnityAction onDoubleClick;
 
     public delegate void DataDelegate(GameObject go, PointerEventData e);
@@ -24,11 +25,13 @@ public class EventWithoutDragTriggerListener : MonoBehaviour, IPointerEnterHandl
     public DataDelegate onUp_Data;
 
     private bool pressed;
+    private float pressTimeCount;
+    private const float LongPressedTimeThreshold = 0.5f;
     private float lastClickTime = -1;
 
     public bool IsPressed => pressed;
 
-    static public EventWithoutDragTriggerListener Get(GameObject go)
+    public static EventWithoutDragTriggerListener Get(GameObject go)
     {
         EventWithoutDragTriggerListener listener = go.GetComponent<EventWithoutDragTriggerListener>();
         if (listener == null) listener = go.AddComponent<EventWithoutDragTriggerListener>();
@@ -82,7 +85,16 @@ public class EventWithoutDragTriggerListener : MonoBehaviour, IPointerEnterHandl
 
     void Update()
     {
-        if(pressed)
-            onPressed?.Invoke();
+        if (pressed)
+        {
+            onPressed?.Invoke(gameObject);
+            pressTimeCount += Time.deltaTime;
+            if (pressTimeCount > LongPressedTimeThreshold)
+                onLongPressed?.Invoke(gameObject);
+        }
+        else
+        {
+            pressTimeCount = 0;
+        }
     }
 }
