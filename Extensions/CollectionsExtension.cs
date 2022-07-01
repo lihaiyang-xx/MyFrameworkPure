@@ -194,6 +194,18 @@ namespace MyFrameworkPure
         }
 
         /// <summary>
+        /// 随机排序
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="iEnumerable"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> RandomSort<T>(this IEnumerable<T> iEnumerable)
+        {
+            System.Random random = new System.Random();
+            return iEnumerable.OrderBy(x => random.Next());
+        }
+
+        /// <summary>
         /// 获取元素的索引
         /// </summary>
         /// <typeparam name="T"></typeparam>

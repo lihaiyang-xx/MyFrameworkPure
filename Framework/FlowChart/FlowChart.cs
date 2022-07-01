@@ -24,7 +24,7 @@ namespace MyFrameworkPure
         public FlowChart()
         {
             nodeList = new List<FlowNode>();
-            curIndex = 0;
+            curIndex = -1;
             //MonoBehaviorTool.Instance.RegisterUpdate(this);
             MonoBehaviorTool.GetInstanceInActiveScene().RegisterUpdate(this);
         }
@@ -94,7 +94,7 @@ namespace MyFrameworkPure
                     nodeList[i].Reset();
                     i--;
                 }
-                while (j < step)//往后跳步
+                while (j < step - 1)//往后跳步
                 {
                     nodeList[j].Complete();
                     j++;
@@ -134,7 +134,7 @@ namespace MyFrameworkPure
         /// </summary>
         public void MonoUpdate()
         {
-            if (curIndex < nodeList.Count)
+            if (curIndex >=0 && curIndex < nodeList.Count)
             {
                 nodeList[curIndex].Update();
             }
@@ -146,6 +146,13 @@ namespace MyFrameworkPure
             if (node != null)
                 return node.GetTip();
             return string.Empty;
+        }
+
+        public void CompleteCurrentStep()
+        {
+            if(curIndex < 0 || curIndex >= nodeList.Count)
+                return;
+            nodeList[curIndex]?.Complete();
         }
     }
 }

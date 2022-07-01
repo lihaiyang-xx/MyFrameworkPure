@@ -50,9 +50,7 @@ namespace MyFrameworkPure
             {
                 target = value;
                 relativePos = target.InverseTransformPoint(transform.position);
-                
                 relativeRot = Quaternion.Inverse(target.rotation) * transform.rotation;
-                Debug.Log(relativePos + " " + relativeRot);
             }
         }
     }
