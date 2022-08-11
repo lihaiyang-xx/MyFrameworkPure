@@ -499,5 +499,37 @@ namespace MyFrameworkPure
                 action(child);
             }
         }
+
+        /// <summary>
+        /// 隐藏子物体
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="exclude"></param>
+        public static void HideChildren(this Transform t, Predicate<Transform> exclude = null)
+        {
+            if (!t) return;
+            foreach (Transform child in t)
+            {
+                if(exclude!=null && exclude(t))
+                    continue;
+                child.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// 显示子物体
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="exclude"></param>
+        public static void ShowChildren(this Transform t, Predicate<Transform> exclude = null)
+        {
+            if (!t) return;
+            foreach (Transform child in t)
+            {
+                if (exclude != null && exclude(child))
+                    continue;
+                child.gameObject.SetActive(true);
+            }
+        }
     }
 }

@@ -250,6 +250,34 @@ namespace MyFrameworkPure
                 bag.TryTake(out T _);
             }
         }
+
+        /// <summary>
+        /// 获取二维数据的一列
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="matrix"></param>
+        /// <param name="columnNumber"></param>
+        /// <returns></returns>
+        public static T[] GetColumn<T>(this T[,] matrix, int columnNumber)
+        {
+            return Enumerable.Range(0, matrix.GetLength(0))
+                .Select(x => matrix[x, columnNumber])
+                .ToArray();
+        }
+
+        /// <summary>
+        /// 获取二维数组的一行
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="matrix"></param>
+        /// <param name="rowNumber"></param>
+        /// <returns></returns>
+        public static T[] GetRow<T>(this T[,] matrix, int rowNumber)
+        {
+            return Enumerable.Range(0, matrix.GetLength(1))
+                .Select(x => matrix[rowNumber, x])
+                .ToArray();
+        }
     }
 }
 

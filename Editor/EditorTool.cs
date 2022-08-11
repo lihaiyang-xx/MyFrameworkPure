@@ -5,7 +5,6 @@ using System.Reflection;
 using MyFrameworkPure;
 using TMPro;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -114,7 +113,7 @@ namespace MyFrameworkPure
                 File.Delete(file);
             }
 #if UNITY_2019_3_OR_NEWER
-                 CompilationPipeline.RequestScriptCompilation();
+            UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
 #elif UNITY_2017_1_OR_NEWER
             var editorAssembly = Assembly.GetAssembly(typeof(Editor));
             var editorCompilationInterfaceType = editorAssembly.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface");

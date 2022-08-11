@@ -29,7 +29,6 @@ namespace MyFrameworkPure
 
 
 
-        [InitializeOnLoadMethod]
         public void Awake()
         {
             OnSelectionChange();
