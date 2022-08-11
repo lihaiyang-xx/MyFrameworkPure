@@ -71,7 +71,7 @@ namespace MyFrameworkPure
         /// <typeparam name="T"></typeparam>
         /// <param name="go"></param>
         /// <returns></returns>
-        public static T GetOrAddCompoent<T>(this GameObject go) where T : Component
+        public static T GetOrAddComponent<T>(this GameObject go) where T : Component
         {
             T t = go.GetComponent<T>();
             if (!t)
@@ -79,7 +79,13 @@ namespace MyFrameworkPure
             return t;
         }
 
-        public static T[] GetComnponentsInChildrenWithoutSelf<T>(this GameObject go) where T : Component
+        /// <summary>
+        /// 获取子物体组件,排除自身
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="go"></param>
+        /// <returns></returns>
+        public static T[] GetComponentsInChildrenWithoutSelf<T>(this GameObject go) where T : Component
         {
             T[] components = go.GetComponentsInChildren<T>();
             return components.Except(go.GetComponents<T>()).ToArray();

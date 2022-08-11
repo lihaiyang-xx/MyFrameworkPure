@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,7 +19,7 @@ namespace MyFrameworkPure
         /// <param name="clipName"></param>
         /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static TimeDelay PlayForward(Animation animation, string clipName = "", UnityAction onComplete = null)
+        public static Delay PlayForward(Animation animation, string clipName = "", UnityAction onComplete = null)
         {
             if (string.IsNullOrEmpty(clipName))
             {
@@ -28,6 +29,10 @@ namespace MyFrameworkPure
             animation[clipName].normalizedTime = 0;
             animation.Play(clipName);
 
+            //return Delay.DelayUntil(()=>animation[clipName].normalizedTime>=1, () =>
+            //{
+            //    onComplete?.Invoke();
+            //});
             return TimeDelay.Delay(animation[clipName].length, () =>
             {
                 if (onComplete != null)
@@ -42,7 +47,7 @@ namespace MyFrameworkPure
         /// <param name="clipName"></param>
         /// <param name="onComplete"></param>
         /// <returns></returns>
-        public static TimeDelay PlayBack(Animation animation, string clipName = "", UnityAction onComplete = null)
+        public static Delay PlayBack(Animation animation, string clipName = "", UnityAction onComplete = null)
         {
             if (string.IsNullOrEmpty(clipName))
             {
@@ -52,6 +57,10 @@ namespace MyFrameworkPure
             animation[clipName].normalizedTime = 1;
             animation.Play(clipName);
 
+            //return Delay.DelayUntil(() => animation[clipName].normalizedTime >= 1, () =>
+            //{
+            //    onComplete?.Invoke();
+            //});
             return TimeDelay.Delay(animation[clipName].length, () =>
             {
                 if (onComplete != null)
@@ -83,7 +92,10 @@ namespace MyFrameworkPure
         {
             if (string.IsNullOrEmpty(clipName))
                 clipName = animation.clip.name;
+            animation.Play(clipName);
             animation[clipName].normalizedTime = 1;
+            animation.Sample();
+            animation.Stop();
         }
 
         /// <summary>

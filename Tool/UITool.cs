@@ -211,21 +211,16 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static GameObject GetUiFromMousePosition(string name)
         {
-            if (EventSystem.current == null) return null;
-
-            Vector2 inputDevPos = Input.mousePosition;
-
-            PointerEventData eventDataCurrentPosition =
-                new PointerEventData(EventSystem.current) { position = new Vector2(inputDevPos.x, inputDevPos.y) };
-
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-            RaycastResult result = results.FirstOrDefault(x => x.gameObject.name == name);
-            return result.gameObject;
+            return GetUiFromMousePosition(x => x.name == name);
 
         }
 
         public static GameObject GetUiFromMousePosition(Type type)
+        {
+            return GetUiFromMousePosition(x => x.GetComponent(type) != null);
+        }
+
+        public static GameObject GetUiFromMousePosition(Predicate<GameObject> predicate = null)
         {
             if (EventSystem.current == null) return null;
 
@@ -236,9 +231,9 @@ namespace MyFrameworkPure
 
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-            RaycastResult result = results.FirstOrDefault(x => x.gameObject.GetComponent(type) != null);
+            
+            RaycastResult result = results.FirstOrDefault(x=>predicate != null && predicate(x.gameObject));
             return result.gameObject;
-
         }
 
         /// <summary>

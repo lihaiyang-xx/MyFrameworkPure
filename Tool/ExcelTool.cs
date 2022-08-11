@@ -49,6 +49,30 @@ namespace MyFrameworkPure
                 }
             }
         }
+
+        public static void Excel2Csv(string excelPath,string csvPath,string sheetName = "sheet1")
+        {
+            string[,] datum = GetExcelData(excelPath);
+            int row = datum.GetLength(0);
+            int col = datum.GetLength(1);
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < col; j++)
+                {
+                    string str = datum[i, j];
+                    if (str.Contains(",") || str.Contains("\n"))
+                    {
+                        str = $"\"{str}\"";
+                    }
+                    sb.Append(str);
+                    sb.Append(",");
+                }
+                sb.Append("\r\n");
+            }
+            File.WriteAllText(csvPath, sb.ToString(), Encoding.UTF8);
+        }
     }
 }
 #endif

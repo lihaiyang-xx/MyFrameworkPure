@@ -68,8 +68,8 @@ namespace MyFrameworkPure
                 var locali = i;
                 btn.onClick.AddListener(() =>
                 {
+                    instance.gameObject.SetActive(false);//和下行代码顺序不能换,否则如果委托中再次调用messagebox无效
                     dosomethings[locali]?.Invoke();
-                    instance.gameObject.SetActive(false);
                 });
             }
         }

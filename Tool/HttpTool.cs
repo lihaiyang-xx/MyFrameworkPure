@@ -109,7 +109,41 @@ public class HttpTool
         return null;
     }
 
-    
+    public static async Task<byte[]> GetBytes(string url)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            await request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                return request.downloadHandler.data;
+            }
+        }
+
+        return null;
+    }
+
+    //public static async Task<byte[]> GetAssetbundle(string url)
+    //{
+    //    using (UnityWebRequest request = UnityWebRequest.Get(url))
+    //    {
+    //        await request.SendWebRequest();
+    //        if (request.isNetworkError || request.isHttpError)
+    //        {
+    //            Debug.Log(request.error);
+    //        }
+    //        else
+    //        {
+    //            return request.downloadedBytes.;
+    //        }
+    //    }
+
+    //    return null;
+    //}
 #endif
 
     public static string GetNative(string uri)
@@ -138,6 +172,23 @@ public class HttpTool
             {
                 string text = request.downloadHandler.text;
                 callback?.Invoke(text);
+            }
+        }
+    }
+
+    public static IEnumerator GetBytes(string url, UnityAction<byte[]> callback)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            yield return request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                byte[] bytes = request.downloadHandler.data;
+                callback?.Invoke(bytes);
             }
         }
     }

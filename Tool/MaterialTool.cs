@@ -67,6 +67,18 @@ namespace MyFrameworkPure
                     break;
             }
         }
+
+        public static void SetEmission(Material material, bool emission)
+        {
+            if (emission)
+            {
+                material.EnableKeyword("_EMISSION");
+            }
+            else
+            {
+                material.DisableKeyword("_EMISSION");
+            }
+        }
     }
 }
 

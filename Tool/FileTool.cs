@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace MyFrameworkPure
@@ -218,11 +219,16 @@ namespace MyFrameworkPure
 
         public static string[,] ReadCsvData(byte[] bytes)
         {
+            return ReadCsvData(bytes, Encoding.UTF8);
+        }
+
+        public static string[,] ReadCsvData(byte[] bytes,Encoding encoding)
+        {
             string[,] data = new string[,] { };
             try
             {
-                string str = Encoding.UTF8.GetString(bytes);
-                string[] lines = str.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries); ;
+                string str = encoding.GetString(bytes);
+                string[] lines = str.Split(new []{"\r\n"}, StringSplitOptions.RemoveEmptyEntries); ;
                 data = ReadCsvFromLines(lines);
             }
             catch (Exception e)
@@ -234,12 +240,13 @@ namespace MyFrameworkPure
 
         static string[,] ReadCsvFromLines(string[] lines)
         {
+            Regex regex = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
             int row = lines.Length;
-            int col = lines.Max(x => x.Split(',').Length);
+            int col = lines.Max(x => regex.Split(x).Length);
             string[,] data = new string[row, col];
             for (int i = 0; i < lines.Length; i++)
             {
-                string[] splits = lines[i].Split(',');
+                string[] splits = regex.Split(lines[i]);
                 for (int j = 0; j < splits.Length; j++)
                 {
                     data[i, j] = splits[j];
