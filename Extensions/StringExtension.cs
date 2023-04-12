@@ -11,6 +11,19 @@ namespace MyFrameworkPure
     public static class StringExtension
     {
         /// <summary>
+        /// 获取字符串前缀
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
+        public static string GetPrefix(this string source, char flag)
+        {
+            int index = source.IndexOf(flag);
+            if (index <= 0)
+                return string.Empty;
+            return source.Substring(0, index);
+        }
+        /// <summary>
         /// 获取字符串后缀
         /// </summary>
         /// <param name="source"></param>

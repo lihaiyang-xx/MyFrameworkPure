@@ -246,7 +246,7 @@ public class HttpTool
             yield return request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.Log(request.error);
+                callback?.Invoke(request.error);
             }
             else
             {
