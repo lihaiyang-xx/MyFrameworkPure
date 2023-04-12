@@ -9,8 +9,6 @@ public class EventTriggerListener : BaseEventTriggerListener, IBeginDragHandler,
     public UnityAction<PointerEventData> onBeginDrag;
     public UnityAction<PointerEventData> onDrag;
     public UnityAction<PointerEventData> onEndDrag;
-    public UnityAction<PointerEventData.InputButton, Vector3> onGlobalMouseDown;
-
 
     public new static EventTriggerListener Get(GameObject go)
     {

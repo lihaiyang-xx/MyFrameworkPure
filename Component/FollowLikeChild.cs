@@ -19,6 +19,11 @@ namespace MyFrameworkPure
         [SerializeField] private bool tween = false;
         [SerializeField] private float rotSpeed = 90;
         [SerializeField] private float moveSpeed = 1;
+
+        [SerializeField] private bool useDefaultRelativePos = false;
+        [SerializeField] private Vector3 defaultRelativePos;
+        [SerializeField] private bool useDefalutRelativeRot = false;
+        [SerializeField] private Quaternion defaultRelativeRot;
         // Start is called before the first frame update
         void Start()
         {
@@ -49,8 +54,8 @@ namespace MyFrameworkPure
             set
             {
                 target = value;
-                relativePos = target.InverseTransformPoint(transform.position);
-                relativeRot = Quaternion.Inverse(target.rotation) * transform.rotation;
+                relativePos =useDefaultRelativePos?defaultRelativePos:target.InverseTransformPoint(transform.position);
+                relativeRot =useDefalutRelativeRot?defaultRelativeRot:Quaternion.Inverse(target.rotation) * transform.rotation;
             }
         }
     }

@@ -40,6 +40,30 @@ namespace MyFrameworkPure
         }
 
         /// <summary>
+        /// 正向播放动画
+        /// </summary>
+        /// <param name="animator"></param>
+        /// <param name="clipName"></param>
+        /// <param name="onComplete"></param>
+        /// <returns></returns>
+        public static Delay PlayForward(Animator animator, string clipName, UnityAction onComplete = null)
+        {
+            animator.Play(clipName);
+            AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+
+            //return Delay.DelayUntil(()=>animation[clipName].normalizedTime>=1, () =>
+            //{
+            //    onComplete?.Invoke();
+            //});
+            return TimeDelay.Delay(state.length, () =>
+            {
+                onComplete?.Invoke();
+            });
+        }
+
+
+
+        /// <summary>
         /// 倒播动画
         /// </summary>
         /// <param name="animation"></param>

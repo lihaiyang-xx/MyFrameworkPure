@@ -5,60 +5,33 @@ using System.Collections;
 namespace MyFrameworkPure
 {
     //状态机实现
-    public class StateMachine<T> where T : class
+    public class StateMachine
     {
-        /// <summary>
-        /// 游戏智能体
-        /// </summary>
-        private T mAI;
-
-        /// <summary>
-        /// 全局状态(可以在任意时间切换至全局状态)
-        /// </summary>
-        private State<T> mGlobalState;
-
-        /// <summary>
-        /// 当前状态
-        /// </summary>
-        private State<T> mCurrentState;
-
-        /// <summary>
-        /// 上一个状态
-        /// </summary>
-        private State<T> mPreviousState;
-
-        public StateMachine(T ai)
+        public StateMachine()
         {
-            mAI = ai;
+            MonoBehaviorTool.Instance.RegisterUpdate(UpdateState);
         }
-
         /// <summary>
         /// 更新状态机
         /// </summary>
         public void UpdateState()
         {
-            if (mGlobalState != null)
-            {
-                mGlobalState.Execute(mAI);
-            }
+            GlobalState?.Update();
 
-            if (mCurrentState != null)
-            {
-                mCurrentState.Execute(mAI);
-            }
+            CurrentState?.Update();
         }
 
         /// <summary>
-        /// 改变状态
+        /// 进入状态
         /// </summary>
-        /// <param equimpentName="newState">新状态</param>
-        public void ChangeState(State<T> newState)
+        /// <param name="newState"></param>
+        public void EnterStatus(State newState)
         {
             Debug.Assert(newState != null, "the new state to chanaged is null *** " + newState);
-            mPreviousState = mCurrentState;
-            mCurrentState.Exit(mAI);
-            mCurrentState = newState;
-            mCurrentState.Enter(mAI);
+            PreviousState = CurrentState;
+            CurrentState?.Exit();
+            CurrentState = newState;
+            CurrentState.Enter();
         }
 
         /// <summary>
@@ -66,28 +39,24 @@ namespace MyFrameworkPure
         /// </summary>
         public void RevertToPreviousState()
         {
-            Debug.Assert(mPreviousState != null, "the previous to revert is null *** " + mPreviousState);
-
-            ChangeState(mPreviousState);
+            if(PreviousState != null)
+                EnterStatus(PreviousState);
         }
 
-        public State<T> GlobalState
-        {
-            get { return mGlobalState; }
-            set { mGlobalState = value; }
-        }
+        /// <summary>
+        /// 全局状态(可以在任意时间切换至全局状态)
+        /// </summary>
+        public State GlobalState { get; set; }
 
-        public State<T> CurrentState
-        {
-            get { return mCurrentState; }
-            set { mCurrentState = value; }
-        }
+        /// <summary>
+        /// 当前状态
+        /// </summary>
+        public State CurrentState { get; set; }
 
-        public State<T> PreviousState
-        {
-            get { return mPreviousState; }
-            set { mPreviousState = value; }
-        }
+        /// <summary>
+        /// 上一个状态
+        /// </summary>
+        public State PreviousState { get; set; }
     }
 }
 

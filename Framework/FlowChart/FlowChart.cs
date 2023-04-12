@@ -34,6 +34,16 @@ namespace MyFrameworkPure
             get { return nodeList.Count; }
         }
 
+        public FlowNode CurrentNode
+        {
+            get
+            {
+                if (curIndex >= 0 && curIndex < nodeList.Count)
+                    return nodeList[curIndex];
+                return null;
+            }
+        }
+
         /// <summary>
         /// 开始执行流程图
         /// </summary>

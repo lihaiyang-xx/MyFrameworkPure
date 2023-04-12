@@ -80,17 +80,25 @@ namespace MyFrameworkPure
 
         public static string Decrypt(string decryptStr, string key = "aescodtuy@#p^sfd")
         {
-            byte[] keyArray = Encoding.UTF8.GetBytes(key);
-            byte[] toEncryptArray = Convert.FromBase64String(decryptStr);
-            RijndaelManaged rDel = new RijndaelManaged
+            try
             {
-                Key = keyArray,
-                Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
-            };
-            ICryptoTransform cTransform = rDel.CreateDecryptor();
-            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
-            return Encoding.UTF8.GetString(resultArray);
+                byte[] keyArray = Encoding.UTF8.GetBytes(key);
+                byte[] toEncryptArray = Convert.FromBase64String(decryptStr);
+                RijndaelManaged rDel = new RijndaelManaged
+                {
+                    Key = keyArray,
+                    Mode = CipherMode.ECB,
+                    Padding = PaddingMode.PKCS7
+                };
+                ICryptoTransform cTransform = rDel.CreateDecryptor();
+                byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+                return Encoding.UTF8.GetString(resultArray);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
+            return string.Empty;
         }
 
         /// <summary>
@@ -137,6 +145,27 @@ namespace MyFrameworkPure
         {
             var bytes = Convert.FromBase64String(str);
             return Encoding.UTF8.GetString(bytes);
+        }
+
+        /// <summary>
+        /// sha1加密
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Sha1(string str)
+        {
+            using (SHA1Managed sha1 = new SHA1Managed())
+            {
+                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(str));
+                var sb = new StringBuilder(hash.Length * 2);
+
+                foreach (byte b in hash)
+                {
+                    // can be "x2" if you want lowercase
+                    sb.Append(b.ToString("X2"));
+                }
+                return sb.ToString();
+            }
         }
     }
 

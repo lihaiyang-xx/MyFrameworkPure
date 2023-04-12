@@ -531,5 +531,15 @@ namespace MyFrameworkPure
                 child.gameObject.SetActive(true);
             }
         }
+
+        public static void ScaleToZero(this Transform t)
+        {
+            t.localScale = Vector3.zero;
+        }
+
+        public static void ScaleToOne(this Transform t)
+        {
+            t.localScale = Vector3.one;
+        }
     }
 }
