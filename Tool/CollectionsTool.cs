@@ -33,13 +33,13 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static T[] MergerArray<T>(params T[][] arrays)
         {
-            List<T> byteList = new List<T>();
+            List<T> list = new List<T>();
             foreach (var array in arrays)
             {
-                byteList.AddRange(array);
+                list.AddRange(array);
             }
 
-            return byteList.ToArray();
+            return list.ToArray();
         }
 
         /// <summary>

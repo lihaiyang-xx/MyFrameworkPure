@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -34,6 +36,7 @@ namespace MyFrameworkPure
         {
             try
             {
+                Debug.Log(Dns.GetHostName());
                 IPHostEntry ipe = Dns.GetHostEntry(Dns.GetHostName());
                 return ipe.AddressList.Where(x=>x.AddressFamily == AddressFamily.InterNetwork).Select(x => x.ToString()).ToArray();
             }
@@ -44,6 +47,34 @@ namespace MyFrameworkPure
             return new string[]{};
         }
 
+        public static string[] GetAllLocalIP()
+        {
+            List<string> ipList = new List<string>();
+
+            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (var network in networkInterfaces)
+            {
+                if (network.OperationalStatus != OperationalStatus.Up)
+                    continue;
+
+                var properties = network.GetIPProperties();
+
+                foreach (var address in properties.UnicastAddresses)
+                {
+                    if (address.Address.AddressFamily != AddressFamily.InterNetwork)
+                        continue;
+
+                    if (IPAddress.IsLoopback(address.Address))
+                        continue;
+
+                    ipList.Add(address.Address.ToString());
+                }
+            }
+
+            return ipList.ToArray();
+        }
+
         /// <summary>
         /// 获取mac地址
         /// </summary>
@@ -51,9 +82,10 @@ namespace MyFrameworkPure
         public static string GetMacAddress()
         {
             return NetworkInterface.GetAllNetworkInterfaces()
-                .Where(x => x.OperationalStatus == OperationalStatus.Up)
+                .Where(x =>x.NetworkInterfaceType != NetworkInterfaceType.Loopback)
                 .Select(x => x.GetPhysicalAddress().ToString()).FirstOrDefault();
         }
+
 
         /// <summary>
         /// 获取公网ip地址
@@ -76,7 +108,9 @@ namespace MyFrameworkPure
                     int first = result.IndexOf('{');
                     int end = result.IndexOf('}');
                     result = result.Substring(first, end - first + 1);
+                    result = JObject.Parse(result)["cip"].ToString();
                 }
+                Debug.Log("公网ip:"+result);
                 onGet?.Invoke(result);
             }
         }

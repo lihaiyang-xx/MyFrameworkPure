@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace MyFrameworkPure
 {
@@ -24,7 +24,7 @@ namespace MyFrameworkPure
         {
             if (path.StartsWith(Application.streamingAssetsPath) && Application.platform == RuntimePlatform.Android)
             {
-                UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(path);
+                UnityWebRequest www = UnityWebRequest.Get(path);
                 www.SendWebRequest();
                 while (!www.isDone) { }
                 return www.downloadHandler.text;
@@ -48,6 +48,77 @@ namespace MyFrameworkPure
             }
 
             return text;
+        }
+
+
+        public static string[] ReadAllLines(string path)
+        {
+            string[] lines = new string[] { };
+            try
+            {
+                lines = File.ReadAllLines(path);
+            }
+            catch (Exception e)
+            {
+               Debug.LogException(e);
+            }
+            return lines;
+        }
+
+        public static string[] SafeReadAllLines(String path)
+        {
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var sr = new StreamReader(fs,Encoding.UTF8))
+            {
+                List<string> file = new List<string>();
+                
+                while (!sr.EndOfStream)
+                {
+                    file.Add(sr.ReadLine());
+                }
+                return file.ToArray();
+            }
+        }
+
+        public static string[,] ReadCsvData(string path)
+        {
+            string str = ReadAllText(path);
+            string[] lines = str.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            string[,] data = ReadCsvFromLines(lines);
+            return data;
+        }
+
+        public static string[,] ReadCsvData(byte[] bytes)
+        {
+            string[,] data = new string[,] { };
+            try
+            {
+                string str = Encoding.UTF8.GetString(bytes);
+                string[] lines = str.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries); ;
+                data = ReadCsvFromLines(lines);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
+            return data;
+        }
+
+        static string[,] ReadCsvFromLines(string[] lines)
+        {
+            int row = lines.Length;
+            int col = lines.Max(x => x.Split(',').Length);
+            string[,] data = new string[row, col];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string[] splits = lines[i].Split(',');
+                for (int j = 0; j < splits.Length; j++)
+                {
+                    data[i, j] = splits[j];
+                }
+            }
+
+            return data;
         }
 
         /// <summary>
@@ -215,7 +286,6 @@ namespace MyFrameworkPure
             FileInfo fi = new FileInfo(fileName);
             fi.MoveTo(newFileName);
         }
-
         public static string[,] ReadCsvData(string path)
         {
             string str = ReadAllText(path);
