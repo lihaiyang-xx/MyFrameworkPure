@@ -1,0 +1,10 @@
+using UnityEngine;
+using UnityEngine.UI;
+public class #CLASSNAME#
+{
+#FIELD#
+	public void Init(Transform root)
+	{
+#METHOD#
+	}
+}
