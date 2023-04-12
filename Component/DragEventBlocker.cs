@@ -21,7 +21,7 @@ namespace MyFrameworkPure
             Selectable[] selectables = go.GetComponentsInChildren<Selectable>(true);
             selectables.ForEach(x =>
             {
-                DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddCompoent<DragEventBlocker>();
+                DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddComponent<DragEventBlocker>();
                 dragEventBlocker.enabled = true;
             });
         }
@@ -31,7 +31,7 @@ namespace MyFrameworkPure
             Selectable[] selectables = go.GetComponentsInChildren<Selectable>(true);
             selectables.ForEach(x =>
             {
-                DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddCompoent<DragEventBlocker>();
+                DragEventBlocker dragEventBlocker = x.gameObject.GetOrAddComponent<DragEventBlocker>();
                 dragEventBlocker.enabled = false;
             });
         }
@@ -42,7 +42,7 @@ namespace MyFrameworkPure
             scrollRects?.ForEach(x =>
             {
                 Selectable[] selectables = x.GetComponentsInChildren<Selectable>(true);
-                selectables.ForEach(y => y.gameObject.GetOrAddCompoent<DragEventBlocker>());
+                selectables.ForEach(y => y.gameObject.GetOrAddComponent<DragEventBlocker>());
             });
         }
 

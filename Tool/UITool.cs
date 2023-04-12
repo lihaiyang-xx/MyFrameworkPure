@@ -236,6 +236,29 @@ namespace MyFrameworkPure
             return result.gameObject;
         }
 
+        public static GameObject GetUiFromPointer(PointerEventData eventData,GraphicRaycaster raycaster,Predicate<GameObject> predicate = null)
+        {
+            if (EventSystem.current == null) return null;
+            List<RaycastResult> results = new List<RaycastResult>();
+            raycaster.Raycast(eventData,results);
+            Debug.Log("****************");
+            foreach (RaycastResult rs in results)
+            {
+                Debug.Log(rs.gameObject.name);
+            }
+            Debug.Log("****************");
+
+            RaycastResult result = results.FirstOrDefault(x => predicate != null && predicate(x.gameObject));
+            return result.gameObject;
+        }
+
+        public static GameObject GetUiFromRay(Ray ray,float maxDistance, Predicate<GameObject> predicate = null)
+        {
+            RaycastHit[] hits = Physics.RaycastAll(ray, maxDistance, 1<<LayerMask.NameToLayer("UI"));
+            RaycastHit hit = hits.FirstOrDefault(x => predicate != null && predicate(x.collider.gameObject));
+            return hit.collider?.gameObject;
+        }
+
         /// <summary>
         /// 设置ui的交互状态,包括子物体
         /// </summary>

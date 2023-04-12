@@ -22,6 +22,13 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static string ReadAllText(string path)
         {
+            if (path.StartsWith(Application.streamingAssetsPath) && Application.platform == RuntimePlatform.Android)
+            {
+                UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(path);
+                www.SendWebRequest();
+                while (!www.isDone) { }
+                return www.downloadHandler.text;
+            }
             return ReadAllText(path, Encoding.UTF8);
         }
 

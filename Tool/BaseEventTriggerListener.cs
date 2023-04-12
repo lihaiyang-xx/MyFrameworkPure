@@ -33,6 +33,14 @@ public class BaseEventTriggerListener : MonoBehaviour, IPointerEnterHandler, IPo
         if (listener == null) listener = go.AddComponent<BaseEventTriggerListener>();
         return listener;
     }
+
+    public static void Enable(GameObject go,bool enable)
+    {
+        BaseEventTriggerListener listener = go.GetComponent<BaseEventTriggerListener>();
+        if (listener)
+            listener.enabled = enable;
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         onClick?.Invoke(eventData);
