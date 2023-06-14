@@ -20,7 +20,9 @@ public class AutoGenCode
         {"tr",typeof(Transform)},
         {"sv",typeof(ScrollRect)},
         {"input",typeof(InputField)},
-        {"go",typeof(GameObject)}
+        {"go",typeof(GameObject)},
+        {"tog",typeof(Toggle) },
+        {"sld",typeof(Slider)}
 
     };
 

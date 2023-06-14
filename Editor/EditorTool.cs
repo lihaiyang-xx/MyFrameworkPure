@@ -121,6 +121,12 @@ namespace MyFrameworkPure
             dirtyAllScriptsMethod.Invoke(editorCompilationInterfaceType, null);
 #endif
         }
+
+        [MenuItem("Tools/EditorTools/清除PlayerPref")]
+        static void ClearPlayerPref()
+        {
+            PlayerPrefs.DeleteAll();
+        }
     }
 }
 
