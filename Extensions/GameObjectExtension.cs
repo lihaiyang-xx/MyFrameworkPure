@@ -46,7 +46,7 @@ namespace MyFrameworkPure
         }
 
         /// <summary>
-        /// 获取物体的碰撞边界
+        /// 获取物体的边界框
         /// </summary>
         /// <param name="go"></param>
         /// <returns></returns>
@@ -87,10 +87,16 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static T[] GetComponentsInChildrenWithoutSelf<T>(this GameObject go) where T : Component
         {
-            T[] components = go.GetComponentsInChildren<T>();
-            return components.Except(go.GetComponents<T>()).ToArray();
+            T[] componentsInChildren = go.GetComponentsInChildren<T>();
+            return componentsInChildren.Where(c => !ReferenceEquals(c.gameObject, go)).ToArray();
         }
 
+        /// <summary>
+        /// 用于在游戏对象的父级中获取指定类型的基础组件（不包括派生类）
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="go"></param>
+        /// <returns></returns>
         public static Component GetBaseComponentInParent<T>(this GameObject go) where T:Component
         {
             T[] components = go.GetComponentsInParent<T>();

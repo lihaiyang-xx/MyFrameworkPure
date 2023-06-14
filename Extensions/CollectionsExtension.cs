@@ -20,11 +20,11 @@ namespace MyFrameworkPure
         /// 遍历对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="ienumerable">遍历的对象</param>
+        /// <param name="enumerable">遍历的对象</param>
         /// <param name="callback">做的事</param>
-        public static void ForEach<T>(this IEnumerable<T> ienumerable,UnityAction<T> callback)
+        public static void ForEach<T>(this IEnumerable<T> enumerable,Action<T> callback)
         {
-            foreach (var i in ienumerable)
+            foreach (var i in enumerable)
             {
                 callback?.Invoke(i);
             }
@@ -52,6 +52,11 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static T Random<T>(this IList<T> iList)
         {
+            if (iList == null || iList.Count == 0)
+            {
+                throw new ArgumentException("List cannot be null or empty.");
+            }
+
             return iList[UnityEngine.Random.Range(0, iList.Count)];
         }
 
@@ -64,10 +69,16 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static T[] Add<T>(this T[] array,T element)
         {
-            T[] newArray = new T[array.Length+1];
-            array.CopyTo(newArray,0);
-            newArray[newArray.Length - 1] = element;
-            return newArray;
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array), "Array cannot be null.");
+            }
+
+            int originalLength = array.Length;
+            Array.Resize(ref array, originalLength + 1);
+            array[originalLength] = element;
+
+            return array;
         }
 
         /// <summary>
@@ -79,10 +90,17 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static T[] AddToHead<T>(this T[] array, T element)
         {
-            T[] newArray = new T[array.Length + 1];
-            array.CopyTo(newArray, 1);
-            newArray[0] = element;
-            return newArray;
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array), "Array cannot be null.");
+            }
+
+            int originalLength = array.Length;
+            Array.Resize(ref array, originalLength + 1);
+            Array.Copy(array, 0, array, 1, originalLength);
+            array[0] = element;
+
+            return array;
         }
 
         /// <summary>
@@ -94,9 +112,20 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static T[] Add<T>(this T[] array, T[] elements)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array), "Array cannot be null.");
+            }
+
+            if (elements == null || elements.Length == 0)
+            {
+                return array;
+            }
+
             T[] newArray = new T[array.Length + elements.Length];
-            array.CopyTo(newArray,0);
-            elements.CopyTo(newArray,array.Length);
+            Array.Copy(array, 0, newArray, 0, array.Length);
+            Array.Copy(elements, 0, newArray, array.Length, elements.Length);
+
             return newArray;
         }
 
@@ -109,9 +138,16 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static T[] Remove<T>(this T[] array, T element)
         {
-            var list = array.ToList();
-            list.Remove(element);
-            return list.ToArray();
+            int index = Array.IndexOf(array, element);
+            if (index < 0)
+            {
+                return array; 
+            }
+
+            Array.Copy(array, index + 1, array, index, array.Length - index - 1);
+            Array.Resize(ref array, array.Length - 1);
+
+            return array;
         }
 
         /// <summary>
@@ -124,18 +160,6 @@ namespace MyFrameworkPure
             return list == null || list.Count == 0;
         }
 
-        /// <summary>
-        /// 删除整个迭代器中的物体
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="ienumerable"></param>
-        //public static void Destroy<T>(this IEnumerable<T> ienumerable) where T:Component
-        //{
-        //    foreach (var i in ienumerable)
-        //    {
-        //        Object.Destroy(i);
-        //    }
-        //}
 
         public static void Destroy<T>(this IList<T> list) where T : Object
         {
@@ -149,18 +173,18 @@ namespace MyFrameworkPure
         /// 立刻删除整个迭代器中的物体
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="ienumerable"></param>
-        public static void DestroyImmediate<T>(this IEnumerable<T> ienumerable) where T : Object
+        /// <param name="enumerable"></param>
+        public static void DestroyImmediate<T>(this IEnumerable<T> enumerable) where T : Object
         {
-            foreach (var i in ienumerable)
+            foreach (var i in enumerable)
             {
                 Object.DestroyImmediate(i);
             }
         }
 
-        public static void DestroyImmediate<T>(this IEnumerable<T> ienumerable,bool allowDestroyingAssets) where T : Object
+        public static void DestroyImmediate<T>(this IEnumerable<T> enumerable,bool allowDestroyingAssets) where T : Object
         {
-            foreach (var i in ienumerable)
+            foreach (var i in enumerable)
             {
                 Object.DestroyImmediate(i,allowDestroyingAssets);
             }
@@ -169,13 +193,13 @@ namespace MyFrameworkPure
         /// <summary>
         /// 拼接集合,以字符串输出
         /// </summary>
-        /// <param name="iEnumerable"></param>
+        /// <param name="enumerable"></param>
         /// <param name="jointChar"></param>
         /// <returns></returns>
-        public static string JointToString(this IEnumerable iEnumerable,char jointChar)
+        public static string JointToString(this IEnumerable enumerable,char jointChar)
         {
             StringBuilder sb = new StringBuilder();
-            foreach (var i in iEnumerable)
+            foreach (var i in enumerable)
             {
                 if (sb.Length != 0)
                     sb.Append(jointChar);
@@ -185,12 +209,19 @@ namespace MyFrameworkPure
             return sb.ToString();
         }
 
-        public static void Log(this IEnumerable iEnumerable)
+        public static void Log(this IEnumerable enumerable)
         {
-            foreach (var i in iEnumerable)
+            string result = "[";
+            foreach (var item in enumerable)
             {
-                Debug.Log(i);
+                result += item + ", ";
             }
+            if (result.Length > 1)
+            {
+                result = result.Remove(result.Length - 2); // 移除最后的逗号和空格
+            }
+            result += "]";
+            Debug.Log(result);
         }
 
         /// <summary>
@@ -214,12 +245,7 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static int IndexOf<T>(this T[] array, T element)
         {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i].Equals(element))
-                    return i;
-            }
-            return -1;
+            return Array.IndexOf(array, element);
         }
 
         /// <summary>
@@ -232,9 +258,17 @@ namespace MyFrameworkPure
         /// <returns></returns>
         public static T[] GetRange<T>(this T[] array, int startIndex, int count)
         {
-            return array.ToList().GetRange(startIndex, count).ToArray();
+            T[] result = new T[count];
+            Array.Copy(array, startIndex, result, 0, count);
+            return result;
         }
 
+        /// <summary>
+        /// 将 IEnumerator 转换为 IEnumerable
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerator"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ToIEnumerable<T>(this IEnumerator<T> enumerator)
         {
             while (enumerator.MoveNext())
@@ -243,6 +277,11 @@ namespace MyFrameworkPure
             }
         }
 
+        /// <summary>
+        /// ConcurrentBag清除方法
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="bag"></param>
         public static void Clear<T>(this ConcurrentBag<T> bag)
         {
             while (!bag.IsEmpty)
@@ -252,7 +291,7 @@ namespace MyFrameworkPure
         }
 
         /// <summary>
-        /// 获取二维数据的一列
+        /// 获取二维数组的一列
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="matrix"></param>

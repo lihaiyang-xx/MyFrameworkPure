@@ -53,8 +53,7 @@ namespace MyFrameworkPure
         /// </summary>
         public static bool IsNumber(this string s)
         {
-            Regex regex = new Regex("[^0-9]");
-            return !regex.IsMatch(s);
+            return Regex.IsMatch(s, @"^-?\d+(\.\d+)?$");
         }
 
         /// <summary>
@@ -79,11 +78,11 @@ namespace MyFrameworkPure
         /// 字符串是否包含任意数组中的元素
         /// </summary>
         /// <param name="s"></param>
-        /// <param name="strs"></param>
+        /// <param name="searchStrings"></param>
         /// <returns></returns>
-        public static bool Contains(this string s, string[] strs)
+        public static bool ContainsAny(this string s, string[] searchStrings)
         {
-            foreach (var str in strs)
+            foreach (var str in searchStrings)
             {
                 if (s.Contains(str))
                     return true;

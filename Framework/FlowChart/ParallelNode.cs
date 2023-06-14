@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 并行节点
+    /// </summary>
     public class ParallelNode : StructNode
     {
         public override void Enter()

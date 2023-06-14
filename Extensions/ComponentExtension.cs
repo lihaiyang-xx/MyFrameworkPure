@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ComponentExtension
+namespace MyFrameworkPure
 {
-    public static void SetActive(this Component component, bool active)
+    /// <summary>
+    /// 组件扩展
+    /// </summary>
+    public static class ComponentExtension
     {
-        component.gameObject.SetActive(active);
+        public static void SetActive(this Component component, bool active)
+        {
+            component.gameObject.SetActive(active);
+        }
     }
 }
+

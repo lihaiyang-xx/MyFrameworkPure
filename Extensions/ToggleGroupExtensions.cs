@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// ToggleGroup扩展
+    /// </summary>
     public static class ToggleGroupExtensions
     {
 
@@ -46,6 +49,11 @@ namespace MyFrameworkPure
             return GetToggles(grp)[index];
         }
 
+        /// <summary>
+        /// 设置特定索引的Toggle开关状态
+        /// </summary>
+        /// <param name="grp"></param>
+        /// <param name="index"></param>
         public static void SetActiveToggleByIndex(this ToggleGroup grp, int index)
         {
             IList<Toggle> toggles = GetToggles(grp);
@@ -54,6 +62,11 @@ namespace MyFrameworkPure
             toggles[index].isOn = true;
         }
 
+        /// <summary>
+        /// 设置特定名称的Toggle开关状态
+        /// </summary>
+        /// <param name="grp"></param>
+        /// <param name="name"></param>
         public static void SetActiveToggleByName(this ToggleGroup grp, string name)
         {
             IList<Toggle> toggles = GetToggles(grp);
@@ -61,6 +74,11 @@ namespace MyFrameworkPure
             toggles.First(x => x.name == name).isOn = true;
         }
 
+        /// <summary>
+        /// 获取打开状态Toggle的索引
+        /// </summary>
+        /// <param name="grp"></param>
+        /// <returns></returns>
         public static int GetActiveIndex(this ToggleGroup grp)
         {
             Toggle activeToggle = grp.ActiveToggles().FirstOrDefault();

@@ -61,11 +61,18 @@ namespace MyFrameworkPure
             ExecuteStep(curIndex + 1);
         }
 
+        /// <summary>
+        /// 执行上一步
+        /// </summary>
         public void ExecutePrevious()
         {
             ExecuteStep(curIndex - 1);
         }
 
+        /// <summary>
+        /// 执行步骤
+        /// </summary>
+        /// <param name="name"></param>
         public void ExecuteStep(string name)
         {
             int step = nodeList.IndexOf(nodeList.Find(x => x.Name == name));
@@ -77,12 +84,22 @@ namespace MyFrameworkPure
             ExecuteStep(step);
         }
 
+        /// <summary>
+        /// 获取特定索引的步骤名称
+        /// </summary>
+        /// <param name="step"></param>
+        /// <returns></returns>
         public string IndexToName(int step)
         {
             //int index = nodeList[step].Name.IndexOf("@");
             //return index < 0 ? nodeList[step].Name : nodeList[step].Name.Remove(index);
             return nodeList[step].Name;
         }
+
+        /// <summary>
+        /// 执行特定步骤
+        /// </summary>
+        /// <param name="step"></param>
         public void ExecuteStep(int step)
         {
             if (step < 0 || step > nodeList.Count)
@@ -133,6 +150,9 @@ namespace MyFrameworkPure
             node.Chart = this;
         }
 
+        /// <summary>
+        /// 清除所有节点
+        /// </summary>
         public void Clear()
         {
             nodeList.Clear();
@@ -150,6 +170,10 @@ namespace MyFrameworkPure
             }
         }
 
+        /// <summary>
+        /// 获取节点备注
+        /// </summary>
+        /// <returns></returns>
         public string GetTip()
         {
             FlowNode node = nodeList[curIndex];
@@ -158,6 +182,9 @@ namespace MyFrameworkPure
             return string.Empty;
         }
 
+        /// <summary>
+        /// 完成当前步骤
+        /// </summary>
         public void CompleteCurrentStep()
         {
             if(curIndex < 0 || curIndex >= nodeList.Count)

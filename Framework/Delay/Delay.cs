@@ -8,11 +8,14 @@ using DG.Tweening;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 延迟抽象类
+    /// </summary>
     public abstract class Delay : IMonoUpdate
     {
-        public UnityAction endCall;
+        public UnityAction endCall;//延迟结束时调用
 
-        public virtual bool Active { get; set; }
+        public virtual bool Active { get; set; }//是否激活状态
 
         public Delay()
         {
@@ -23,6 +26,9 @@ namespace MyFrameworkPure
 
         public abstract bool IsEnd();
 
+        /// <summary>
+        /// 销毁延迟
+        /// </summary>
         public void Destroy()
         {
             Active = false;
@@ -42,6 +48,9 @@ namespace MyFrameworkPure
 
     }
 
+    /// <summary>
+    /// 时间延迟
+    /// </summary>
     public class TimeDelay : Delay
     {
 
@@ -108,6 +117,9 @@ namespace MyFrameworkPure
         }
     }
 
+    /// <summary>
+    /// 条件延迟
+    /// </summary>
     public class ConditionDelay : Delay
     {
         public delegate bool Predicate();
@@ -184,6 +196,7 @@ namespace MyFrameworkPure
     }
 #endif
 
+    
 #if DoTween
     public class FadeinoutDelay : Delay
     {
@@ -239,6 +252,9 @@ namespace MyFrameworkPure
     }
 #endif
 
+    /// <summary>
+    /// 延迟队列
+    /// </summary>
     public class DelaySqueue
     {
         private Queue<Delay> queue = new Queue<Delay>();

@@ -7,6 +7,9 @@ using UnityEngine.Events;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 变化扩展
+    /// </summary>
     public static class TransformExtension
     {
         /// <summary>
@@ -257,11 +260,11 @@ namespace MyFrameworkPure
         /// </summary>
         /// <param name="self"></param>
         /// <param name="parentName"></param>
-        /// <param name="NearChild"></param>
+        /// <param name="nearChild"></param>
         /// <returns></returns>
-        public static int FindParents(this Transform self, string parentName, out Transform NearChild)
+        public static int FindParents(this Transform self, string parentName, out Transform nearChild)
         {
-            NearChild = null;
+            nearChild = null;
             Transform t = self;
             int level = 0;
             while (t.parent != null)
@@ -272,7 +275,7 @@ namespace MyFrameworkPure
                 {
                     return level;
                 }
-                NearChild = t;
+                nearChild = t;
             }
             return -1;
         }
@@ -424,6 +427,11 @@ namespace MyFrameworkPure
             return -1;
         }
 
+        /// <summary>
+        /// 获取所有子物体变换
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public static Transform[] GetChildren(this Transform t)
         {
             Transform[] children = new Transform[t.childCount];
@@ -532,11 +540,19 @@ namespace MyFrameworkPure
             }
         }
 
+        /// <summary>
+        /// 缩放到0
+        /// </summary>
+        /// <param name="t"></param>
         public static void ScaleToZero(this Transform t)
         {
             t.localScale = Vector3.zero;
         }
 
+        /// <summary>
+        /// 缩放到1
+        /// </summary>
+        /// <param name="t"></param>
         public static void ScaleToOne(this Transform t)
         {
             t.localScale = Vector3.one;

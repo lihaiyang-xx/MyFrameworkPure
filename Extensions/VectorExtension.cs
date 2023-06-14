@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 向量扩展
+    /// </summary>
     public static class VectorExtension
     {
         /// <summary>
