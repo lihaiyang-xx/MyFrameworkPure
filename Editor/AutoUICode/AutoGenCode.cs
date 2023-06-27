@@ -26,18 +26,18 @@ public class AutoGenCode
 
     };
 
-    private const string ViewTemplete = "Assets/3rdParts/MyFrameworkPure/Editor/AutoUICode/ViewTemplete.txt";
-    private const string LogicTemplete = "Assets/3rdParts/MyFrameworkPure/Editor/AutoUICode/LogicTemplete.txt";
+    private const string ViewTemplate = "Assets/3rdParts/MyFrameworkPure/Editor/AutoUICode/ViewTemplate.txt";
+    private const string ControllerTemplate = "Assets/3rdParts/MyFrameworkPure/Editor/AutoUICode/ControllerTemplate.txt";
     private const string ViewScriptPath = "Assets/Scripts/AutoGen/View";
-    private const string LogicScriptPath = "Assets/Scripts/AutoGen/Logic";
+    private const string ControllerScriptPath = "Assets/Scripts/AutoGen/Controller";
 
     [MenuItem("GameObject/AutoGen/Create View", priority = 0)]
-    static void CreateLogicAndView()
+    static void CreateControllerAndView()
     {
         if (!Directory.Exists(ViewScriptPath))
             Directory.CreateDirectory(ViewScriptPath);
-        if (!Directory.Exists(LogicScriptPath))
-            Directory.CreateDirectory(LogicScriptPath);
+        if (!Directory.Exists(ControllerScriptPath))
+            Directory.CreateDirectory(ControllerScriptPath);
         GameObject go = Selection.activeGameObject;
         if (go == null || !go.name.StartsWith("Panel_"))
         {
@@ -45,16 +45,17 @@ public class AutoGenCode
             return;
         }
 
-        string content = File.ReadAllText(ViewTemplete);
+        string hierarchy = go.transform.GetHierarchyPath();
+        string content = File.ReadAllText(ViewTemplate);
 
         StringBuilder fieldSb = new StringBuilder();
-        StringBuilder methodSb = new StringBuilder();
+        StringBuilder methodSb = new StringBuilder($"\t\ttransform = GameObjectTool.FindGameObjectQuick(\"{hierarchy}\").transform;\r\n");
         List<ComponentInfo> infos = new List<ComponentInfo>();
         GetComponentInfos(go.transform,infos,string.Empty);
         foreach (var info in infos)
         {
             fieldSb.AppendLine($"\tpublic {info.type} {info.name}{{get;set;}}");
-            methodSb.AppendLine($"\t\t{info.name} = root.Find(\"{info.path}\").GetComponent<{info.type}>();");
+            methodSb.AppendLine($"\t\t{info.name} = transform.Find(\"{info.path}\").GetComponent<{info.type}>();");
         }
 
         string panelClassName = go.name.Replace("Panel_", "")+"View";
@@ -66,15 +67,15 @@ public class AutoGenCode
         Debug.Log(path);
         File.WriteAllText(path,content);
 
-        //生成logic.cs
-        string logicClassName = go.name.Replace("Panel_", "")+"Logic";
-        path = $"{LogicScriptPath}/{logicClassName}.cs";
+        //生成controller.cs
+        string controllerClassName = go.name.Replace("Panel_", "")+"Controller";
+        path = $"{ControllerScriptPath}/{controllerClassName}.cs";
         if (!File.Exists(path))
         {
-            string field = $"\tprivate {panelClassName} view;";
-            string method = $"\t\tview = new {panelClassName}();\r\n\t\tview.Init(transform);";
-            content = File.ReadAllText(LogicTemplete);
-            content = content.Replace("#CLASSNAME#", logicClassName).
+            string field = $"\tpublic {panelClassName} view;";
+            string method = $"\t\tview = new {panelClassName}();\r\n\t\tbaseView = view;\r\n";
+            content = File.ReadAllText(ControllerTemplate);
+            content = content.Replace("#CLASSNAME#", controllerClassName).
                 Replace("#FIELD#", field).
                 Replace("#METHOD#", method);
             File.WriteAllText(path,content);

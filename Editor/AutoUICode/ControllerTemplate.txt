@@ -1,0 +1,11 @@
+using UnityEngine;
+using UnityEngine.UI;
+using MyFrameworkPure;
+public class #CLASSNAME#:Controller
+{
+#FIELD#
+	public #CLASSNAME#()
+	{
+#METHOD#
+	}
+}
