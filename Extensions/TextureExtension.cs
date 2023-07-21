@@ -21,7 +21,7 @@ namespace MyFrameworkPure
             var textureRect = new Rect(0, 0, width, height);
             GpuScale(inputTexture, width, height, mode);
 
-            inputTexture.Resize(width, height);
+            inputTexture.Reinitialize(width, height);
             inputTexture.ReadPixels(textureRect, 0, 0, true);
             inputTexture.Apply(false);
         }
