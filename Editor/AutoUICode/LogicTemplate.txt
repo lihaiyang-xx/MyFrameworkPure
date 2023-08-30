@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using MyFrameworkPure;
-#USING#
-public class #CLASSNAME#:View
+public class #CLASSNAME#:MonoBehaviour
 {
 	/*****自动生成的代码*****/
 #FIELD#
-	public #CLASSNAME#()
+	void Start()
 	{
 		/*****自动生成的代码*****/
 #METHOD#

@@ -15,6 +15,13 @@ namespace MyFrameworkPure
             CM.Add(this);
         }
 
+        public abstract void Run();
+
+        public virtual void Destroy()
+        {
+
+        }
+
         public virtual void ShowView()
         {
             baseView.transform.SetActive(true);
@@ -43,6 +50,12 @@ namespace MyFrameworkPure
         public static T Get<T>(string name) where T : Controller
         {
             return Controllers.OfType<T>().FirstOrDefault(x=>x.name == name);
+        }
+
+        public static void DestroyAll()
+        {
+            foreach(Controller controller in Controllers)
+                controller.Destroy();
         }
     }
 }

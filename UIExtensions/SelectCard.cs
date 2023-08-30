@@ -10,6 +10,8 @@ namespace MyFrameworkPure
     {
         [SerializeField] private Transform toggles;
         [SerializeField] private Transform panels;
+        [SerializeField] private Color onTextColor;
+        [SerializeField] private Color offTextColor;
 
         public UnityAction<int> onValueChanged;
         // Use this for initialization
@@ -20,16 +22,23 @@ namespace MyFrameworkPure
                 if (i >= panels.childCount)
                     break;
                 var index = i;
-                toggles.GetChild(i).GetComponent<Toggle>().onValueChanged.AddListener(v =>
+                Toggle toggle = toggles.GetChild(i).GetComponent<Toggle>();
+                toggle.onValueChanged.AddListener(v =>
                 {
+                    toggle.GetComponentInChildren<Text>().color = v ? onTextColor : offTextColor;
                     panels.GetChild(index).gameObject.SetActive(v);
-                    if (v && onValueChanged != null)
-                        onValueChanged(index);
+                    if (v)
+                        onValueChanged?.Invoke(index);
                 });
             }
 
-            toggles.GetChild(0).GetComponent<Toggle>().isOn = true;
+            Toggle firstToggle = toggles.GetChild(0).GetComponent<Toggle>();
+            firstToggle.isOn = true;
+            firstToggle.onValueChanged?.Invoke(true);
         }
+
+        public Transform ToggleParent => toggles;
+        public Transform PanelParent => panels;
     }
 }
 

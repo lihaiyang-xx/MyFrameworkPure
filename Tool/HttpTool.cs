@@ -159,19 +159,20 @@ public class HttpTool
         }
     }
 
-    public static IEnumerator Get(string url, UnityAction<string> callback)
+    public static IEnumerator Get(string url, UnityAction<string> onSuccess,UnityAction<string> onError)
     {
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             yield return request.SendWebRequest();
-            if (request.isNetworkError || request.isHttpError)
+            if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log(request.error);
+                string text = request.downloadHandler.text;
+                onSuccess?.Invoke(text);
             }
             else
             {
-                string text = request.downloadHandler.text;
-                callback?.Invoke(text);
+                Debug.Log(request.error);
+                onError?.Invoke(request.error);
             }
         }
     }
@@ -211,28 +212,36 @@ public class HttpTool
     }
 
 
-    public static IEnumerator Post(string url, string json, UnityAction<string> callback)
+    public static IEnumerator Post(string url, string json, UnityAction<string> onSuccess,UnityAction<string> onError, Dictionary<string, string> headers = null)
     {
         using (UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST))
         {
+            if (headers != null)
+            {
+                foreach (var header in headers)
+                {
+                    request.SetRequestHeader(header.Key, header.Value);
+                }
+            }
+
             byte[] bytes = Encoding.UTF8.GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(bytes);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
             yield return request.SendWebRequest();
-            if (request.isNetworkError || request.isHttpError)
+            if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log(request.error);
+                string text = request.downloadHandler.text;
+                onSuccess?.Invoke(text);
             }
             else
             {
-                string text = request.downloadHandler.text;
-                callback?.Invoke(text);
+                onError?.Invoke(request.error);
             }
         }
     }
 
-    public static IEnumerator Post(string url, WWWForm form, UnityAction<string> callback, Dictionary<string, string> headers = null)
+    public static IEnumerator Post(string url, WWWForm form, UnityAction<string> onSuccess, Dictionary<string, string> headers = null)
     {
         using (UnityWebRequest request = UnityWebRequest.Post(url, form))
         {
@@ -246,12 +255,12 @@ public class HttpTool
             yield return request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                callback?.Invoke(request.error);
+                onSuccess?.Invoke(request.error);
             }
             else
             {
                 string text = request.downloadHandler.text;
-                callback?.Invoke(text);
+                onSuccess?.Invoke(text);
             }
         }
     }
