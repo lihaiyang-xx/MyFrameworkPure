@@ -13,7 +13,6 @@ namespace MyFrameworkPure
     public static class CoroutineTool
     {
         private static MonoManagerMonoBehaviour _monoManagerMonoBehaviour;
-        private static MonoManagerMonoBehaviour _monoManagerMonoBehaviourNormal;
         static CoroutineTool()
         {
             Init();
@@ -24,23 +23,21 @@ namespace MyFrameworkPure
             return _monoManagerMonoBehaviour.StartCoroutine(routine);
         }
 
-        public static Coroutine DoCoroutine_Normal(IEnumerator routine)
+        public static void StopCoroutine(IEnumerator routine)
         {
-            if (_monoManagerMonoBehaviourNormal == null)
-            {
-                var go1 = new GameObject { name = "CoroutineManager_Normal" };
-                _monoManagerMonoBehaviourNormal = go1.AddComponent<MonoManagerMonoBehaviour>();
-            }
-            return _monoManagerMonoBehaviourNormal.StartCoroutine(routine);
+            _monoManagerMonoBehaviour.StopCoroutine(routine);
         }
+
+        public static void StopCoroutine(Coroutine coroutine)
+        {
+            _monoManagerMonoBehaviour.StopCoroutine(coroutine);
+        }
+
         private static void Init()
         {
             var go = new GameObject { name = "CoroutineTool" };
             _monoManagerMonoBehaviour = go.AddComponent<MonoManagerMonoBehaviour>();
             Object.DontDestroyOnLoad(go);
-
-            var go1 = new GameObject { name = "CoroutineManager_Normal" };
-            _monoManagerMonoBehaviourNormal = go1.AddComponent<MonoManagerMonoBehaviour>();
         }
     }
 }

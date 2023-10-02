@@ -9,6 +9,7 @@ namespace MyFrameworkPure
     /// </summary>
     public static class TextureExtension
     {
+#if UNITY_2021_1_OR_NEWER
         /// <summary>
         /// 缩放纹理
         /// </summary>
@@ -25,6 +26,7 @@ namespace MyFrameworkPure
             inputTexture.ReadPixels(textureRect, 0, 0, true);
             inputTexture.Apply(false);
         }
+#endif
 
         /// <summary>
         /// 使用GPU进行纹理缩放

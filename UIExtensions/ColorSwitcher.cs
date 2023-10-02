@@ -5,28 +5,25 @@ using UnityEngine.UI;
 
 public class ColorSwitcher : MonoBehaviour
 {
-    [SerializeField] private Image image;
+    [SerializeField] private Graphic graphic;
     [SerializeField] private Color normalColor;
     [SerializeField] private Color hoverColor;
- 
+
+    void OnEnable()
+    {
+        graphic.color = normalColor;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         EventTriggerListener.Get(gameObject).onEnter += d =>
         {
-            image.color = hoverColor;
+            graphic.color = hoverColor;
         };
-
         EventTriggerListener.Get(gameObject).onExit += d =>
         {
-            image.color = normalColor;
+            graphic.color = normalColor;
         };
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
