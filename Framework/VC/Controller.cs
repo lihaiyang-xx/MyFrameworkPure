@@ -56,6 +56,7 @@ namespace MyFrameworkPure
         {
             foreach(Controller controller in Controllers)
                 controller.Destroy();
+            Controllers.Clear();
         }
     }
 }

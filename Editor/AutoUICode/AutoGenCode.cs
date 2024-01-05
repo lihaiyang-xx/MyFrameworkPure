@@ -27,7 +27,8 @@ public class AutoGenCode
         {"dd",typeof(Dropdown)},
         {"tlab",typeof(TMP_Text)},
         {"tinput",typeof(TMP_InputField)},
-        {"tdd",typeof(TMP_Dropdown)}
+        {"tdd",typeof(TMP_Dropdown)},
+        {"rimg",typeof(RawImage)}
     };
 
     private const string ViewTemplate = "Assets/3rdParts/MyFrameworkPure/Editor/AutoUICode/ViewTemplate.txt";

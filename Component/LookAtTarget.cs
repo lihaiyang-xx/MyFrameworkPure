@@ -23,12 +23,14 @@ namespace MyFrameworkPure
         // Start is called before the first frame update
         void Start()
         {
-
+            target = Camera.main?.transform;
         }
 
         // Update is called once per frame
         void Update()
         {
+            if(target == null)
+                return;
             Vector3 dir = target.position - transform.position;
             if (keepHorizontal)
                 dir.y = 0;

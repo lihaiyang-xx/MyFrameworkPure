@@ -264,4 +264,77 @@ public class HttpTool
             }
         }
     }
+
+    public static IEnumerator Require(
+        string url,string method = "POST",
+        Dictionary<string, string> queryParams = null,
+        Dictionary<string, string> headers = null,
+        WWWForm form = null,
+        string jsonData = null,
+        UnityAction<string> onSuccess = null,
+        UnityAction<string> onFail = null)
+    {
+        if (queryParams != null && queryParams.Count > 0)
+        {
+            url += "?";
+            foreach (var param in queryParams)
+            {
+                url += param.Key + "=" + param.Value + "&";
+            }
+            url = url.TrimEnd('&');
+        }
+
+        UnityWebRequest www = new UnityWebRequest(url, method);
+        www.downloadHandler = new DownloadHandlerBuffer();
+
+        // Headers
+        if (headers != null)
+        {
+            foreach (var header in headers)
+            {
+                www.SetRequestHeader(header.Key, header.Value);
+            }
+        }
+
+        if (form != null)
+        {
+            www.uploadHandler = new UploadHandlerRaw(form.data);
+            www.SetRequestHeader("Content-Type", form.headers["Content-Type"]);
+        }
+        else if (!string.IsNullOrEmpty(jsonData))
+        {
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
+            www.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            www.SetRequestHeader("Content-Type", "application/json");
+        }
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            onFail?.Invoke(string.IsNullOrEmpty(www.downloadHandler.text) ? www.error : www.downloadHandler.text);
+        }
+        else
+        {
+            onSuccess?.Invoke(www.downloadHandler.text);
+        }
+    }
+
+    public static IEnumerator GetAudio(string url,AudioType audioType,UnityAction<AudioClip> onSuccess = null,UnityAction<string> onFail=null)
+    {
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, audioType))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
+                onSuccess?.Invoke(audioClip);
+            }
+            else
+            {
+                onFail?.Invoke(www.error);
+            }
+        }
+    }
 }
