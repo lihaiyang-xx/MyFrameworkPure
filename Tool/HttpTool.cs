@@ -5,11 +5,12 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
-
+#if UNITASK
+using Cysharp.Threading.Tasks;
+#endif
 public class HttpTool
 {
 #if AsyncAwaitUtil

@@ -5,8 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -105,10 +103,6 @@ namespace MyFrameworkPure
                 else
                 {
                     result = webRequest.downloadHandler.text;
-                    int first = result.IndexOf('{');
-                    int end = result.IndexOf('}');
-                    result = result.Substring(first, end - first + 1);
-                    result = JObject.Parse(result)["cip"].ToString();
                 }
                 Debug.Log("公网ip:"+result);
                 onGet?.Invoke(result);

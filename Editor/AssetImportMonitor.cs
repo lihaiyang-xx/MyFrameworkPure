@@ -31,12 +31,6 @@ public class AssetImportMonitor : AssetPostprocessor
                     AssetDatabase.ImportAsset(assetPath);
                 }
             }
-            else if (assetPath.StartsWith("Assets/StreamingAssets/Csv") && assetPath.EndsWith(".csv") ||
-                     assetPath.StartsWith("Assets/StreamingAssets/Voice") && assetPath.EndsWith(".mp3"))
-            {
-                AppGlobal.CreateMd5ForFile(assetPath);
-                AssetDatabase.Refresh();
-            }
         }
     }
 }
