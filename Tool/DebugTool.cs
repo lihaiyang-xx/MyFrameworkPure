@@ -4,9 +4,16 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// debug 工具
+    /// </summary>
     public class DebugTool
     {
-        public static void LogHierarchy(Transform root)
+        /// <summary>
+        /// 打印子物体层级
+        /// </summary>
+        /// <param name="root"></param>
+        public static void LogChildrenHierarchy(Transform root)
         {
             string result = string.Empty;
             PrintChildren(root,string.Empty,ref result);

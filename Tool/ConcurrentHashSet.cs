@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 现场安全的hashset
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ConcurrentHashSet<T> : IDisposable
     {
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);

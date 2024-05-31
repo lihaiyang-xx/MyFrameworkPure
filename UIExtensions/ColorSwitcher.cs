@@ -3,27 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ColorSwitcher : MonoBehaviour
+namespace MyFrameworkPure
 {
-    [SerializeField] private Graphic graphic;
-    [SerializeField] private Color normalColor;
-    [SerializeField] private Color hoverColor;
-
-    void OnEnable()
+    /// <summary>
+    /// 用于UI的颜色切换器
+    /// </summary>
+    public class ColorSwitcher : MonoBehaviour
     {
-        graphic.color = normalColor;
-    }
+        [SerializeField] private Graphic graphic;
+        [SerializeField] private Color normalColor;
+        [SerializeField] private Color hoverColor;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        EventTriggerListener.Get(gameObject).onEnter += d =>
-        {
-            graphic.color = hoverColor;
-        };
-        EventTriggerListener.Get(gameObject).onExit += d =>
+        void OnEnable()
         {
             graphic.color = normalColor;
-        };
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            EventTriggerListener.Get(gameObject).onEnter += d =>
+            {
+                graphic.color = hoverColor;
+            };
+            EventTriggerListener.Get(gameObject).onExit += d =>
+            {
+                graphic.color = normalColor;
+            };
+        }
     }
 }
+

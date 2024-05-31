@@ -4,6 +4,9 @@ using MyFrameworkPure;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// 自由相机控制器
+/// </summary>
 public class FlyCamera : MonoBehaviour
 {
     [SerializeField]

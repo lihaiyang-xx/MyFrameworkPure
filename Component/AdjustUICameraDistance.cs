@@ -1,9 +1,13 @@
 using UnityEngine;
 
+/// <summary>
+/// 自适应UI相机距离
+/// </summary>
 [RequireComponent(typeof(Canvas))]
 public class AdjustUICameraDistance : MonoBehaviour
 {
     [SerializeField] private Camera uiCamera;
+    [Tooltip("期望的UI画布缩放")]
     [SerializeField] private Vector3 desiredScale = new Vector3(0.01f, 0.01f, 0.01f);
 
     private Canvas canvas;
@@ -32,7 +36,9 @@ public class AdjustUICameraDistance : MonoBehaviour
     }
 #endif
 
-
+    /// <summary>
+    /// 自适应UI相机距离
+    /// </summary>
     public void AdjustCameraDistance()
     {
         if (uiCamera == null) return;

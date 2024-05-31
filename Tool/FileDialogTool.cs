@@ -5,6 +5,9 @@ using System.Runtime.InteropServices;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 文件打开和保存对话框
+    /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public class FileDialogTool
     {

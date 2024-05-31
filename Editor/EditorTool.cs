@@ -10,6 +10,9 @@ using UnityEngine.UI;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 编辑器工具
+    /// </summary>
     public class EditorTool : MonoBehaviour
     {
         [MenuItem("Tools/EditorTools/重命名子物体的Text内容")]

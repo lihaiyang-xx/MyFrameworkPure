@@ -3,23 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpriteSwitcher : MonoBehaviour
+namespace MyFrameworkPure
 {
-    [SerializeField] private Image image;
-    [SerializeField] private Sprite normalSprite;
-    [SerializeField] private Sprite hoverSprite;
-
-
-    void Start()
+    public class SpriteSwitcher : MonoBehaviour
     {
-        EventTriggerListener.Get(gameObject).onEnter += d =>
-        {
-            image.sprite = hoverSprite;
-        };
+        [SerializeField] private Image image;
+        [SerializeField] private Sprite normalSprite;
+        [SerializeField] private Sprite hoverSprite;
 
-        EventTriggerListener.Get(gameObject).onExit += d =>
+        void Start()
         {
-            image.sprite = normalSprite;
-        };
+            EventTriggerListener.Get(gameObject).onEnter += d =>
+            {
+                image.sprite = hoverSprite;
+            };
+
+            EventTriggerListener.Get(gameObject).onExit += d =>
+            {
+                image.sprite = normalSprite;
+            };
+        }
     }
 }
+

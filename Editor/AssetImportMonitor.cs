@@ -5,12 +5,17 @@ using MyFrameworkPure;
 using UnityEditor;
 using UnityEngine;
 
-public class AssetImportMonitor : AssetPostprocessor
+namespace MyFrameworkPure
 {
-    public static void OnPostprocessAllAssets(string[] importedAsset, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+    /// <summary>
+    /// 资源监视器
+    /// </summary>
+    public class AssetImportMonitor : AssetPostprocessor
     {
-        foreach (string assetPath in importedAsset)
+        public static void OnPostprocessAllAssets(string[] importedAsset, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
+            foreach (string assetPath in importedAsset)
+            {
 #if EXCEL
             if (assetPath.EndsWith(".xls"))
             {
@@ -22,15 +27,17 @@ public class AssetImportMonitor : AssetPostprocessor
                 AssetDatabase.Refresh();
             }
 #endif
-            if(assetPath.StartsWith("Assets/Arts/UI"))
-            {
-                TextureImporter textureImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter; ;
-                if(textureImporter != null && textureImporter.textureType != TextureImporterType.Sprite)
+                if (assetPath.StartsWith("Assets/Arts/UI"))
                 {
-                    textureImporter.textureType = TextureImporterType.Sprite;
-                    AssetDatabase.ImportAsset(assetPath);
+                    TextureImporter textureImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter; ;
+                    if (textureImporter != null && textureImporter.textureType != TextureImporterType.Sprite)
+                    {
+                        textureImporter.textureType = TextureImporterType.Sprite;
+                        AssetDatabase.ImportAsset(assetPath);
+                    }
                 }
             }
         }
     }
 }
+

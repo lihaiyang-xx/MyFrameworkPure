@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// ÊÓÍ¼»ùÀà
+    /// </summary>
     public abstract class View
     {
         public Transform transform { get; set; }

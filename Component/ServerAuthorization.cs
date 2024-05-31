@@ -3,42 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ServerAuthorization : MonoBehaviour
+namespace MyFrameworkPure
 {
-    [SerializeField] private string appName;
-    // Start is called before the first frame update
-    IEnumerator  Start()
+    /// <summary>
+    /// 服务器授权
+    /// </summary>
+    public class ServerAuthorization : MonoBehaviour
     {
-        using (UnityWebRequest request = UnityWebRequest.Get($"http://106.14.190.213:8090/active/app.php?app={appName}"))
+        [SerializeField] private string appName;
+        // Start is called before the first frame update
+        IEnumerator Start()
         {
-            yield return request.SendWebRequest();
-            if (request.result == UnityWebRequest.Result.Success)
+            using (UnityWebRequest request = UnityWebRequest.Get($"http://106.14.190.213:8090/active/app.php?app={appName}"))
             {
-                string result = request.downloadHandler.text;
-                if (result == "fail")
+                yield return request.SendWebRequest();
+                if (request.result == UnityWebRequest.Result.Success)
                 {
-                    Debug.Log("start failed by some reason!");
+                    string result = request.downloadHandler.text;
+                    if (result == "fail")
+                    {
+                        Debug.Log("start failed by some reason!");
 #if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPlaying = false;
+                        UnityEditor.EditorApplication.isPlaying = false;
 #else
                     Application.Quit();
 #endif
+                    }
+                    else
+                    {
+                        //Debug.Log("服务器授权成功!");
+                    }
                 }
                 else
                 {
-                    //Debug.Log("服务器授权成功!");
+                    yield break;
                 }
             }
-            else
-            {
-                yield break;
-            }
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+

@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 消息发送和接收工具
+    /// </summary>
     public static class MessageTool
     {
         public delegate void Handler(params object[] args);

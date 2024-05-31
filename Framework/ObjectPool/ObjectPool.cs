@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// 对象池
+    /// </summary>
     public class ObjectPool
     {
 

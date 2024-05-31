@@ -4,12 +4,19 @@ using System.Collections.Generic;
 using MyFrameworkPure;
 using UnityEngine;
 
-public class AuthorizeTool : MonoBehaviour
+namespace MyFrameworkPure
 {
-    public static bool IsValid(string date)
+    /// <summary>
+    /// 授权工具
+    /// </summary>
+    public class AuthorizeTool : MonoBehaviour
     {
-        DateTime dateTime = DateTime.Parse(date);
-        long timeStamp = (new DateTimeOffset(dateTime)).ToUnixTimeSeconds();
-        return TimeTool.GetTimeStamp() < timeStamp;
+        public static bool IsValid(string date)
+        {
+            DateTime dateTime = DateTime.Parse(date);
+            long timeStamp = (new DateTimeOffset(dateTime)).ToUnixTimeSeconds();
+            return TimeTool.GetTimeStamp() < timeStamp;
+        }
     }
 }
+

@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace MyFrameworkPure
 {
+    /// <summary>
+    /// ¿ØÖÆÆ÷»ùÀà
+    /// </summary>
     public abstract class Controller
     {
         public View baseView { get; set; }
