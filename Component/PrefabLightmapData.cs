@@ -164,7 +164,7 @@ namespace MyFrameworkPure
         }
 
 #if UNITY_EDITOR
-        [UnityEditor.MenuItem("Tools/烘焙预设灯光贴图")]
+        [UnityEditor.MenuItem("Tools/EditorTools/烘焙预设灯光贴图")]
         static void GenerateLightmapInfo()
         {
             if (UnityEditor.Lightmapping.giWorkflowMode != UnityEditor.Lightmapping.GIWorkflowMode.OnDemand)

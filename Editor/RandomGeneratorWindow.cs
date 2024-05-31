@@ -28,7 +28,7 @@ namespace MyFrameworkPure
 
         private Vector2 scrollPos;
 
-        [MenuItem("Tools/创建建筑")]
+        [MenuItem("Tools/EditorTools/创建建筑")]
         static void Init()
         {
             RandomGeneratorWindow window = EditorWindow.GetWindow<RandomGeneratorWindow>();

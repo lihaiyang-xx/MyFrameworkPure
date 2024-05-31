@@ -22,7 +22,7 @@ namespace MyFrameworkPure
         private SerializedObject serializedObject;
         private SerializedProperty serializedProperty;
 
-        [MenuItem("Tools/批量删除场景组件窗口")]
+        [MenuItem("Tools/EditorTools/批量删除场景组件窗口")]
         static void InitWindow()
         {
             ComponentsDestoryWindow window = EditorWindow.GetWindow<ComponentsDestoryWindow>();

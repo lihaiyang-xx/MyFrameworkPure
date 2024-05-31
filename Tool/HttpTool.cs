@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -265,14 +267,116 @@ public class HttpTool
         }
     }
 
-    public static IEnumerator Require(
-        string url,string method = "POST",
+    //public static IEnumerator Require(
+    //    string url,string method = "POST",
+    //    Dictionary<string, string> queryParams = null,
+    //    Dictionary<string, string> headers = null,
+    //    WWWForm form = null,
+    //    string jsonData = null,
+    //    UnityAction<string> onSuccess = null,
+    //    UnityAction<string> onFail = null)
+    //{
+    //    if (queryParams != null && queryParams.Count > 0)
+    //    {
+    //        url += "?";
+    //        foreach (var param in queryParams)
+    //        {
+    //            url += param.Key + "=" + param.Value + "&";
+    //        }
+    //        url = url.TrimEnd('&');
+    //    }
+
+    //    UnityWebRequest www = new UnityWebRequest(url, method);
+    //    www.downloadHandler = new DownloadHandlerBuffer();
+
+    //    // Headers
+    //    if (headers != null)
+    //    {
+    //        foreach (var header in headers)
+    //        {
+    //            www.SetRequestHeader(header.Key, header.Value);
+    //        }
+    //    }
+
+    //    if (form != null)
+    //    {
+    //        www.uploadHandler = new UploadHandlerRaw(form.data);
+    //        www.SetRequestHeader("Content-Type", form.headers["Content-Type"]);
+    //    }
+    //    else if (!string.IsNullOrEmpty(jsonData))
+    //    {
+    //        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
+    //        www.uploadHandler = new UploadHandlerRaw(bodyRaw);
+    //        www.SetRequestHeader("Content-Type", "application/json");
+    //    }
+
+    //    yield return www.SendWebRequest();
+
+    //    if (www.result != UnityWebRequest.Result.Success)
+    //    {
+    //        onFail?.Invoke(string.IsNullOrEmpty(www.downloadHandler.text) ? www.error : www.downloadHandler.text);
+    //    }
+    //    else
+    //    {
+    //        onSuccess?.Invoke(www.downloadHandler.text);
+    //    }
+    //}
+
+    public static IEnumerator GetAudio(string url,AudioType audioType,UnityAction<AudioClip> onSuccess = null,UnityAction<string> onFail=null)
+    {
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, audioType))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
+                onSuccess?.Invoke(audioClip);
+            }
+            else
+            {
+                onFail?.Invoke(www.error);
+            }
+        }
+    }
+
+#if UNITASK
+    /// <summary>
+    /// 异步获取音频
+    /// </summary>
+    /// <param name="url"></param>
+    /// <param name="audioType"></param>
+    /// <returns></returns>
+    public static async UniTask<AudioClip> GetAudio(string url, AudioType audioType)
+    {
+        try
+        {
+            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, audioType);
+            await www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log($"get audio fail! url:{url} error:{www.error}");
+                return null;
+            }
+
+            AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
+            return audioClip;
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
+
+        return null;
+    }
+
+    public static async UniTask<string> Require(
+        string url, string method = "POST",
         Dictionary<string, string> queryParams = null,
         Dictionary<string, string> headers = null,
         WWWForm form = null,
-        string jsonData = null,
-        UnityAction<string> onSuccess = null,
-        UnityAction<string> onFail = null)
+        string jsonData = null)
     {
         if (queryParams != null && queryParams.Count > 0)
         {
@@ -308,33 +412,23 @@ public class HttpTool
             www.SetRequestHeader("Content-Type", "application/json");
         }
 
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
+        try
         {
-            onFail?.Invoke(string.IsNullOrEmpty(www.downloadHandler.text) ? www.error : www.downloadHandler.text);
-        }
-        else
-        {
-            onSuccess?.Invoke(www.downloadHandler.text);
-        }
-    }
+            await www.SendWebRequest();
 
-    public static IEnumerator GetAudio(string url,AudioType audioType,UnityAction<AudioClip> onSuccess = null,UnityAction<string> onFail=null)
-    {
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, audioType))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.Success)
+            if (www.result != UnityWebRequest.Result.Success)
             {
-                AudioClip audioClip = DownloadHandlerAudioClip.GetContent(www);
-                onSuccess?.Invoke(audioClip);
+                return string.IsNullOrEmpty(www.downloadHandler.text) ? www.error : www.downloadHandler.text;
             }
-            else
-            {
-                onFail?.Invoke(www.error);
-            }
+
+            return www.downloadHandler.text;
         }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
+
+        return string.Empty;
     }
+#endif
 }

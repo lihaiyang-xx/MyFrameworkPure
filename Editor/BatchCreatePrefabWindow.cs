@@ -12,7 +12,7 @@ namespace MyFrameworkPure
     /// </summary>
     public class BatchCreatePrefabWindow : EditorWindow
     {
-        [MenuItem("Tools/批量生成Prefab")]
+        [MenuItem("Tools/EditorTools/批量生成Prefab")]
 
         static void AddWindow()
         {

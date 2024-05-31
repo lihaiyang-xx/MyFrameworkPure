@@ -102,7 +102,7 @@ public class SimpleVideoPlayer : MonoBehaviour
         {
             isFullScreen = !isFullScreen;
             Vector2 sizeDelta = isFullScreen
-                ? new Vector2(AppGlobal.GetScreenWidth()+40, AppGlobal.GetScreenHeight()+40)
+                ? new Vector2(Screen.width, Screen.height)
                 : originSize;
             rectTransform.sizeDelta = sizeDelta;
             closeRt.anchoredPosition = isFullScreen ? new Vector2(-100, -100) :new Vector2(38.2f,-6.4f);

@@ -12,7 +12,7 @@ namespace MyFrameworkPure
     {
         private GameObject particleGO;
         private float scaleFactor = 1;
-        [MenuItem("Tools/粒子缩放窗口")]
+        [MenuItem("Tools/EditorTools/粒子缩放窗口")]
         static void InitWindow()
         {
             ParticleScaleWindow window = GetWindow<ParticleScaleWindow>();

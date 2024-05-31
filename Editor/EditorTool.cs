@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using MyFrameworkPure;
-using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,14 +24,15 @@ namespace MyFrameworkPure
                     Undo.RecordObject(labelText, "Change Text");
                     labelText.text = go.name;
                 }
+#if TMPro
                 TMP_Text textPro = go.GetComponentInChildren<TMP_Text>();
                 if (textPro)
                 {
                     Undo.RecordObject(textPro, "Change Text");
                     textPro.text = go.name;
                 }
+#endif
             }
-            //EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }
 
         [MenuItem("Tools/EditorTools/Text内容作为物体名称")]
@@ -44,15 +44,18 @@ namespace MyFrameworkPure
                 Text labelText = go.GetComponentInChildren<Text>();
                 if (labelText)
                     go.name = labelText.text;
+#if TMPro
                 TMP_Text textPro = go.GetComponentInChildren<TMP_Text>();
                 if (textPro)
                     go.name = textPro.text;
+#endif
             }
         }
 
         [MenuItem("Tools/EditorTools/text替换成textmeshpro")]
         static void ReplaceToTextMeshPro()
         {
+#if TMPro
             Text[] texts = Selection.activeGameObject.GetComponentsInChildren<Text>();
             foreach (Text label in texts)
             {
@@ -66,12 +69,15 @@ namespace MyFrameworkPure
                 tmPro.color = color;
                 tmPro.fontSize = size;
                 tmPro.text = text;
+
             }
+#endif
         }
 
         [MenuItem("Tools/EditorTools/textmeshpro替换成text")]
         static void ReplaceToText()
         {
+#if TMPro
             TextMeshProUGUI[] texts = Selection.activeGameObject.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI tmPro in texts)
             {
@@ -86,6 +92,7 @@ namespace MyFrameworkPure
                 label.fontSize = (int)size;
                 label.text = text;
             }
+#endif
         }
 
         [MenuItem("Tools/EditorTools/放大选中Text字体")]

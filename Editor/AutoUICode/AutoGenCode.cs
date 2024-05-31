@@ -5,7 +5,6 @@ using System.IO;
 using System.Text;
 using System;
 using MyFrameworkPure;
-using TMPro;
 using UnityEngine.UI;
 
 /// <summary>
@@ -25,18 +24,20 @@ public class AutoGenCode
         {"tog",typeof(Toggle) },
         {"sld",typeof(Slider)},
         {"dd",typeof(Dropdown)},
-        {"tlab",typeof(TMP_Text)},
-        {"tinput",typeof(TMP_InputField)},
-        {"tdd",typeof(TMP_Dropdown)},
+#if TMPro
+        {"tlab",typeof(TMPro.TMP_Text)},
+        {"tinput",typeof(TMPro.TMP_InputField)},
+        {"tdd",typeof(TMPro.TMP_Dropdown)},
+#endif
         {"rimg",typeof(RawImage)}
     };
 
     private const string ViewTemplate = "Assets/3rdParts/MyFrameworkPure/Editor/AutoUICode/ViewTemplate.txt";
     private const string ControllerTemplate = "Assets/3rdParts/MyFrameworkPure/Editor/AutoUICode/ControllerTemplate.txt";
     private const string LogicTemplate = "Assets/3rdParts/MyFrameworkPure/Editor/AutoUICode/LogicTemplate.txt";
-    private const string ViewScriptPath = "Assets/Scripts/AutoGen/View";
-    private const string ControllerScriptPath = "Assets/Scripts/AutoGen/Controller";
-    private const string LogicScriptPath = "Assets/Scripts/AutoGen/Logic";
+    private const string ViewScriptPath = "Assets/Scripts/View";
+    private const string ControllerScriptPath = "Assets/Scripts/Controller";
+    private const string LogicScriptPath = "Assets/Scripts/Logic";
     private const string UsingTMP = "using TMPro;";
 
     [MenuItem("GameObject/AutoGen/Create View", priority = 0)]

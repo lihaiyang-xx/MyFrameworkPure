@@ -288,7 +288,12 @@ namespace MyFrameworkPure
                 string[] splits = regex.Split(lines[i]);
                 for (int j = 0; j < splits.Length; j++)
                 {
-                    data[i, j] = splits[j];
+                    string str = splits[j];
+                    if (str.StartsWith("\"") && str.EndsWith("\""))//去除分割后的双引号
+                    {
+                        str = str.Substring(1, str.Length - 2);
+                    }
+                    data[i, j] = str;
                 }
             }
 

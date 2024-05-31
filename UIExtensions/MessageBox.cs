@@ -27,7 +27,7 @@ namespace MyFrameworkPure
 
         void Awake()
         {
-            transform.localPosition = Vector3.zero;
+            //transform.localPosition = Vector3.zero;
         }
 
         public static void Show(string message)

@@ -30,7 +30,7 @@ public class AssetBundleTool : MonoBehaviour
         DoBuildAssetBundle(Application.streamingAssetsPath, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
     }
 
-    [MenuItem("Tools/Windows-低压缩", false, 0)]
+    [MenuItem("Tools/AssetBundle/Windows-低压缩", false, 0)]
 
     static void BuildLowCompressedForWindows()
     {
